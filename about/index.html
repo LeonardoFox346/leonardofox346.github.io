@@ -1907,9 +1907,9 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1752332784048),
+    lastupdate: new Date(1752373999360),
     sidebar: {
-      for_page: ["blogger","category","tagcloud","webinfo","repos"],
+      for_page: ["blogger","category","tagcloud","webinfo","repos","lastupdate"],
       for_post: ["toc"],
       webinfo: {
         lastupd: {
@@ -1940,7 +1940,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       },
       
       
-      rightmenus: {"enable":"ture","order":["plugins.navigation","hr","plugins.inputBox","plugins.seletctText","plugins.elementCheck","plugins.elementImage","hr","menus.darkMode","plugins.articlePage","music"],"options":{"iconPrefix":"fa-solid","articleShowLink":true,"musicAlwaysShow":true},"plugins":{"navigation":[{"id":"left","name":"转到上一页","icon":"fa-solid fa-arrow-left","event":"history.back()","group":"navigation"},{"id":"right","name":"转到下一页","icon":"fa-solid fa-arrow-right","event":"history.forward()","group":"navigation"},{"id":"redo","name":"刷新当前页面","icon":"fa-solid fa-redo","event":"window.location.reload()","group":"navigation"},{"id":"up","name":"回到顶部","icon":"fa-solid fa-arrow-up","event":"VolantisApp.scrolltoElement(volantis.dom.bodyAnchor)","group":"navigation"}],"inputBox":[{"id":"copyPaste","name":"粘贴文本","icon":"fa-solid fa-paste","event":"copyPaste","group":"inputBox"},{"id":"copyAll","name":"全选文本","icon":"fa-solid fa-object-ungroup","event":"copyAll","group":"inputBox"},{"id":"copyCut","name":"剪切文本","icon":"fa-solid fa-cut","event":"copyCut","group":"inputBox"}],"seletctText":[{"id":"copyText","name":"复制文本","icon":"fa-solid fa-copy","event":"copyText","group":"seletctText"},{"id":"searchWord","name":"站内搜索","icon":"fa-solid fa-search","event":"OpenSearch(__text__)","group":"seletctText"},{"id":"bingSearch","name":"必应搜索","icon":"fa-solid fa-search","event":"window.open(`https://cn.bing.com/search?q=${__text__}`)","group":"seletctText"}],"elementCheck":[{"id":"openTab","name":"新标签页打开","icon":"fa-solid fa-external-link-square-alt","event":"window.open(__link__)","group":"elementCheck"},{"id":"copyLink","name":"复制链接地址","icon":"fa-solid fa-link","event":"copyLink","group":"elementCheck"}],"elementImage":[{"id":"copyImg","name":"复制图片","icon":"fa-solid fa-image","event":"copyImg","group":"elementImage"}],"articlePage":[{"id":"printMode","name":"打印页面","icon":"fa-solid fa-print","event":"printMode","group":"articlePage"},{"id":"readMode","name":"阅读模式","icon":"fa-solid fa-book-open","event":"readMode","group":"articlePage"}]},"menus":{"link":[{"id":"help","name":"常见问题","icon":"fa-solid fa-question","link":"https://volantis.js.org/faqs/","group":"link"},{"id":"examples","name":"示例博客","icon":"fa-solid fa-rss","link":"https://volantis.js.org/examples/","group":"link"},{"id":"contributors","name":"加入社区","icon":"fa-solid fa-fan","link":"https://volantis.js.org/contributors/","group":"link"},"hr",{"id":"source_docs","name":"本站源码","icon":"fa-solid fa-code-branch","link":"https://github.com/volantis-x/volantis-docs/","group":"link"},{"id":"source_theme","name":"主题源码","icon":"fa-solid fa-code-branch","link":"https://github.com/volantis-x/hexo-theme-volantis/","group":"link"}],"darkMode":[{"id":"darkMode","name":"切换深/浅色模式","icon":"fa-solid fa-moon","event":"volantis.dark.toggle()","group":"darkMode"}]}}
+      rightmenus: {"enable":"ture","order":["plugins.navigation","hr","plugins.inputBox","plugins.seletctText","plugins.elementCheck","plugins.elementImage","hr","menus.darkMode","plugins.articlePage","music"],"options":{"iconPrefix":"fa-regular","articleShowLink":true,"musicAlwaysShow":false},"plugins":{"navigation":[{"id":"left","name":"转到上一页","icon":"fa-solid fa-arrow-left","event":"history.back()","group":"navigation"},{"id":"right","name":"转到下一页","icon":"fa-solid fa-arrow-right","event":"history.forward()","group":"navigation"},{"id":"redo","name":"刷新当前页面","icon":"fa-solid fa-redo","event":"window.location.reload()","group":"navigation"},{"id":"up","name":"回到顶部","icon":"fa-solid fa-arrow-up","event":"VolantisApp.scrolltoElement(volantis.dom.bodyAnchor)","group":"navigation"}],"inputBox":[{"id":"copyPaste","name":"粘贴文本","icon":"fa-solid fa-paste","event":"copyPaste","group":"inputBox"},{"id":"copyAll","name":"全选文本","icon":"fa-solid fa-object-ungroup","event":"copyAll","group":"inputBox"},{"id":"copyCut","name":"剪切文本","icon":"fa-solid fa-cut","event":"copyCut","group":"inputBox"}],"seletctText":[{"id":"copyText","name":"复制文本","icon":"fa-solid fa-copy","event":"copyText","group":"seletctText"},{"id":"searchWord","name":"站内搜索","icon":"fa-solid fa-search","event":"OpenSearch(__text__)","group":"seletctText"},{"id":"bingSearch","name":"必应搜索","icon":"fa-solid fa-search","event":"window.open(`https://cn.bing.com/search?q=${__text__}`)","group":"seletctText"}],"elementCheck":[{"id":"openTab","name":"新标签页打开","icon":"fa-solid fa-external-link-square-alt","event":"window.open(__link__)","group":"elementCheck"},{"id":"copyLink","name":"复制链接地址","icon":"fa-solid fa-link","event":"copyLink","group":"elementCheck"}],"elementImage":[{"id":"copyImg","name":"复制图片","icon":"fa-solid fa-image","event":"copyImg","group":"elementImage"}],"articlePage":[{"id":"printMode","name":"打印页面","icon":"fa-solid fa-print","event":"printMode","group":"articlePage"},{"id":"readMode","name":"阅读模式","icon":"fa-solid fa-book-open","event":"readMode","group":"articlePage"}]},"menus":{"link":[{"id":"help","name":"常见问题","icon":"fa-solid fa-question","link":"https://volantis.js.org/faqs/","group":"link"},{"id":"examples","name":"示例博客","icon":"fa-solid fa-rss","link":"https://volantis.js.org/examples/","group":"link"},{"id":"contributors","name":"加入社区","icon":"fa-solid fa-fan","link":"https://volantis.js.org/contributors/","group":"link"},"hr",{"id":"source_docs","name":"本站源码","icon":"fa-solid fa-code-branch","link":"https://github.com/volantis-x/volantis-docs/","group":"link"},{"id":"source_theme","name":"主题源码","icon":"fa-solid fa-code-branch","link":"https://github.com/volantis-x/hexo-theme-volantis/","group":"link"}],"darkMode":[{"id":"darkMode","name":"切换深/浅色模式","icon":"fa-solid fa-moon","event":"volantis.dark.toggle()","group":"darkMode"}]}}
       
     }
   }
@@ -2380,13 +2380,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             
               <li>
                 <a class="menuitem flat-box faa-parent animated-hover"
-                href="/" title="视频资源/脚本"
+                href="/" title="视频资源"
                   
                   
                   
                     active-action="action-home"
                   >
-                  <i class='fa-solid fa-rss fa-fw'></i>视频资源/脚本
+                  <i class='fa-solid fa-folder-open fa-fw'></i>视频资源
                 </a>
                 
               </li>
@@ -2501,13 +2501,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             
               <li>
                 <a class="menuitem flat-box faa-parent animated-hover"
-                href="/" title="视频资源/脚本"
+                href="/" title="视频资源"
                   
                   
                   
                     active-action="action-home"
                   >
-                  <i class='fa-solid fa-rss fa-fw'></i>视频资源/脚本
+                  <i class='fa-solid fa-folder-open fa-fw'></i>视频资源
                 </a>
                 
               </li>
@@ -2660,7 +2660,14 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
               
               active-action="action-https:spacebilibilicom523509650">
-              <img src='https://s21.ax1x.com/2025/07/12/pVlltgO.png'><p>B站<p>主页</p>
+              <img src='https://s21.ax1x.com/2025/07/13/pVlsgDs.png'><p>B站<p>主页</p>
+            </a>
+          
+            <a href="/404"
+              
+              
+              active-action="action-404">
+              <img src='https://s21.ax1x.com/2025/07/13/pVlsNDA.png'><p>QQ<p>扩列</p>
             </a>
           
             <a href="/about/"
@@ -2912,8 +2919,35 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             
           
             
+              <a href="https://space.bilibili.com/523509650"
+                class="social fa-brands fa-bilibili flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer" itemprop="url">
+                
+              </a>
+            
+          
+            
+              <a href="/404/"
+                class="social fa-brands fa-qq flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer" itemprop="url">
+                
+              </a>
+            
+          
+            
               <a href="https://music.163.com/#/user/home?id=1562873343"
-                class="social fas fa-headphones-alt flat-btn"
+                class="social fa-solid fa-music flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer" itemprop="url">
+                
+              </a>
+            
+          
+            
+              <a href="https://afdian.tv/a/wangming346"
+                class="social fa-solid fa-hand-holding-dollar flat-btn"
                 target="_blank"
                 rel="external nofollow noopener noreferrer" itemprop="url">
                 
@@ -2929,14 +2963,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
     
       
-        本站使用
-        <a href="https://github.com/volantis-x/hexo-theme-volantis/#5.8.0" target="_blank" class="codename">Volantis</a>
-        作为主题
-      
-    
-      
         <div class='copyright'>
-        <p><a href="/">Copyright © 2006-2025 NameAlpha346.Inc</a></p>
+        <p><a href="/about">Copyright © 2006-2025 NameAlpha346.Inc</a></p>
 
         </div>
       
@@ -3144,13 +3172,13 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   </li>
   <li class='music ctrl'>
     <a class='nav icon-only backward fix-cursor-default' href="/" onclick="return false;" title="backward">
-      <i class='fa-solid fa-step-backward fa-fw'></i>
+      <i class='fa-regular fa-step-backward fa-fw'></i>
     </a>
     <a class='nav icon-only toggle fix-cursor-default' href="/" onclick="return false;" title="toggle">
-      <i class='fa-solid fa-play fa-fw'></i>
+      <i class='fa-regular fa-play fa-fw'></i>
     </a>
     <a class='nav icon-only forward fix-cursor-default' href="/" onclick="return false;" title="forward">
-      <i class='fa-solid fa-step-forward fa-fw'></i>
+      <i class='fa-regular fa-step-forward fa-fw'></i>
     </a>
   </li>
   <li class='music volume'>
@@ -3158,8 +3186,8 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <div class="aplayer-volume-bar-wrap">
         <div class="aplayer-volume-bar fix-cursor-pointer">
           <div class="aplayer-volume"></div>
-          <i class='left fa-solid fa-volume-off fa-fw'></i>
-          <i class='right fa-solid fa-volume-up fa-fw'></i>
+          <i class='left fa-regular fa-volume-off fa-fw'></i>
+          <i class='right fa-regular fa-volume-up fa-fw'></i>
         </div>
       </div>
     </div>
