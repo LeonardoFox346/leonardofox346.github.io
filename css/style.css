@@ -6929,12 +6929,6 @@ pre {
   display: -moz-box /* OLD - Firefox 19- (buggy but mostly works) */;
   display: none !important;
 }
-.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
-  left: -66px !important;
-}
-.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
-  left: 0px !important;
-}
 p,
 input,
 pre>span,
@@ -7387,7 +7381,7 @@ ul.list-v.rightmenu li.music .nav.volume .aplayer-volume-bar .aplayer-volume {
   :root:not([color-scheme]) svg.iconfont,
   :root:not([color-scheme]) img,
   :root:not([color-scheme]) .lazyload {
-    filter: brightness(70%) !important;
+    filter: brightness(60%) !important;
   }
   :root:not([color-scheme]) .widget.blogger .content .social-wrapper a.social:hover {
     background: var(--color-card);
@@ -7476,7 +7470,7 @@ ul.list-v.rightmenu li.music .nav.volume .aplayer-volume-bar .aplayer-volume {
     background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(33,33,33,0.8));
   }
   :root:not([color-scheme]) .aplayer-pic {
-    filter: brightness(70%);
+    filter: brightness(60%);
   }
   :root:not([color-scheme]) .aplayer .aplayer-list ol li {
     border-top: 1px solid var(--color-card);
@@ -7505,7 +7499,7 @@ ul.list-v.rightmenu li.music .nav.volume .aplayer-volume-bar .aplayer-volume {
 [color-scheme='dark'] svg.iconfont,
 [color-scheme='dark'] img,
 [color-scheme='dark'] .lazyload {
-  filter: brightness(70%) !important;
+  filter: brightness(60%) !important;
 }
 [color-scheme='dark'] .widget.blogger .content .social-wrapper a.social:hover {
   background: var(--color-card);
@@ -7594,7 +7588,7 @@ ul.list-v.rightmenu li.music .nav.volume .aplayer-volume-bar .aplayer-volume {
   background: linear-gradient(180deg, rgba(0,0,0,0) 0, rgba(33,33,33,0.8));
 }
 [color-scheme='dark'] .aplayer-pic {
-  filter: brightness(70%);
+  filter: brightness(60%);
 }
 [color-scheme='dark'] .aplayer .aplayer-list ol li {
   border-top: 1px solid var(--color-card);

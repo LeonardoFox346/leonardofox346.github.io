@@ -864,7 +864,7 @@ button {
     --color-copyright-bkg: #21252b;
   }
   :root:not([color-scheme]) img {
-    filter: brightness(70%) !important;
+    filter: brightness(60%) !important;
   }
   :root:not([color-scheme]) .blur {
     background: rgba(34,34,34,0.9) !important;
@@ -936,7 +936,7 @@ button {
   --color-copyright-bkg: #21252b;
 }
 [color-scheme='dark'] img {
-  filter: brightness(70%) !important;
+  filter: brightness(60%) !important;
 }
 [color-scheme='dark'] .blur {
   background: rgba(34,34,34,0.9) !important;
@@ -1910,7 +1910,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1752654679173),
+    lastupdate: new Date(1752747248010),
     sidebar: {
       for_page: ["blogger","category","music","tagcloud","webinfo","repos","lastupdate"],
       for_post: ["toc"],
@@ -2661,7 +2661,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
                 <li>
                   <a class="menuitem flat-box">
-                    <i class='fa-solid fa-compact-disc fa-fw music'></i>背景音乐
+                    <i class='fa-solid fa-compact-disc fa-fw music'></i>全局音乐
                   </a>
                   <ul class="list-v">
                     <li>
@@ -2671,7 +2671,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <meting-js
       theme='#1BCDFC'
-      autoplay='true'
+      autoplay='false'
       volume='0.2'
       loop='all'
       order='list'
@@ -2680,7 +2680,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       server='netease'
       type='playlist'
       id='13981921635'
-      list-folded='true'>
+      list-folded='false'>
     </meting-js>
   
 
@@ -3099,7 +3099,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <!-- see: /layout/_partial/scripts/_ctrl/coverCtrl.ejs -->
       <div id="none" class='cover-wrapper post dock' style="display: none;">
         
-  <div class='cover-bg lazyload placeholder' data-bg="https://s21.ax1x.com/2025/07/16/pV1om3d.jpg"></div>
+  <div class='cover-bg lazyload placeholder' data-bg="https://s21.ax1x.com/2025/07/17/pV3uIje.jpg"></div>
 
 <div class='cover-body'>
   <div class='top'>
@@ -3110,7 +3110,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       <p class="title">網名346のBlog（预览体验）</p>
     
     
-      <p class="subtitle">版本号：1.7.6Pre（优化与新建页面中）</p>
+      <p class="subtitle">版本号：1.8.0.1Pre（正式版马上就好....）</p>
     
   </div>
   <div class='bottom'>
@@ -3122,7 +3122,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
               
               active-action="action-home">
-              <img src='https://s21.ax1x.com/2025/07/13/pVl4mRI.png'><p>主页<p>这是家</p>
+              <img src='https://s21.ax1x.com/2025/07/13/pVl4mRI.png'><p>主页<p>Home</p>
             </a>
           
             <a href="/archives/"
@@ -3151,13 +3151,6 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
               
               active-action="action-about">
               <img src='https://s21.ax1x.com/2025/07/12/pVlldDH.png'><p>346的<p>设定档</p>
-            </a>
-          
-            <a target="_blank" rel="noopener" href="https://qm.qq.com/q/Rbn3nYSscQ"
-              
-              
-              active-action="action-https:qmqqcomqRbn3nYSscQ">
-              <img src='https://s21.ax1x.com/2025/07/13/pVlgwLQ.png'><p>Bug<p>反馈</p>
             </a>
           
         
@@ -3407,6 +3400,17 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
     <div class="prev-next">
+      
+        <a class='prev' href='/2025/07/17/1-8-0-1PreUpdate/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>网页1.8.0.1Pre更新</p>
+          <p class='content'>1.8.0.1Pre更新内容加我好友页现已制作完成 正式投入使用 各位可以直接戳图标来加我好友了
+
+是不是感觉特别方便？鼠标放上去还有上浮效果
+
+深色效果目前还没有完全覆盖（我故意的）
+
+dis...</p>
+        </a>
       
       
         <a class='next' href='/2025/07/16/1-7-5PreUpdate/'>
@@ -4420,6 +4424,44 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 
 <!-- pjax 标签必须存在于所有页面 否则 pjax error -->
 <pjax>
+
+      
+
+
+  <div id="snackbar"></div>
+  <script>
+    function Snackbar(){
+      document.getElementById("snackbar").innerHTML=`<div class='snackbar-wrap' theme='warning'>
+      <div class="snackbar-content">
+        <div class='title'><p>这是一份过期文档</p>
+</div>
+        <div class='message'><p>这份文档的内容已过期，请查看最新文档</p>
+</div>
+        
+          <div class="action">
+          
+            
+              <a href='/archives/'>
+                在此处查找新的文档
+              </a>
+            
+          
+          </div>
+        
+      </div>
+    </div>`
+    }
+  </script>
+
+
+<script>
+
+  Snackbar()
+
+</script>
+
+
+
 
 </pjax>
 
