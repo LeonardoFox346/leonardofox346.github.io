@@ -34,19 +34,19 @@
 
   <!-- feed -->
   <!-- 页面元数据 -->
-  <title>网页更新历史记录 - 莱昂纳多的实验记录</title>
+  <title>网页更新历史记录 - Leonardo's Lab Report</title>
   <meta name="keywords" content="开发,web,Blog">
-  <meta desc name="description" content="Blog - NameAlpha346 - 莱昂纳多的实验记录">
+  <meta desc name="description" content="Blog - NameAlpha346 - Leonardo's Lab Report">
   
 <meta property="og:type" content="article">
 <meta property="og:title" content="网页更新历史记录">
 <meta property="og:url" content="http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/index.html">
-<meta property="og:site_name" content="莱昂纳多的实验记录">
+<meta property="og:site_name" content="Leonardo&#39;s Lab Report">
 <meta property="og:description" content="这是我们如何走来的用来记录网页的发展进程 0.9.7（DEV.） UpdateTime: 2025-07-13 16:37:24Debugtittle：提示 tags: - 开发 - web 维护: NameAlpha346 版本代号图片(LocalHost内测)  版本说明 第一个初具雏形的网页主页与文章界面已可打开 但文章下面的分享和评论区目前还是坏的 暂时不要使用！ 1.0.0（Dev-Pu">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2025-07-23T07:07:21.000Z">
-<meta property="article:modified_time" content="2025-07-23T08:12:55.396Z">
+<meta property="article:modified_time" content="2025-07-24T12:23:29.226Z">
 <meta property="article:author" content="NameAlpha346">
 <meta property="article:tag" content="开发">
 <meta property="article:tag" content="web">
@@ -786,50 +786,15 @@ button {
 .cover-wrapper.focus .menu .list-h a:hover {
   background: var(--color-card);
 }
-.cover-wrapper.dock .top {
-  margin-bottom: 48px;
+.cover-wrapper.featured .menu .list-h {
+  margin: -2px;
 }
-.cover-wrapper.dock .menu {
+.cover-wrapper.featured .menu .list-h a {
+  margin: 2px;
   background: rgba(255,255,255,0.5);
-  position: absolute;
-  bottom: 0;
-  max-width: 100%;
-}
-.cover-wrapper.dock .menu .list-h {
-  flex-wrap: nowrap;
-  -webkit-flex-wrap: nowrap;
-  -khtml-flex-wrap: nowrap;
-  -moz-flex-wrap: nowrap;
-  -o-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  margin: 4px;
-}
-.cover-wrapper.dock .menu .list-h a+a {
-  margin-left: 4px;
-}
-@media screen and (max-width: 500px) {
-  .cover-wrapper.dock .menu .list-h {
-    overflow-x: scroll;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar {
-    height: 0;
-    width: 0;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-track-piece {
-    background: transparent;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-thumb {
-    background: #44d7b6;
-    cursor: pointer;
-    border-radius: 0;
-    -webkit-border-radius: 0;
-  }
-  .cover-wrapper.dock .menu .list-h::-webkit-scrollbar-thumb:hover {
-    background: #ff5722;
-  }
 }
 @supports (backdrop-filter: blur(20px)) {
-  .cover-wrapper.dock .menu {
+  .cover-wrapper.featured .menu .list-h a {
     background: rgba(255,255,255,0.5);
     backdrop-filter: saturate(200%) blur(20px);
   }
@@ -1910,7 +1875,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1753353320412),
+    lastupdate: new Date(1753361449198),
     sidebar: {
       for_page: ["blogger","feedback","category","music","tagcloud","webinfo","repos","lastupdate"],
       for_post: ["toc"],
@@ -3099,18 +3064,18 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     
       <!-- see: /layout/_partial/scripts/_ctrl/coverCtrl.ejs -->
-      <div id="none" class='cover-wrapper post dock' style="display: none;">
+      <div id="none" class='cover-wrapper post featured' style="display: none;">
         
-  <div class='cover-bg lazyload placeholder' data-bg="https://s21.ax1x.com/2025/07/22/pVGEs0I.jpg"></div>
+  <div class='cover-bg lazyload placeholder' data-bg="https://s21.ax1x.com/2025/07/24/pVJk3Se.jpg"></div>
 
 <div class='cover-body'>
   <div class='top'>
     
     
-      <p class="title">LeonardoFox</p>
+      <p class="title">Leonardo_Fox</p>
     
     
-      <p class="subtitle">一只想要走遍世界的小狐狸<br>Version 1.9.9.1（部分页面测试中）</p>
+      <p class="subtitle">DEBUG THE WORLD</p>
     
   </div>
   <div class='bottom'>
@@ -3172,10 +3137,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md shadow floatable blur article-type-post" id="post" itemscope itemprop="blogPost">
   <link itemprop="mainEntityOfPage" href="http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="莱昂纳多的实验记录">
+    <meta itemprop="name" content="Leonardo's Lab Report">
   </span>
   <span hidden itemprop="post" itemscope itemtype="http://schema.org/Post">
-    <meta itemprop="name" content="莱昂纳多的实验记录">
+    <meta itemprop="name" content="Leonardo's Lab Report">
     <meta itemprop="description" content="Blog">
   </span>
   
@@ -3686,6 +3651,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
                 <div class="license-meta-text">2025年7月23日</div>
               </div>
               
+              <div class="license-meta-item">
+                <div class="license-meta-title">更新于</div>
+                <div class="license-meta-text">2025年7月24日</div>
+              </div>
+              
               
               <div class="license-meta-item">
                 <div class="license-meta-title">许可协议</div>
@@ -3708,10 +3678,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-07-23T16:12:55+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2025-07-24T20:23:29+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：2025年7月23日</p>
+    <p>更新于：2025年7月24日</p>
   </a>
 </div>
 
@@ -3734,7 +3704,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/&title=网页更新历史记录 - 莱昂纳多的实验记录&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/&title=网页更新历史记录 - Leonardo's Lab Report&summary="
           
           >
           
@@ -3746,7 +3716,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/&title=网页更新历史记录 - 莱昂纳多的实验记录&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/&title=网页更新历史记录 - Leonardo's Lab Report&summary="
           
           >
           
@@ -3758,7 +3728,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/&title=网页更新历史记录 - 莱昂纳多的实验记录&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/&title=网页更新历史记录 - Leonardo's Lab Report&summary="
           
           >
           
@@ -3780,7 +3750,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-telegram" title="" rel="external nofollow noopener noreferrer noopener"
           
-            target="_blank" href="https://t.me/share/url?url=http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/&text=网页更新历史记录 - 莱昂纳多的实验记录"
+            target="_blank" href="https://t.me/share/url?url=http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/&text=网页更新历史记录 - Leonardo's Lab Report"
           
           >
           
@@ -3810,6 +3780,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
   
     <div class="prev-next">
+      
+        <a class='prev' href='/2025/07/24/2-0-0%E6%AD%A3%E5%BC%8F%E7%89%88%E6%9D%A5%E4%BA%86/'>
+          <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>2.0.0正式版来了</p>
+          <p class='content'>你知道吗 历经开发时长12天的Leonardo实验报告博客终于完成了主要开发内部基本没有问题了 如果出现问题我会用即时热补丁覆盖修复的所有页面均已制作完成 快去体验吧！</p>
+        </a>
       
       
         <a class='next' href='/2025/07/11/hello-world/'>
@@ -4828,32 +4803,6 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 <!-- pjax 标签必须存在于所有页面 否则 pjax error -->
 <pjax>
 
-      
-
-
-  
-      <script>
-        function Snackbar(){
-          
-            VolantisApp.message(
-              '这是一篇受版权保护的文章',
-              '版权所有 严禁转载<br>' + "<a href='/copyright'>在此处查看这篇文章版权声明</a>"
-            );
-          
-        }
-      </script>
-  
-
-
-<script>
-
-  Snackbar()
-
-</script>
-
-
-
-
 </pjax>
 
 <script>
@@ -4985,7 +4934,7 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"莱昂纳多的实验记录","url":"http://jacklu346.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"NameAlpha346","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://jacklu346.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Blog"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://jacklu346.github.io/","name":"莱昂纳多的实验记录"}},{"@type":"ListItem","position":3,"item":{"@id":"http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/","name":"网页更新历史记录"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"莱昂纳多的实验记录","url":"http://jacklu346.github.io/","keywords":"Blog","description":"Blog","author":{"@type":"Person","name":"NameAlpha346","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://jacklu346.github.io/","description":"Blog"},"publisher":{"@type":"Organization","name":"莱昂纳多的实验记录","url":"http://jacklu346.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"http://jacklu346.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"网页更新历史记录","description":"Blog","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/"},"author":{"@type":"Person","name":"NameAlpha346","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://jacklu346.github.io/"},"publisher":{"@type":"Organization","name":"莱昂纳多的实验记录","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/","wordCount":0,"datePublished":"2025-07-23T07:07:21.000Z","dateModified":"2025-07-23T08:12:55.396Z","keywords":"开发,web","image":{"@type":"ImageObject","url":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-wallpaper/abstract/41F215B9-261F-48B4-80B5-4E86E165259E.jpeg","width":1024,"height":768}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"Leonardo's Lab Report","url":"http://jacklu346.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"NameAlpha346","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://jacklu346.github.io/","sameAs":["https://github.com/volantis-x"],"description":"Blog"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://jacklu346.github.io/","name":"Leonardo's Lab Report"}},{"@type":"ListItem","position":3,"item":{"@id":"http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/","name":"网页更新历史记录"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"Leonardo's Lab Report","url":"http://jacklu346.github.io/","keywords":"Blog","description":"Blog","author":{"@type":"Person","name":"NameAlpha346","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://jacklu346.github.io/","description":"Blog"},"publisher":{"@type":"Organization","name":"Leonardo's Lab Report","url":"http://jacklu346.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"http://jacklu346.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"网页更新历史记录","description":"Blog","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/"},"author":{"@type":"Person","name":"NameAlpha346","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://jacklu346.github.io/"},"publisher":{"@type":"Organization","name":"Leonardo's Lab Report","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"http://jacklu346.github.io/2025/07/23/WebHistoryUpdate/","wordCount":0,"datePublished":"2025-07-23T07:07:21.000Z","dateModified":"2025-07-24T12:23:29.226Z","keywords":"开发,web","image":{"@type":"ImageObject","url":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-wallpaper/abstract/41F215B9-261F-48B4-80B5-4E86E165259E.jpeg","width":1024,"height":768}}]</script>
 
 
 
