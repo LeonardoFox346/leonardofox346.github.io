@@ -227,18 +227,18 @@ table:not([class]) {
   vertical-align: text-top;
 }
 table:not([class]) th {
-  background-color: #353535;
+  background-color: #f1f1f1;
 }
 table:not([class]) td,
 table:not([class]) th {
   padding: 8px 16px;
-  border: 2px solid #353535;
+  border: 2px solid #f1f1f1;
   line-height: 1.5;
   font-size: 90%;
 }
 table:not([class]) tr {
   word-break: keep-all;
-  background-color: #424242;
+  background-color: #fefefe;
   transition: all 0.28s ease;
   -webkit-transition: all 0.28s ease;
   -khtml-transition: all 0.28s ease;
@@ -247,7 +247,7 @@ table:not([class]) tr {
   -ms-transition: all 0.28s ease;
 }
 table:not([class]) tr:hover {
-  background-color: #353535;
+  background-color: #f1f1f1;
 }
 td,
 th {
@@ -594,7 +594,7 @@ article#tag .all-tags ul li span:before {
   background: var(--color-codeblock);
   font-size: 0.8125rem;
   font-family: Menlo, UbuntuMono, Monaco, monospace, courier, sans-serif;
-  border: 1px solid #262a2c;
+  border: 1px solid #ffebcb;
   padding: 16px;
   border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -3417,7 +3417,7 @@ img.lazyload:not(.placeholder).loaded {
     -webkit-border-radius: 4px;
     box-shadow: 0 4px 8px 0px rgba(0,0,0,0.1);
     -webkit-box-shadow: 0 4px 8px 0px rgba(0,0,0,0.1);
-    border: 1px solid #2b2b2b;
+    border: 1px solid #e7e7e7;
     visibility: hidden;
     transform: scale(0, 0);
     -webkit-transform: scale(0, 0);
@@ -5816,9 +5816,9 @@ div.tabs .tab-content .tab-pane > .note:last-child {
 .article kbd {
   border-radius: 4px;
   -webkit-border-radius: 4px;
-  border: 1px solid #3c3c3c;
+  border: 1px solid #d2d2d2;
   border-bottom-width: 2px;
-  background: #9c9c9c;
+  background: #fafafa;
   padding-left: 4px;
   padding-right: 4px;
 }
@@ -5919,7 +5919,7 @@ div.timenode .body >*:last-child {
   margin-bottom: 0.25em;
 }
 div.timenode .body .highlight {
-  border: 1px solid #3b3b3b;
+  border: 1px solid #e4e4e4;
 }
 div.timenode:hover .meta {
   color: var(--color-text);
@@ -6765,17 +6765,17 @@ pre {
   -moz-transition: all 0.28s ease;
   -o-transition: all 0.28s ease;
   -ms-transition: all 0.28s ease;
-  background: #313739;
+  background: #ffeed2;
 }
 .highlight:hover .gutter {
-  background: #282d2e;
+  background: #ffedd0;
 }
 .highlight figcaption {
   font-size: 13px;
   position: sticky;
   left: 0;
   padding: 4px 8px 4px 8px;
-  background: #373737;
+  background: #eaeaea;
   border-top-left-radius: calc(4px - 1px);
   border-top-right-radius: calc(4px - 1px);
 }
@@ -6834,7 +6834,7 @@ pre {
   position: sticky;
   left: 0;
   z-index: 1;
-  background: #2d2d2d;
+  background: #e9e9e9;
 }
 .highlight >table .gutter pre {
   color: var(--color-meta);
@@ -7168,7 +7168,7 @@ ul.list-v.rightmenu li.music .nav.volume .aplayer-volume-bar {
   position: relative;
   height: 8px;
   width: 100%;
-  background: #3a3a3a;
+  background: #ededed;
   border-radius: 32px;
   -webkit-border-radius: 32px;
   overflow: hidden;
