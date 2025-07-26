@@ -1,0 +1,87 @@
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<title>余烬咖啡馆 · 路由霓虹</title>
+<style>
+  :root{ --oneplus-red:#eb0028; }
+
+html,body{margin:0;height:100%;background:#000;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--oneplus-red);overflow:hidden}
+
+/* 霓虹灯条 */
+.neon-stripes{
+position:absolute;top:0;left:0;width:100%;height:100%;
+display:flex;flex-direction:column;justify-content:space-evenly;
+pointer-events:none;
+}
+.stripe{
+height:4px;width:100%;background:#000;
+animation:neon-flick 4s steps(1) forwards;
+}
+.stripe:nth-child(1){animation-delay:0s;  background:#0047ab;}   /* 钴蓝 */
+.stripe:nth-child(2){animation-delay:1s;  background:#39ff14;}   /* 毒绿 */
+.stripe:nth-child(3){animation-delay:2s;  background:#e60026;}   /* 血浆红 */
+.stripe:nth-child(4){animation-delay:3s;  background:#b8860b;}   /* 暗金 */
+
+@keyframes neon-flick{
+0%{opacity:0;}
+10%{opacity:1;}
+100%{opacity:0;}
+}
+
+/* 内容区 */
+.frame{display:flex;flex-direction:column;align-items:center;z-index:2}
+
+/* 头像与描述 */
+.avatar{width:180px;height:180px;border-radius:50%;object-fit:cover;border:2px solid var(--oneplus-red)}
+.caption{margin-top:12px;font-size:1rem;text-align:center;line-height:1.6}
+.tail{
+position:absolute;bottom:-60px;width:200px;height:40px;
+background:url('https://s21.ax1x.com/2025/07/26/pVJ2tRs.png') no-repeat center/contain;
+animation:swipe 2.5s ease-in-out infinite;
+}
+@keyframes swipe{
+0%{transform:translateX(-120%) rotate(-20deg);opacity:0}
+50%{transform:translateX(0) rotate(0deg);opacity:1}
+100%{transform:translateX(120%) rotate(20deg);opacity:0}
+}
+
+/* 状态行 */
+.status{margin-top:10px;font-size:0.9rem;letter-spacing:.5px}
+</style>
+</head>
+<body>
+
+  <!-- 霓虹灯撕裂 -->
+  <div class="neon-stripes">
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+  </div>
+
+  <!-- 居中内容 -->
+  <div class="frame">
+    <!-- 半身像：把 src 换成你的图床链接 -->
+    <img class="avatar lazyload" src=" https://s21.ax1x.com/2025/07/24/pVJkkz4.png " class="lazyload" data-srcset=" https://s21.ax1x.com/2025/07/24/pVJkkz4.png " srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Leonardo·F">
+
+    <div class="caption">
+      米黄色大耳狐，戴着一个单片眼镜；<br>
+      镜片反光遮住了瞳孔，只能看见嘴角永恒的 15° 笑意。<br>
+      页面3秒后会自动跳转，太难实现原文中的效果了 大家就当走个过场吧
+    </div>
+
+    <div class="status" id="status">
+      barista：Leonardo·F ／ status：online
+    </div>
+
+    <!-- 尾巴残影 -->
+    <div class="tail"></div>
+  </div>
+
+  <!-- 3 秒后自动跳转 -->
+  <script>
+    setTimeout(()=>location.href='/story/3a2',3000);
+  </script>
+</body>
+</html>

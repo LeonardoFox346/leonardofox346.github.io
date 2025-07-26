@@ -1,0 +1,92 @@
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <title>余烬咖啡厅 · 确认暗号</title>
+    <style>
+        :root{
+            --hack-green:#00ff41;
+            --oneplus-red:#eb0028;
+        }
+
+        html,body{
+            margin:0;
+            height:100%;
+            background:#000;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-family:"SF Mono","Consolas","PingFang SC","Microsoft YaHei",monospace;
+            color:var(--hack-green);
+        }
+
+        .card{
+            text-align:center;
+            max-width:480px;
+            padding:2rem;
+        }
+
+        h1{
+            font-size:2.5rem;
+            margin-bottom:1rem;
+            letter-spacing:2px;
+        }
+
+        p{
+            font-size:1.2rem;
+            line-height:1.8;
+            margin:.5rem 0;
+        }
+
+        .input-wrapper{
+            position:relative;
+            margin:2rem 0 1.5rem;
+            display:inline-block;
+        }
+
+        input[type="text"]{
+            width:320px;
+            padding:12px 18px;
+            font-size:1.2rem;
+            font-family:inherit;
+            color:var(--oneplus-red);          /* 一加红字体 */
+            background:#000;
+            border:1px solid var(--hack-green);
+            border-radius:4px;
+            outline:none;
+            caret-color:transparent;           /* 隐藏光标 */
+            box-shadow:0 0 12px var(--hack-green);
+        }
+
+        .confirm-btn{
+            padding:12px 44px;
+            font-size:1.2rem;
+            font-weight:bold;
+            background:var(--oneplus-red);
+            color:#000;
+            border:none;
+            border-radius:4px;
+            cursor:pointer;
+            transition:background .3s;
+        }
+
+        .confirm-btn:hover{background:#ff0a38;}
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>余烬咖啡厅</h1>
+    <p>名字已登记，访客编号 15。</p>
+    <p>咖啡正在烘焙，路线正在打开。</p>
+    <p>请确认：黑咖、双份、不加糖。</p>
+    <p>最后一句话是暗号——确认你是否真的准备好。</p>
+
+    <div class="input-wrapper">
+        <input type="text" id="code" value="Double shot, no sugar." readonly>
+    </div>
+
+    <button class="confirm-btn" onclick="location.href='/story/3a3'">确认</button>
+</div>
+</body>
+</html>
