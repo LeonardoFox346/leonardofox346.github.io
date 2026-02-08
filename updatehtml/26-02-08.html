@@ -1,0 +1,1823 @@
+
+<!-- 编码修复：强制浏览器使用UTF-8解析 -->
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+<style>
+  /* 强制显示图片，覆盖懒加载样式 */
+  img[data-srcset], img[data-src] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+  }
+  /* 隐藏懒加载占位符 */
+  img[src^="data:image/gif;base64"] {
+    background: transparent !important;
+  }
+</style>
+<style>
+  /* ========================================
+     基础样式重置
+     ======================================== */
+  .apple-page-container {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    color: #1d1d1f;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  .apple-page-container * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  .apple-page-container a { text-decoration: none; color: inherit; }
+  .apple-page-container img { max-width: 100%; height: auto; display: block; }
+  .apple-page-container button { font-family: inherit; }
+
+  /* 隐藏Hexo页面标题 */
+  .apple-page-container ~ h1,
+  .apple-page-container ~ .page-title,
+  .page-header, .article-header { display: none !important; }
+
+  /* 全屏容器 */
+  .apple-page-container {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    position: relative;
+  }
+
+
+  /* ========================================
+     深色模式样式
+     ======================================== */
+
+  /* 深色模式基础变量 */
+  body.dark-mode {
+    --bg-primary: #000000;
+    --bg-secondary: #1c1c1e;
+    --bg-tertiary: #2c2c2e;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.85);
+    --text-tertiary: rgba(255, 255, 255, 0.6);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --card-bg: #1c1c1e;
+    --hover-bg: #2c2c2e;
+  }
+
+  /* 深色模式切换按钮样式 */
+  .dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dark-mode-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .apple-nav.scrolled .dark-mode-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  /* 深色模式 - 页面背景 */
+  body.dark-mode .apple-timeline {
+    background: linear-gradient(to bottom, #000000 0%, #1c1c1e 100%);
+  }
+
+  body.dark-mode .apple-gallery {
+    background: #000000;
+  }
+
+  body.dark-mode .apple-skills {
+    background: #1c1c1e;
+  }
+
+  body.dark-mode .apple-features {
+    background: #000000;
+  }
+
+  /* 深色模式 - 文字颜色 */
+  body.dark-mode .apple-section-title {
+    color: #ffffff;
+  }
+
+  body.dark-mode .apple-section-desc {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  body.dark-mode .apple-timeline-title {
+    color: #ffffff;
+  }
+
+  body.dark-mode .apple-timeline-text {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  body.dark-mode .apple-timeline-card {
+    background: #1c1c1e;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  body.dark-mode .apple-timeline-card:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  /* 深色模式 - 技能区域 */
+  body.dark-mode .apple-skill-item {
+    background: #1c1c1e;
+  }
+
+  body.dark-mode .apple-skill-name {
+    color: #ffffff;
+  }
+
+  body.dark-mode .apple-skill-bar {
+    background: #3a3a3c;
+  }
+
+  /* 深色模式 - 功能卡片 */
+  body.dark-mode .apple-feature-card {
+    background: linear-gradient(145deg, #1c1c1e 0%, #2c2c2e 100%);
+    border-color: rgba(255, 255, 255, 0.05);
+  }
+
+  body.dark-mode .apple-feature-title {
+    color: #ffffff;
+  }
+
+  body.dark-mode .apple-feature-desc {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* 深色模式 - 按钮 */
+  body.dark-mode .apple-btn-primary {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  body.dark-mode .apple-btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  body.dark-mode .apple-btn-dark {
+    background: #ffffff;
+    color: #000000 !important;
+  }
+
+  body.dark-mode .apple-btn-dark:hover {
+    background: #e5e5e5;
+    color: #000000 !important;
+  }
+
+  /* 深色模式 - 导航栏滚动后 */
+  body.dark-mode .apple-nav.scrolled {
+    background: rgba(0, 0, 0, 0.85);
+    box-shadow: 0 1px 3px rgba(255, 255, 255, 0.05);
+  }
+
+  body.dark-mode .apple-nav.scrolled .apple-nav-logo,
+  body.dark-mode .apple-nav.scrolled .apple-nav-link {
+    color: #ffffff;
+  }
+
+  /* 深色模式 - 页脚 */
+  body.dark-mode .apple-footer-title {
+    color: #ffffff;
+  }
+
+  body.dark-mode .apple-footer-desc {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  body.dark-mode .apple-footer-copyright {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  body.dark-mode .apple-footer-badge span {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* 深色模式 - 画廊覆盖层 */
+  body.dark-mode .apple-gallery-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+  }
+
+  /* 深色模式 - 时间线 */
+  body.dark-mode .apple-timeline-line {
+    opacity: 0.5;
+  }
+
+  /* 深色模式 - CTA区域 */
+  body.dark-mode .apple-features-cta p {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* 深色模式切换图标 */
+  body.dark-mode .sun-icon {
+    display: none !important;
+  }
+
+  body.dark-mode .moon-icon {
+    display: block !important;
+  }
+
+  body:not(.dark-mode) .sun-icon {
+    display: block !important;
+  }
+
+  body:not(.dark-mode) .moon-icon {
+    display: none !important;
+  }
+
+  /* ========================================
+     导航栏
+     ======================================== */
+  .apple-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    background: transparent;
+  }
+
+  .apple-nav.scrolled {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .apple-nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  @media (min-width: 1024px) { .apple-nav-inner { height: 72px; } }
+
+  .apple-nav-logo {
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    transition: all 0.3s ease;
+    letter-spacing: -0.02em;
+  }
+
+  .apple-nav.scrolled .apple-nav-logo { color: #1d1d1f; }
+
+  .apple-nav-links {
+    display: none;
+    align-items: center;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) { .apple-nav-links { display: flex; } }
+
+  .apple-nav-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .apple-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s ease;
+    border-radius: 1px;
+  }
+
+  .apple-nav-link:hover::after { width: 100%; }
+  .apple-nav.scrolled .apple-nav-link { color: #424245; }
+
+  .apple-nav-btn {
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+  }
+
+  .apple-nav-btn-light {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    backdrop-filter: blur(10px);
+  }
+
+  .apple-nav-btn-light:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .apple-nav.scrolled .apple-nav-btn-light {
+    background: #0071e3;
+    color: #fff;
+  }
+
+  .apple-nav.scrolled .apple-nav-btn-light:hover { background: #0077ed; }
+
+  .apple-nav-menu-btn {
+    display: flex;
+    padding: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    transition: color 0.3s ease;
+  }
+
+  .apple-nav.scrolled .apple-nav-menu-btn { color: #1d1d1f; }
+  @media (min-width: 768px) { .apple-nav-menu-btn { display: none; } }
+
+  .apple-nav-mobile-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    padding: 16px 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.3s ease;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .apple-nav-mobile-menu.active { display: block; }
+
+  .apple-nav-mobile-link {
+    display: block;
+    padding: 14px 0;
+    color: #1d1d1f;
+    font-weight: 500;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+  }
+
+  .apple-nav-mobile-link:hover { color: #0071e3; padding-left: 8px; }
+
+  .apple-nav-mobile-link:last-of-type {
+    border-bottom: none;
+    margin-top: 12px;
+    padding: 14px 20px;
+    background: #0071e3;
+    color: #fff;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .apple-nav-mobile-link:last-of-type:hover {
+    background: #0077ed;
+    padding-left: 20px;
+  }
+
+  /* ========================================
+     Hero 区域
+     ======================================== */
+  .apple-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .apple-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .apple-hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: heroZoom 20s ease infinite alternate;
+  }
+
+  @keyframes heroZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+  }
+
+  .apple-hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
+  }
+
+  .apple-hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 24px;
+    max-width: 900px;
+  }
+
+  .apple-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .apple-hero-badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #34c759;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .apple-hero-title {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  }
+
+  @media (min-width: 640px) { .apple-hero-title { font-size: 72px; } }
+  @media (min-width: 1024px) { .apple-hero-title { font-size: 96px; } }
+
+  .apple-hero-subtitle {
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+  }
+
+  @media (min-width: 640px) { .apple-hero-subtitle { font-size: 28px; } }
+
+  .apple-hero-desc {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 560px;
+    margin: 0 auto 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  }
+
+  .apple-hero-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  }
+
+  @media (min-width: 640px) { .apple-hero-buttons { flex-direction: row; } }
+
+  .apple-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 32px;
+    border-radius: 9999px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: none;
+    cursor: pointer;
+  }
+
+  .apple-btn:hover { transform: translateY(-2px) scale(1.02); }
+  .apple-btn:active { transform: translateY(0) scale(0.98); }
+
+  .apple-btn-primary {
+    background: #fff;
+    color: #1d1d1f;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .apple-btn-primary:hover {
+    background: #f5f5f7;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .apple-btn-secondary {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .apple-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .apple-hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 0.6s forwards;
+  }
+
+  .apple-hero-scroll:hover { color: #fff; }
+  .apple-hero-scroll span { font-size: 12px; margin-bottom: 8px; letter-spacing: 0.05em; }
+  .apple-hero-scroll svg { width: 24px; height: 24px; animation: bounce 2s infinite; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+  }
+
+  /* ========================================
+     时间线区域
+     ======================================== */
+  .apple-timeline {
+    padding: 120px 24px;
+    background: linear-gradient(to bottom, #fff 0%, #f5f5f7 100%);
+  }
+
+  @media (min-width: 1024px) { .apple-timeline { padding: 160px 24px; } }
+
+  .apple-section-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .apple-section-label {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0071e3;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .apple-section-label.visible { opacity: 1; transform: translateY(0); }
+
+  .apple-section-title {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #1d1d1f;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+  }
+
+  @media (min-width: 640px) { .apple-section-title { font-size: 52px; } }
+  @media (min-width: 1024px) { .apple-section-title { font-size: 64px; } }
+
+  .apple-section-title.visible { opacity: 1; transform: translateY(0); }
+
+  .apple-section-desc {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #6e6e73;
+    max-width: 640px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  }
+
+  .apple-section-desc.visible { opacity: 1; transform: translateY(0); }
+
+  .apple-timeline-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .apple-timeline-line {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #0071e3, #af52de);
+    border-radius: 1px;
+  }
+
+  @media (min-width: 768px) { .apple-timeline-line { left: 50%; transform: translateX(-50%); } }
+
+  .apple-timeline-item {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 64px;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .apple-timeline-item.visible { opacity: 1; transform: translateX(0); }
+
+  @media (min-width: 768px) {
+    .apple-timeline-item:nth-child(odd) { flex-direction: row-reverse; padding-right: 50%; padding-left: 40px; }
+    .apple-timeline-item:nth-child(even) { padding-left: 50%; padding-right: 40px; }
+    .apple-timeline-item:nth-child(even) { transform: translateX(30px); }
+    .apple-timeline-item:nth-child(even).visible { transform: translateX(0); }
+  }
+
+  .apple-timeline-dot {
+    position: absolute;
+    left: 11px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 4px solid #0071e3;
+    border-radius: 50%;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+
+  .apple-footer-tittle {
+    color: #ffffff;
+  }
+
+  @media (min-width: 768px) { .apple-timeline-dot { left: 50%; transform: translateX(-50%); } }
+
+  .apple-timeline-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    margin-left: 48px;
+    flex: 1;
+    transition: all 0.3s ease;
+  }
+
+  @media (min-width: 768px) { .apple-timeline-card { margin-left: 0; } }
+
+  .apple-timeline-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .apple-timeline-date {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0071e3;
+    background: rgba(0, 113, 227, 0.1);
+    padding: 6px 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+
+  .apple-timeline-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-bottom: 8px;
+  }
+
+  .apple-timeline-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #6e6e73;
+  }
+
+  /* ========================================
+     学习图片画廊
+     ======================================== */
+  .apple-gallery {
+    padding: 120px 24px;
+    background: #fff;
+  }
+
+  @media (min-width: 1024px) { .apple-gallery { padding: 160px 24px; } }
+
+  .apple-gallery-grid {
+    display: grid;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 64px auto 0;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 640px) { .apple-gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) {
+    .apple-gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 280px);
+    }
+    .apple-gallery-item:first-child { grid-column: span 2; grid-row: span 2; }
+  }
+
+  .apple-gallery-item {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .apple-gallery-item.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+  .apple-gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .apple-gallery-item:hover img { transform: scale(1.08); }
+
+  .apple-gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .apple-gallery-item:hover .apple-gallery-overlay { opacity: 1; }
+
+  .apple-gallery-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .apple-gallery-desc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  /* ========================================
+     数据统计区域
+     ======================================== */
+  .apple-stats {
+    padding: 100px 24px;
+    background: linear-gradient(135deg, #0071e3 0%, #5856d6 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .apple-stats::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .apple-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) { .apple-stats-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .apple-stat-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .apple-stat-item.visible { opacity: 1; transform: translateY(0); }
+
+  .apple-stat-number {
+    font-size: 48px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (min-width: 768px) { .apple-stat-number { font-size: 64px; } }
+
+  .apple-stat-label {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+  }
+
+  /* ========================================
+     技能展示区域
+     ======================================== */
+  .apple-skills {
+    padding: 120px 24px;
+    background: #f5f5f7;
+  }
+
+  @media (min-width: 1024px) { .apple-skills { padding: 160px 24px; } }
+
+  .apple-skills-grid {
+    display: grid;
+    gap: 24px;
+    max-width: 1000px;
+    margin: 64px auto 0;
+  }
+
+  @media (min-width: 640px) { .apple-skills-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .apple-skill-item {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .apple-skill-item.visible { opacity: 1; transform: translateY(0); }
+
+  .apple-skill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .apple-skill-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1d1d1f;
+  }
+
+  .apple-skill-percent {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0071e3;
+  }
+
+  .apple-skill-bar {
+    height: 8px;
+    background: #e8e8ed;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .apple-skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #0071e3, #5856d6);
+    border-radius: 4px;
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ========================================
+     新功能展示区域
+     ======================================== */
+  .apple-features {
+    padding: 120px 24px;
+    background: #fff;
+  }
+
+  @media (min-width: 1024px) { .apple-features { padding: 160px 24px; } }
+
+  .apple-features-image-wrap {
+    max-width: 1200px;
+    margin: 64px auto;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .apple-features-image-wrap.visible { opacity: 1; transform: translateY(0); }
+
+  .apple-features-image {
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+  }
+
+  .apple-features-image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .apple-features-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 113, 227, 0.1) 0%, transparent 50%);
+  }
+
+  .apple-features-grid {
+    display: grid;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 640px) { .apple-features-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .apple-features-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
+
+  .apple-feature-card {
+    background: linear-gradient(145deg, #fff 0%, #f5f5f7 100%);
+    border-radius: 24px;
+    padding: 32px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .apple-feature-card.visible { opacity: 1; transform: translateY(0); }
+
+  .apple-feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  }
+
+  .apple-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--card-color) 0%, var(--card-color-light) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .apple-feature-card:hover::before { opacity: 1; }
+
+  .apple-feature-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    background: var(--icon-bg);
+    transition: all 0.3s ease;
+  }
+
+  .apple-feature-card:hover .apple-feature-icon {
+    transform: scale(1.1) rotate(-5deg);
+  }
+
+  .apple-feature-icon svg {
+    width: 28px;
+    height: 28px;
+    color: var(--icon-color);
+  }
+
+  .apple-feature-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-bottom: 10px;
+  }
+
+  .apple-feature-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #6e6e73;
+  }
+
+  .apple-features-cta {
+    text-align: center;
+    margin-top: 64px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s;
+  }
+
+  .apple-features-cta.visible { opacity: 1; transform: translateY(0); }
+
+  .apple-features-cta p {
+    color: #6e6e73;
+    margin-bottom: 24px;
+    font-size: 16px;
+  }
+
+  .apple-btn-dark {
+    background: #1d1d1f;
+    color: #ffffff !important;
+  }
+
+  .apple-btn-dark:hover {
+    background: #333;
+    color: #ffffff !important;
+  }
+
+  /* ========================================
+     Footer 区域
+     ======================================== */
+  .apple-footer {
+    position: relative;
+    padding: 120px 24px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 1024px) { .apple-footer { padding: 160px 24px; } }
+
+  .apple-footer-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .apple-footer-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .apple-footer-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+  }
+
+  .apple-footer-content {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .apple-footer-title {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (min-width: 640px) { .apple-footer-title { font-size: 52px; } }
+
+  .apple-footer-title.visible { opacity: 1; transform: translateY(0); }
+
+  .apple-footer-desc {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+  }
+
+  .apple-footer-desc.visible { opacity: 1; transform: translateY(0); }
+
+  .apple-footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 60px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  }
+
+  .apple-footer-social.visible { opacity: 1; transform: translateY(0); }
+
+  .apple-footer-social a {
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .apple-footer-social a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-4px);
+  }
+
+  .apple-footer-social svg { width: 22px; height: 22px; }
+
+  .apple-footer-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 40px;
+  }
+
+  .apple-footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  @media (min-width: 640px) {
+    .apple-footer-bottom {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .apple-footer-copyright {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.3s;
+  }
+
+  .apple-footer-copyright.visible { opacity: 1; }
+
+  .apple-footer-copyright svg {
+    width: 16px;
+    height: 16px;
+    color: #ff375f;
+    fill: #ff375f;
+    animation: heartbeat 1.5s ease infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  .apple-footer-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.4s;
+  }
+
+  .apple-footer-links.visible { opacity: 1; }
+
+  .apple-footer-links a {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+  }
+
+  .apple-footer-links a:hover { color: #fff; }
+
+  .apple-footer-top-btn {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.4s, background 0.3s ease, color 0.3s ease;
+  }
+
+  .apple-footer-top-btn.visible { opacity: 1; }
+
+  .apple-footer-top-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-4px);
+  }
+
+  .apple-footer-top-btn svg { width: 20px; height: 20px; }
+
+  .apple-footer-badge {
+    margin-top: 48px;
+    opacity: 0;
+    transition: opacity 0.7s ease 0.5s;
+  }
+
+  .apple-footer-badge.visible { opacity: 1; }
+
+  .apple-footer-badge span {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 9999px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+</style>
+
+<!-- ========================================
+     HTML 内容
+     ======================================== -->
+<div class="apple-page-container">
+
+  <!-- 导航栏 -->
+  <nav class="apple-nav" id="appleNav">
+    <div class="apple-nav-inner">
+      <a href="/" class="apple-nav-logo">Leonardo's Blog</a>
+
+      <div class="apple-nav-links">
+        <a href="#timeline" class="apple-nav-link">历程</a>
+        <a href="#gallery" class="apple-nav-link">历程</a>
+        <a href="#skills" class="apple-nav-link">技能</a>
+        <a href="#features" class="apple-nav-link">新功能</a>
+        <button class="apple-nav-link dark-mode-toggle" id="darkModeToggle" aria-label="切换深色模式">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" style="display:none" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </div>
+
+      <button class="apple-nav-menu-btn" id="menuBtn" aria-label="菜单">
+        <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg id="closeIcon" style="display:none" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="apple-nav-mobile-menu" id="mobileMenu">
+      <a href="#timeline" class="apple-nav-mobile-link">我的历程</a>
+      <a href="#gallery" class="apple-nav-mobile-link">时光</a>
+      <a href="#skills" class="apple-nav-mobile-link">技能提升</a>
+      <a href="#features" class="apple-nav-mobile-link">网页新功能</a>
+    </div>
+  </nav>
+
+  <!-- Hero 区域 -->
+  <section class="apple-hero">
+    <!-- 【图片替换 1/8】Hero背景图 - 建议尺寸：1920x1080 或更大 -->
+    <div class="apple-hero-bg">
+      <img src="https://s41.ax1x.com/2026/01/30/pZfKDAg.jpg" class="lazyload" data-srcset="https://s41.ax1x.com/2026/01/30/pZfKDAg.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="背景" id="HERO_BG_IMG">
+    </div>
+
+    <div class="apple-hero-content">
+      <span class="apple-hero-badge">Welcome Back</span>
+      <h1 class="apple-hero-title">好久不见</h1>
+      <p class="apple-hero-subtitle">回来了，我们重新出发</p>
+      <p class="apple-hero-desc">这段时间，我在专注于学业和个人成长。
+      <p class="apple-hero-desc">现在，我准备好重新出发，与你分享更多。</p>
+
+      <div class="apple-hero-buttons">
+        <a href="#features" class="apple-btn apple-btn-primary">
+          了解新变化
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+        <a href="#timeline" class="apple-btn apple-btn-secondary">关于我去做了什么</a>
+      </div>
+    </div>
+
+    <a href="#timeline" class="apple-hero-scroll">
+      <span>向下滚动</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </a>
+  </section>
+
+  <!-- 时间线区域 -->
+  <section class="apple-timeline" id="timeline">
+    <div class="apple-section-header">
+      <span class="apple-section-label" data-animate>我的历程(网页摆烂的描述)</span>
+      <h2 class="apple-section-title" data-animate>这段时间的成长</h2>
+      <p class="apple-section-desc" data-animate>回顾这段时间的点点滴滴，每一个阶段都有独特的收获和感悟。</p>
+    </div>
+
+    <div class="apple-timeline-content">
+      <div class="apple-timeline-line"></div>
+
+      <div class="apple-timeline-item" data-animate>
+        <div class="apple-timeline-dot"></div>
+        <div class="apple-timeline-card">
+          <span class="apple-timeline-date">2025年9月</span>
+          <h3 class="apple-timeline-title">军训</h3>
+          <p class="apple-timeline-text">太忙,每天太累,没有动力更新网站</p>
+        </div>
+      </div>
+
+      <div class="apple-timeline-item" data-animate>
+        <div class="apple-timeline-dot"></div>
+        <div class="apple-timeline-card">
+          <span class="apple-timeline-date">2025年10月</span>
+          <h3 class="apple-timeline-title">大一开始阶段</h3>
+          <p class="apple-timeline-text">意识到需要给自己一段专注学习的时间，暂时放下其他事务，全身心投入学业。</p>
+        </div>
+      </div>
+
+      <div class="apple-timeline-item" data-animate>
+        <div class="apple-timeline-dot"></div>
+        <div class="apple-timeline-card">
+          <span class="apple-timeline-date">2025年11月</span>
+          <h3 class="apple-timeline-title">事务繁忙期</h3>
+          <p class="apple-timeline-text">学校各类活动太多,完全忙不过来,索性直接放弃网页</p>
+        </div>
+      </div>
+
+      <div class="apple-timeline-item" data-animate>
+        <div class="apple-timeline-dot"></div>
+        <div class="apple-timeline-card">
+          <span class="apple-timeline-date">2026年1月</span>
+          <h3 class="apple-timeline-title">全新开始</h3>
+          <p class="apple-timeline-text">带着这段时间的收获和成长，重新出发，准备分享更多有价值的内容。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 学习图片画廊 -->
+  <section class="apple-gallery" id="gallery">
+    <div class="apple-section-header">
+      <span class="apple-section-label" data-animate>学习与生活</span>
+      <h2 class="apple-section-title" data-animate>记录每一段时间</h2>
+      <p class="apple-section-desc" data-animate>在不同的地方，用不同的方式，坚持着同一份热爱。</p>
+    </div>
+
+    <div class="apple-gallery-grid">
+      <div class="apple-gallery-item" data-animate>
+        <img src="https://s41.ax1x.com/2026/02/08/pZTaiZT.md.jpg" class="lazyload" data-srcset="https://s41.ax1x.com/2026/02/08/pZTaiZT.md.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="学习" id="STUDY_IMG_1">
+        <div class="apple-gallery-overlay">
+          <p class="apple-gallery-title">教室时光</p>
+          <p class="apple-gallery-desc">在知识的海洋中遨游</p>
+        </div>
+      </div>
+
+      <div class="apple-gallery-item" data-animate>
+        <img src="https://s41.ax1x.com/2026/02/08/pZTakoF.jpg" class="lazyload" data-srcset="https://s41.ax1x.com/2026/02/08/pZTakoF.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="游玩" id="STUDY_IMG_2">
+        <div class="apple-gallery-overlay">
+          <p class="apple-gallery-title">外出游玩</p>
+          <p class="apple-gallery-desc">大千世界出去走走</p>
+        </div>
+      </div>
+
+      <!-- 【图片替换 4/8】学习图片3-户外 -->
+      <div class="apple-gallery-item" data-animate>
+        <img src="https://s41.ax1x.com/2026/02/08/pZTaEi4.jpg" class="lazyload" data-srcset="https://s41.ax1x.com/2026/02/08/pZTaEi4.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="户外学习" id="STUDY_IMG_3">
+        <div class="apple-gallery-overlay">
+          <p class="apple-gallery-title">美食</p>
+          <p class="apple-gallery-desc">美食也是生活的一部分(大雾)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 数据统计区域 -->
+  <section class="apple-stats" id="stats">
+    <div class="apple-stats-grid">
+      <div class="apple-stat-item" data-animate>
+        <div class="apple-stat-number" data-count="4">0</div>
+        <div class="apple-stat-label">个月专注学习</div>
+      </div>
+      <div class="apple-stat-item" data-animate>
+        <div class="apple-stat-number" data-count="12">0</div>
+        <div class="apple-stat-label">+ 本书籍阅读</div>
+      </div>
+      <div class="apple-stat-item" data-animate>
+        <div class="apple-stat-number" data-count="9">0</div>
+        <div class="apple-stat-label">+ 社会实践</div>
+      </div>
+      <div class="apple-stat-item" data-animate>
+        <div class="apple-stat-number" data-count="365">0</div>
+        <div class="apple-stat-label">天坚持不懈</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技能展示区域 -->
+  <section class="apple-skills" id="skills">
+    <div class="apple-section-header">
+      <span class="apple-section-label" data-animate>技能提升</span>
+      <h2 class="apple-section-title" data-animate>这段时间的收获</h2>
+      <p class="apple-section-desc" data-animate>不断学习，持续进步，每一项技能都是成长的见证。</p>
+    </div>
+
+    <div class="apple-skills-grid">
+      <div class="apple-skill-item" data-animate>
+        <div class="apple-skill-header">
+          <span class="apple-skill-name">前端开发</span>
+          <span class="apple-skill-percent">75%</span>
+        </div>
+        <div class="apple-skill-bar">
+          <div class="apple-skill-progress" data-width="75"></div>
+        </div>
+      </div>
+
+      <div class="apple-skill-item" data-animate>
+        <div class="apple-skill-header">
+          <span class="apple-skill-name">后端开发</span>
+          <span class="apple-skill-percent">50%</span>
+        </div>
+        <div class="apple-skill-bar">
+          <div class="apple-skill-progress" data-width="50"></div>
+        </div>
+      </div>
+
+      <div class="apple-skill-item" data-animate>
+        <div class="apple-skill-header">
+          <span class="apple-skill-name">UI/UX 设计</span>
+          <span class="apple-skill-percent">85%</span>
+        </div>
+        <div class="apple-skill-bar">
+          <div class="apple-skill-progress" data-width="85"></div>
+        </div>
+      </div>
+
+      <div class="apple-skill-item" data-animate>
+        <div class="apple-skill-header">
+          <span class="apple-skill-name">数据分析</span>
+          <span class="apple-skill-percent">20%</span>
+        </div>
+        <div class="apple-skill-bar">
+          <div class="apple-skill-progress" data-width="20"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 新功能展示区域 -->
+  <section class="apple-features" id="features">
+    <div class="apple-section-header">
+      <span class="apple-section-label" data-animate>全新升级</span>
+      <h2 class="apple-section-title" data-animate>看看有什么新变化</h2>
+      <p class="apple-section-desc" data-animate>这段时间不仅在学习，我也在悄悄准备这些新功能和改进。</p>
+    </div>
+
+    <!-- 图片展示区 1 -->
+    <div class="apple-features-image-wrap" data-animate>
+      <div class="apple-features-image">
+        <img src="https://s41.ax1x.com/2026/02/08/pZTUk8A.png" class="lazyload" data-srcset="https://s41.ax1x.com/2026/02/08/pZTUk8A.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="新功能展示1" id="FEATURES_IMG_1">
+      </div>
+    </div>
+
+    <!-- 图片展示区 2 -->
+    <div class="apple-features-image-wrap" data-animate>
+      <div class="apple-features-image">
+        <img src="https://s41.ax1x.com/2026/02/08/pZTaTfJ.png" class="lazyload" data-srcset="https://s41.ax1x.com/2026/02/08/pZTaTfJ.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="新功能展示2" id="FEATURES_IMG_2">
+      </div>
+    </div>
+
+    <!-- 图片展示区 3 -->
+    <div class="apple-features-image-wrap" data-animate>
+      <div class="apple-features-image">
+        <img src="https://s41.ax1x.com/2026/02/08/pZTUk8A.png" class="lazyload" data-srcset="https://s41.ax1x.com/2026/02/08/pZTUk8A.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="新功能展示3" id="FEATURES_IMG_3">
+      </div>
+    </div>
+
+    <div class="apple-features-grid">
+      <div class="apple-feature-card" data-animate style="--card-color: #0071e3; --card-color-light: #5ac8fa; --icon-bg: #e8f4fd; --icon-color: #0071e3;">
+        <div class="apple-feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+        </div>
+        <h3 class="apple-feature-title">全新视觉设计</h3>
+        <p class="apple-feature-desc">采用现代化的设计语言，界面更加简洁优雅。</p>
+      </div>
+
+      <div class="apple-feature-card" data-animate style="--card-color: #f5a623; --card-color-light: #ffd60a; --icon-bg: #fef3e2; --icon-color: #f5a623;">
+        <div class="apple-feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </div>
+        <h3 class="apple-feature-title">性能优化</h3>
+        <p class="apple-feature-desc">基于最新Node.js组件打造,速度更快</p>
+      </div>
+
+      <div class="apple-feature-card" data-animate style="--card-color: #34c759; --card-color-light: #30d158; --icon-bg: #e8f8f0; --icon-color: #34c759;">
+        <div class="apple-feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+        </div>
+        <h3 class="apple-feature-title">网页响应式布局</h3>
+        <p class="apple-feature-desc">完美适配各种设备，随时随地浏览。</p>
+      </div>
+
+      <div class="apple-feature-card" data-animate style="--card-color: #af52de; --card-color-light: #bf5af2; --icon-bg: #f3e8fd; --icon-color: #af52de;">
+        <div class="apple-feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>
+        </div>
+        <h3 class="apple-feature-title">No IE</h3>
+        <p class="apple-feature-desc">去除了IE的代码支持,浏览更流畅了</p>
+      </div>
+
+      <div class="apple-feature-card" data-animate style="--card-color: #ff3b30; --card-color-light: #ff453a; --icon-bg: #fde8e8; --icon-color: #ff3b30;">
+        <div class="apple-feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        </div>
+        <h3 class="apple-feature-title">安全升级(真的)</h3>
+        <p class="apple-feature-desc">重置了网页的部分组件,服务器主机更加安全</p>
+      </div>
+
+      <div class="apple-feature-card" data-animate style="--card-color: #5856d6; --card-color-light: #7c7aff; --icon-bg: #e8e8fd; --icon-color: #5856d6;">
+        <div class="apple-feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+        </div>
+        <h3 class="apple-feature-title">更多内容</h3>
+        <p class="apple-feature-desc">准备分享更多有趣的内容和项目。</p>
+      </div>
+    </div>
+
+    <div class="apple-features-cta" data-animate>
+      <p>还有更多功能正在开发中，敬请期待...</p>
+      <a href="/" class="apple-btn apple-btn-dark">跳转到博客</a>
+    </div>
+  </section>
+
+  <!-- Footer 区域 -->
+  <footer class="apple-footer">
+    <!-- 【图片替换 7/8】Footer背景图 -->
+    <div class="apple-footer-bg">
+      <img src="https://s41.ax1x.com/2026/01/30/pZfKrNQ.jpg" class="lazyload" data-srcset="https://s41.ax1x.com/2026/01/30/pZfKrNQ.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" id="FOOTER_BG_IMG">
+    </div>
+
+    <div class="apple-footer-content">
+      <h2 class="apple-footer-title" data-animate>感谢你的等待</h2>
+      <h3 class="apple-footer-tittle" data-animate>无论你是否曾经访问过这里，都感谢你的到来。未来，我会继续努力，创造更多有价值的内容。</h3>
+      <p class="apple-footer-desc" data-animate>LeonardoFox 26 Update 1</p>
+      <p class="apple-footer-desc" data-animate>Copyright LeonardoFox 2020-2026</p>
+    </div>
+
+    <div class="apple-footer-divider"></div>
+
+
+    <button class="apple-footer-top-btn" id="backToTop" data-animate aria-label="回到顶部">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+    </button>
+</div>
+
+</div>
+</footer>
+
+</div>
+
+<!-- ========================================
+     JavaScript
+     ======================================== -->
+<script>
+  (function() {
+    'use strict';
+
+    // 导航栏滚动效果
+    var nav = document.getElementById('appleNav');
+    var menuBtn = document.getElementById('menuBtn');
+    var mobileMenu = document.getElementById('mobileMenu');
+    var menuIcon = document.getElementById('menuIcon');
+    var closeIcon = document.getElementById('closeIcon');
+    var backToTop = document.getElementById('backToTop');
+    var menuOpen = false;
+
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // 移动端菜单
+    menuBtn.addEventListener('click', function() {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('active', menuOpen);
+      menuIcon.style.display = menuOpen ? 'none' : 'block';
+      closeIcon.style.display = menuOpen ? 'block' : 'none';
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        menuOpen = false;
+        mobileMenu.classList.remove('active');
+        menuIcon.style.display = 'block';
+        closeIcon.style.display = 'none';
+      });
+    });
+
+    // 回到顶部
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 深色模式切换功能
+    var darkModeToggle = document.getElementById('darkModeToggle');
+    var body = document.body;
+
+    // 检查本地存储的深色模式偏好
+    if (localStorage.getItem('darkMode') === 'enabled') {
+      body.classList.add('dark-mode');
+    }
+
+    // 切换深色模式
+    darkModeToggle.addEventListener('click', function() {
+      body.classList.toggle('dark-mode');
+
+      // 保存偏好到本地存储
+      if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        localStorage.setItem('darkMode', 'disabled');
+      }
+    });
+
+
+    // Intersection Observer 动画
+    var observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+
+          // 数字动画
+          var numberEl = entry.target.querySelector('.apple-stat-number');
+          if (numberEl && !numberEl.classList.contains('counted')) {
+            numberEl.classList.add('counted');
+            animateNumber(numberEl);
+          }
+
+          // 技能条动画
+          var progressEl = entry.target.querySelector('.apple-skill-progress');
+          if (progressEl && !progressEl.classList.contains('animated')) {
+            progressEl.classList.add('animated');
+            setTimeout(function() {
+              progressEl.style.width = progressEl.dataset.width + '%';
+            }, 200);
+          }
+
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('[data-animate]').forEach(function(el) {
+      observer.observe(el);
+    });
+
+    // 数字动画函数
+    function animateNumber(el) {
+      var target = parseInt(el.dataset.count);
+      var duration = 2000;
+      var start = 0;
+      var increment = target / (duration / 16);
+      var current = 0;
+
+      var timer = setInterval(function() {
+        current += increment;
+        if (current >= target) {
+          el.textContent = target + (el.parentElement.textContent.includes('+') ? '+' : '');
+          clearInterval(timer);
+        } else {
+          el.textContent = Math.floor(current);
+        }
+      }, 16);
+    }
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        var href = this.getAttribute('href');
+        if (href !== '#') {
+          e.preventDefault();
+          var target = document.querySelector(href);
+          if (target) {
+            var offsetTop = target.offsetTop - 72;
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+
+  })();
+</script>
+
+
+<!-- 修复Volantis懒加载问题 -->
+<script>
+  (function() {
+    // 立即执行，恢复被懒加载替换的图片
+    function fixImages() {
+      var images = document.querySelectorAll('img[data-srcset], img[data-src]');
+      images.forEach(function(img) {
+        // 优先使用data-srcset
+        if (img.dataset.srcset) {
+          img.src = img.dataset.srcset;
+        } else if (img.dataset.src) {
+          img.src = img.dataset.src;
+        }
+        // 移除懒加载相关属性
+        img.removeAttribute('data-srcset');
+        img.removeAttribute('data-src');
+        img.removeAttribute('srcset');
+        img.classList.remove('lazyload');
+        img.classList.remove('lazyloaded');
+        img.classList.remove('lazyloading');
+      });
+    }
+
+    // 多次执行确保覆盖
+    fixImages();
+    document.addEventListener('DOMContentLoaded', fixImages);
+    window.addEventListener('load', fixImages);
+    setTimeout(fixImages, 100);
+    setTimeout(fixImages, 500);
+    setTimeout(fixImages, 1000);
+  })();
+</script>
