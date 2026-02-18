@@ -1,0 +1,2192 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>更新日志 - Leonardo's Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #0060ff;
+      --primary-dark: #004bbd;
+      --primary-light: #4d8fff;
+      --surface-light: #ffffff;
+      --surface-light-variant: #f5f5f5;
+      --background-light: #fafafa;
+      --on-surface-light: #212121;
+      --on-surface-light-variant: #757575;
+      --divider-light: rgba(0, 0, 0, 0.12);
+
+      --surface-dark: #1e1e1e;
+      --surface-dark-variant: #2d2d2d;
+      --background-dark: #121212;
+      --on-surface-dark: #ffffff;
+      --on-surface-dark-variant: #b0b0b0;
+      --divider-dark: rgba(255, 255, 255, 0.12);
+
+      /* 阅读模式颜色 - 米黄色 */
+      --reading-bg: #f5f0e1;
+      --reading-surface: #faf6e9;
+      --reading-text: #2c2416;
+      --reading-secondary: #5c4f3d;
+
+      --elevation-1: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
+      --elevation-2: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
+      --elevation-4: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12);
+      --elevation-8: 0 5px 5px -3px rgba(0,0,0,0.2), 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: var(--background-light);
+      color: var(--on-surface-light);
+      line-height: 1.6;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* 深色模式样式 - 检测 Volantis 机制 */
+    [color-scheme="dark"] body,
+    html:not([color-scheme]) body {
+      background-color: var(--background-dark);
+      color: var(--on-surface-dark);
+    }
+
+    [color-scheme="dark"] .app-bar,
+    html:not([color-scheme]) .app-bar {
+      background-color: var(--surface-dark);
+      color: var(--on-surface-dark);
+    }
+
+    [color-scheme="dark"] .sidebar,
+    html:not([color-scheme]) .sidebar {
+      background-color: var(--surface-dark);
+      border-right-color: var(--divider-dark);
+    }
+
+    [color-scheme="dark"] .content-card,
+    html:not([color-scheme]) .content-card {
+      background-color: var(--surface-dark);
+      color: var(--on-surface-dark);
+    }
+
+    [color-scheme="dark"] .version-title,
+    html:not([color-scheme]) .version-title {
+      color: var(--on-surface-dark);
+    }
+
+    [color-scheme="dark"] .version-meta,
+    html:not([color-scheme]) .version-meta {
+      color: var(--on-surface-dark-variant);
+    }
+
+    [color-scheme="dark"] .toc-item,
+    html:not([color-scheme]) .toc-item {
+      color: var(--on-surface-dark-variant);
+    }
+
+    [color-scheme="dark"] .toc-item:hover,
+    html:not([color-scheme]) .toc-item:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--primary-light);
+    }
+
+    [color-scheme="dark"] .feature-text,
+    html:not([color-scheme]) .feature-text {
+      color: var(--on-surface-dark-variant);
+    }
+
+    [color-scheme="dark"] .divider,
+    html:not([color-scheme]) .divider {
+      background-color: var(--divider-dark);
+    }
+
+    /* 明确标记 light 时的样式 */
+    [color-scheme="light"] body {
+      background-color: var(--background-light);
+      color: var(--on-surface-light);
+    }
+
+    /* 阅读模式样式 */
+    body.reading-mode {
+      background-color: var(--reading-bg) !important;
+      color: var(--reading-text) !important;
+    }
+
+    body.reading-mode .app-bar {
+      background-color: var(--reading-surface) !important;
+      color: var(--reading-text) !important;
+    }
+
+    body.reading-mode .sidebar {
+      background-color: var(--reading-surface) !important;
+      border-right-color: rgba(44, 36, 22, 0.12);
+    }
+
+    body.reading-mode .content-card {
+      background-color: var(--reading-surface) !important;
+      color: var(--reading-text) !important;
+      box-shadow: 0 1px 3px rgba(44, 36, 22, 0.1);
+    }
+
+    body.reading-mode .version-title {
+      color: var(--reading-text) !important;
+    }
+
+    body.reading-mode .version-meta {
+      color: var(--reading-secondary) !important;
+    }
+
+    body.reading-mode .toc-item {
+      color: var(--reading-secondary) !important;
+    }
+
+    body.reading-mode .toc-item:hover {
+      background-color: rgba(0, 96, 255, 0.08);
+      color: var(--primary-blue) !important;
+    }
+
+    body.reading-mode .feature-text {
+      color: var(--reading-secondary) !important;
+    }
+
+    body.reading-mode .icon-button {
+      color: var(--reading-text) !important;
+    }
+
+    body.reading-mode .sidebar-logo {
+      background: linear-gradient(135deg, #e8dcc0 0%, #f0e6d0 100%);
+    }
+
+    /* 布局 */
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* 顶部应用栏 */
+    .app-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background-color: var(--surface-light);
+      box-shadow: var(--elevation-4);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+    }
+
+    .app-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .app-bar-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.25rem;
+      font-weight: 500;
+      letter-spacing: 0.0125em;
+      color: var(--on-surface-light);
+      white-space: nowrap;
+    }
+
+    [color-scheme="dark"] .app-bar-center,
+    html:not([color-scheme]) .app-bar-center {
+      color: var(--on-surface-dark);
+    }
+
+    body.reading-mode .app-bar-center {
+      color: var(--reading-text) !important;
+    }
+
+    .app-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--on-surface-light);
+      transition: background-color 0.2s;
+      text-decoration: none;
+    }
+
+    /* 修复：深色模式下次图标颜色继承 */
+    [color-scheme="dark"] .icon-button,
+    html:not([color-scheme]) .icon-button {
+      color: var(--on-surface-dark);
+    }
+
+    body.reading-mode .icon-button {
+      color: var(--reading-text);
+    }
+
+    .icon-button:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    [color-scheme="dark"] .icon-button:hover,
+    html:not([color-scheme]) .icon-button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    body.reading-mode .icon-button:hover {
+      background-color: rgba(44, 36, 22, 0.08);
+    }
+
+    .text-button {
+      height: 36px;
+      padding: 0 16px;
+      border-radius: 18px;
+      border: 1px solid var(--divider-light);
+      background: transparent;
+      color: var(--on-surface-light);
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    /* 修复：深色模式下次按钮颜色继承 */
+    [color-scheme="dark"] .text-button,
+    html:not([color-scheme]) .text-button {
+      border-color: var(--divider-dark);
+      color: var(--on-surface-dark);
+    }
+
+    [color-scheme="dark"] .text-button:hover,
+    html:not([color-scheme]) .text-button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    body.reading-mode .text-button {
+      border-color: rgba(44, 36, 22, 0.2);
+      color: var(--reading-text);
+    }
+
+    body.reading-mode .text-button:hover {
+      background-color: rgba(0, 96, 255, 0.1);
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    .text-button:hover {
+      background-color: rgba(0, 96, 255, 0.08);
+      border-color: var(--primary-blue);
+      color: var(--primary-blue);
+    }
+
+    /* 侧边栏目录 */
+    .sidebar {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      width: 280px;
+      height: calc(100vh - 64px);
+      background-color: var(--surface-light);
+      border-right: 1px solid var(--divider-light);
+      overflow-y: auto;
+      padding: 16px 0;
+      z-index: 100;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .sidebar-header {
+      padding: 0 16px 16px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.00714em;
+      text-transform: uppercase;
+      color: var(--on-surface-light-variant);
+    }
+
+    /* Logo 区域 */
+    .sidebar-logo {
+      margin: 0 16px 20px;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--elevation-1);
+    }
+
+    .sidebar-logo svg {
+      width: 64px;
+      height: 64px;
+      filter: drop-shadow(0 2px 4px rgba(0, 96, 255, 0.3));
+    }
+
+    .sidebar-logo-text {
+      font-size: 0.75rem;
+      color: var(--on-surface-light-variant);
+      text-align: center;
+      font-weight: 500;
+    }
+
+    [color-scheme="dark"] .sidebar-logo,
+    html:not([color-scheme]) .sidebar-logo {
+      background: linear-gradient(135deg, #2d2d2d 0%, #1e1e1e 100%);
+    }
+
+    body.reading-mode .sidebar-logo {
+      background: linear-gradient(135deg, #e8dcc0 0%, #f0e6d0 100%);
+    }
+
+    .toc-list {
+      list-style: none;
+    }
+
+    .toc-item {
+      display: block;
+      padding: 12px 16px 12px 24px;
+      color: var(--on-surface-light-variant);
+      text-decoration: none;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      letter-spacing: 0.01786em;
+      border-radius: 0 24px 24px 0;
+      margin-right: 8px;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .toc-item:hover {
+      background-color: rgba(0, 96, 255, 0.08);
+      color: var(--primary-blue);
+    }
+
+    .toc-item.active {
+      color: var(--primary-blue);
+      background-color: rgba(0, 96, 255, 0.12);
+      font-weight: 500;
+    }
+
+    /* 主内容区 */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+      margin-top: 64px;
+      padding: 24px 32px;
+      max-width: 900px;
+    }
+
+    /* 内容卡片 */
+    .content-card {
+      background-color: var(--surface-light);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--elevation-1);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .content-card:hover {
+      box-shadow: var(--elevation-2);
+    }
+
+    body.reading-mode .content-card:hover {
+      box-shadow: 0 2px 8px rgba(44, 36, 22, 0.15);
+    }
+
+    /* 版本标题区 */
+    .version-header {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--divider-light);
+    }
+
+    body.reading-mode .version-header {
+      border-bottom-color: rgba(44, 36, 22, 0.12);
+    }
+
+    .version-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      background-color: var(--primary-blue);
+      color: white;
+      border-radius: 16px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+      letter-spacing: 0.025em;
+    }
+
+    .version-title {
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 2rem;
+      letter-spacing: 0;
+      margin-bottom: 8px;
+      color: var(--on-surface-light);
+    }
+
+    .version-meta {
+      font-size: 0.875rem;
+      color: var(--on-surface-light-variant);
+      letter-spacing: 0.01786em;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .material-icons.md-18 {
+      font-size: 18px;
+      color: var(--on-surface-light-variant);
+    }
+
+    body.reading-mode .material-icons.md-18 {
+      color: var(--reading-secondary);
+    }
+
+    /* 特性列表 */
+    .feature-section {
+      margin-top: 20px;
+    }
+
+    .feature-title {
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.00937em;
+      margin-bottom: 12px;
+      color: var(--primary-blue);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding-left: 8px;
+    }
+
+    .feature-item {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .feature-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 6px;
+      height: 6px;
+      background-color: var(--primary-blue);
+      border-radius: 50%;
+    }
+
+    .feature-text {
+      color: var(--on-surface-light-variant);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    /* 图片网格 */
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .image-card {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--elevation-1);
+      transition: transform 0.2s, box-shadow 0.2s;
+      background-color: var(--surface-light-variant);
+    }
+
+    body.reading-mode .image-card {
+      background-color: #f0e9d6;
+    }
+
+    .image-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--elevation-4);
+    }
+
+    body.reading-mode .image-card:hover {
+      box-shadow: 0 4px 12px rgba(44, 36, 22, 0.2);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .image-caption {
+      padding: 12px;
+      font-size: 0.8125rem;
+      color: var(--on-surface-light-variant);
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.03);
+    }
+
+    [color-scheme="dark"] .image-caption,
+    html:not([color-scheme]) .image-caption {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    body.reading-mode .image-caption {
+      background-color: rgba(44, 36, 22, 0.06);
+      color: var(--reading-secondary);
+    }
+
+    /* 特殊标记 */
+    .highlight {
+      background: linear-gradient(120deg, rgba(0, 96, 255, 0.2) 0%, rgba(0, 96, 255, 0.2) 100%);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    body.reading-mode .highlight {
+      background: linear-gradient(120deg, rgba(0, 96, 255, 0.15) 0%, rgba(0, 96, 255, 0.15) 100%);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      background-color: rgba(0, 96, 255, 0.1);
+      color: var(--primary-blue);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      margin-right: 6px;
+    }
+
+    body.reading-mode .tag {
+      background-color: rgba(0, 96, 255, 0.08);
+    }
+
+    /* 代码块样式 */
+    .code-block {
+      background-color: #263238;
+      color: #aed581;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.875rem;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+
+    body.reading-mode .code-block {
+      background-color: #2d333b;
+      color: #aad94c;
+    }
+
+    /* 响应式 */
+    @media (max-width: 960px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 16px;
+      }
+
+      .menu-button {
+        display: flex;
+      }
+
+      .app-bar-center {
+        font-size: 1rem;
+        left: 60px;
+        transform: none;
+      }
+    }
+
+    @media (min-width: 961px) {
+      .menu-button {
+        display: none;
+      }
+    }
+
+    /* 滚动条美化 */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    [color-scheme="dark"] ::-webkit-scrollbar-thumb,
+    html:not([color-scheme]) ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    [color-scheme="dark"] ::-webkit-scrollbar-thumb:hover,
+    html:not([color-scheme]) ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    body.reading-mode ::-webkit-scrollbar-thumb {
+      background: rgba(44, 36, 22, 0.3);
+    }
+
+    body.reading-mode ::-webkit-scrollbar-thumb:hover {
+      background: rgba(44, 36, 22, 0.4);
+    }
+
+    /* 遮罩层 */
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 99;
+    }
+
+    @media (max-width: 960px) {
+      .overlay.show {
+        display: block;
+      }
+    }
+
+    /* 平滑滚动 */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* 锚点偏移 */
+    .version-section {
+      scroll-margin-top: 80px;
+    }
+
+    /* 强制图片立即显示，防止Volantis懒加载 */
+    img {
+      opacity: 1 !important;
+      transition: none !important;
+    }
+
+    img.lazyload,
+    img.lazyloading,
+    img.lazyloaded {
+      opacity: 1 !important;
+    }
+
+    /* 移除懒加载占位图效果 */
+    .image-card img {
+      min-height: auto !important;
+      background: none !important;
+    }
+
+    /* === 强制图片立即显示，防止Volantis懒加载 === */
+    img {
+      opacity: 1 !important;
+      filter: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+
+    /* 移除所有懒加载状态 */
+    img.lazyload,
+    img.lazyloading,
+    img.lazyloaded,
+    img[data-src],
+    img[data-srcset] {
+      opacity: 1 !important;
+      filter: none !important;
+    }
+
+    /* 强制显示图片容器 */
+    .image-card {
+      min-height: auto !important;
+    }
+
+    .image-card img {
+      min-height: auto !important;
+      background: transparent !important;
+      visibility: visible !important;
+    }
+
+    /* 隐藏占位图背景 */
+    [class*="lazy"] {
+      background-image: none !important;
+    }
+  </style>
+</head>
+<body>
+<!-- 顶部应用栏 -->
+<header class="app-bar">
+  <div class="app-bar-left">
+    <button class="icon-button menu-button" onclick="toggleSidebar()" aria-label="菜单">
+      <span class="material-icons">menu</span>
+    </button>
+    <button class="icon-button back-button" onclick="history.back()" aria-label="返回">
+      <span class="material-icons">arrow_back</span>
+    </button>
+    <!-- 主页按钮 -->
+    <a href="/" class="icon-button home-button" aria-label="主页" title="返回主页">
+      <span class="material-icons">home</span>
+    </a>
+  </div>
+
+  <!-- 中间标题 -->
+  <div class="app-bar-center">
+    <span class="material-icons" style="font-size: 24px;">history_edu</span>
+    <span>Leonardo's Blog History Update</span>
+  </div>
+
+  <div class="app-bar-right">
+    <!-- 阅读模式切换 -->
+    <button class="icon-button" onclick="toggleReadingMode()" aria-label="阅读模式" title="阅读模式">
+      <span class="material-icons" id="reading-icon">menu_book</span>
+    </button>
+    <!-- 主题切换 -->
+    <button class="icon-button" onclick="toggleTheme()" aria-label="切换主题" title="切换深浅色">
+      <span class="material-icons" id="theme-icon">dark_mode</span>
+    </button>
+    <!-- 切换到旧版 -->
+    <a href="/updatemd" class="text-button" title="切换到旧版更新日志">
+      <span class="material-icons" style="font-size: 18px;">history</span>
+      <span>切换到旧版</span>
+    </a>
+  </div>
+</header>
+
+<!-- 遮罩层 -->
+<div class="overlay" onclick="toggleSidebar()"></div>
+
+<!-- 侧边栏目录 -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">版本目录</div>
+
+  <!-- Logo 区域 - 使用蓝色 SVG -->
+  <div class="sidebar-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#0060ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <!-- 烧瓶主体 -->
+      <path d="M9 3 L9 10 L4 20 C3.5 21 4 22 5 22 L19 22 C20 22 20.5 21 20 20 L15 10 L15 3"/>
+      <!-- 瓶口 -->
+      <line x1="7" y1="3" x2="17" y2="3"/>
+      <!-- 瓶内液体 -->
+      <path d="M6 18 L18 18" opacity="0.3"/>
+      <!-- 气泡1 -->
+      <circle cx="10" cy="15" r="1" fill="#0060ff" stroke="none"/>
+      <!-- 气泡2 -->
+      <circle cx="14" cy="13" r="0.8" fill="#0060ff" stroke="none"/>
+      <!-- 气泡3 -->
+      <circle cx="12" cy="16" r="0.6" fill="#0060ff" stroke="none"/>
+      <!-- 气泡4 -->
+      <circle cx="8" cy="12" r="0.7" fill="#0060ff" stroke="none"/>
+      <!-- 气泡5 -->
+      <circle cx="16" cy="15" r="0.5" fill="#0060ff" stroke="none"/>
+    </svg>
+    <div class="sidebar-logo-text">Leonardo's Lab</div>
+  </div>
+
+  <ul class="toc-list">
+    <li><button class="toc-item" onclick="scrollToSection('v26-02', event)">26年第2个更新</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v26-01', event)">26 Update 1</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v2.0.1', event)">2.0.1 服务器维护</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v2.0.0', event)">2.0.0 正式版</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v1.9.7', event)">1.9.7.5 最终测试版</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v1.8.8', event)">1.8.8 停更通知</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v1.8.5', event)">1.8.5 Beta</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v1.7.8', event)">1.7.8 小更新</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v1.7.3', event)">1.7.3 预览版</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v1.3.9', event)">1.3.9 公测版</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v1.2.5', event)">1.2.5 Beta</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v1.0.0', event)">1.0.0 首次公开</button></li>
+    <li><button class="toc-item" onclick="scrollToSection('v0.9.7', event)">0.9.7 内测版</button></li>
+  </ul>
+</nav>
+
+<!-- 主内容 -->
+<main class="main-content">
+
+  <!-- 26年第2个更新 -->
+  <section class="version-section" id="v26-02">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge">最新版本</span>
+        <h2 class="version-title">26年第2个更新</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2026-02-08
+                        </span>
+          <span class="meta-item">
+                            <span class="material-icons md-18">label</span>
+                            <span class="tag">维护</span>
+                            <span class="tag">优化</span>
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">speed</span>
+          性能优化
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">优化网页互动体验，删除冗余控件后流畅度显著提升</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">article</span>
+          内容更新
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">发布新文章《华硕奥创中心降级指南》，采用全新 HTML 排版</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">B站视频跳转逻辑优化：不再直接跳转云盘，先进入介绍页</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">重置历史文章，新增文字版本，统一使用 HTML 构建</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">refresh</span>
+          页面重构
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">重构「联系我」社交整合页</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">重构「关于本网站」介绍页</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">重构「关于我」标准页面</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">重构视觉小说前两部分</span>
+          </li>
+        </ul>
+
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29ce.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29ce.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="华硕奥创中心降级指南">
+            <div class="image-caption">华硕奥创中心降级指南</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cb.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cb.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="文章文字版">
+            <div class="image-caption">文章文字版界面</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cf.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cf.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="联系我页面">
+            <div class="image-caption">联系我 - 社交整合页</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cd.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cd.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="关于本网站">
+            <div class="image-caption">关于本网站</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cc.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cc.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="关于我">
+            <div class="image-caption">关于我</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29d0.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/699568a1556e27f1c93a29d0.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="视觉小说">
+            <div class="image-caption">视觉小说重构</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26 Update 1 -->
+  <section class="version-section" id="v26-01">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge">重大更新</span>
+        <h2 class="version-title">26 Update 1</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2026-02-08
+                        </span>
+          <span class="meta-item">
+                            <span class="material-icons md-18">person</span>
+                            NameAlpha346
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">new_releases</span>
+          核心变更
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">推出全新 <span class="highlight">HTML 版本介绍页</span>，后续更新采用独立页面形式展示</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">Hexo 升级至最新版本，Node.js 升级至最新语言库</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">主题切换回 Volantis，配置文件重置后的全新开始</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">palette</span>
+          界面重绘
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">主界面完全重绘，采用设计师精选配色方案</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">404 页面重置，提供更友好的错误提示</span></li>
+          <li class="feature-item">
+            <span class="feature-text">页脚精简至 3 个核心链接</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">友链页面完全重置</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">remove_circle</span>
+          功能移除
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">移除 IE 浏览器支持</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">移除评论区功能</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">移除调试菜单与旧版菜单</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">移除帮助页面与精选文章（存在 4 个重大漏洞）</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">menu_book</span>
+          阅读体验
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">新增文章摘要功能，提升浏览效率</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://s41.ax1x.com/2026/01/30/pZfKDAg.jpg" class="lazyload" data-srcset="https://s41.ax1x.com/2026/01/30/pZfKDAg.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="版本代号图">
+            <div class="image-caption">版本代号：再出发</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-section" style="margin-top: 50px; text-align: center;">
+      <a href="/updatehtml/26-02-08.html" class="text-button" style="display: inline-flex; background-color: var(--primary-blue); color: white; border: none; padding: 30px 40px; font-size: 1rem; margin: 0 auto;">
+        <span class="material-icons" style="font-size: 20px;">open_in_new</span>
+        <span>查看详细更新内容</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 2.0.1 服务器维护 -->
+  <section class="version-section" id="v2.0.1">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge">维护更新</span>
+        <h2 class="version-title">2.0.1 服务器维护</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2025-08-06
+                        </span>
+          <span class="meta-item">
+                            <span class="material-icons md-18">schedule</span>
+                            01:24 凌晨更新
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">code</span>
+          性能优化
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">精简代码结构，显著提升网页访问速度</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">people</span>
+          社交页面优化
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">「加我好友」页重大优化：手机端 2 个一排，电脑端 4 个一排</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">全面适配浏览器深色模式</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6892425858cb8da5c807c623.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6892425858cb8da5c807c623.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="手机端">
+            <div class="image-caption">手机端布局</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6892428f58cb8da5c807c7d6.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6892428f58cb8da5c807c7d6.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="PC端">
+            <div class="image-caption">PC 端布局</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/689242c458cb8da5c807c95e.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/689242c458cb8da5c807c95e.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="深色模式">
+            <div class="image-caption">深色模式适配</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">link</span>
+          友链与导航
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">友链页面新增 4 位合作伙伴</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">快捷方式新增 2 项入口</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/689242e658cb8da5c807ca46.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/689242e658cb8da5c807ca46.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="友链页面">
+            <div class="image-caption">友链页面</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6892430958cb8da5c807cb53.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6892430958cb8da5c807cb53.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="快捷方式">
+            <div class="image-caption">新增快捷入口</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">color_lens</span>
+          视觉升级
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">网页图标全面上色，进入色彩世界</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">主题色、深浅背景色重新调校</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">Project Delta 小说入口隐藏（寻找彩蛋）</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6892436c58cb8da5c807ce2a.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6892436c58cb8da5c807ce2a.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="彩色图标">
+            <div class="image-caption">彩色图标系统</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6892439e58cb8da5c807cfa0.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6892439e58cb8da5c807cfa0.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="浅色主题">
+            <div class="image-caption">浅色主题</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6892439e58cb8da5c807cfa1.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6892439e58cb8da5c807cfa1.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="深色主题">
+            <div class="image-caption">深色主题</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.0.0 正式版 -->
+  <section class="version-section" id="v2.0.0">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge" style="background: linear-gradient(135deg, #0060ff 0%, #00c6ff 100%);">里程碑</span>
+        <h2 class="version-title">2.0.0 正式版发布</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2025-07-24
+                        </span>
+          <span class="meta-item">
+                            <span class="material-icons md-18">timer</span>
+                            历时 12 天开发
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <p class="feature-text" style="font-size: 1rem; margin-bottom: 16px; line-height: 1.8;">
+          Leonardo 实验报告博客主要开发完成！历经 12 天的持续迭代，所有核心功能均已就绪。内部架构基本稳定，后续将通过热补丁即时修复潜在问题。
+        </p>
+
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6882456d58cb8da5c8d76278.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6882456d58cb8da5c8d76278.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="2.0.0宣传图">
+            <div class="image-caption">2.0.0 正式发布</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.9.7.5 -->
+  <section class="version-section" id="v1.9.7">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge">最终测试</span>
+        <h2 class="version-title">1.9.7.5 - 正式版前的最后一站</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2025-07-22
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">account_circle</span>
+          个人中心
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">左侧菜单头像更换（PC 独占）</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">「关于我」页面制作完成，正式上线</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/687f663b58cb8da5c8cb66a9.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/687f663b58cb8da5c8cb66a9.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="新头像">
+            <div class="image-caption">全新菜单头像</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/687f66bd58cb8da5c8cb66c9.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/687f66bd58cb8da5c8cb66c9.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="关于我">
+            <div class="image-caption">关于我页面</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">dark_mode</span>
+          深色模式
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">「加好友」页面深色模式修复（移动端）</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">主页 LOGO 与菜单栏 LOGO 重构中</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/687f676858cb8da5c8cb670a.jpg" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/687f676858cb8da5c8cb670a.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="深色模式">
+            <div class="image-caption">深色模式效果</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.8.8 -->
+  <section class="version-section" id="v1.8.8">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge" style="background-color: #ff9800;">停更通知</span>
+        <h2 class="version-title">1.8.8 - 短暂休整</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2025-07-19
+                        </span>
+          <span class="meta-item">
+                            <span class="material-icons md-18">schedule</span>
+                            预计 3 天后复更
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <p class="feature-text" style="font-size: 1rem; line-height: 1.8;">
+          开发者 NameAlpha346 身体不适，需要短暂休息。预计 3 天后恢复更新，感谢理解与支持。
+        </p>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://s21.ax1x.com/2025/07/19/pV3LnlF.png" class="lazyload" data-srcset="https://s21.ax1x.com/2025/07/19/pV3LnlF.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="停更通知">
+            <div class="image-caption">停更版本代号图</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.8.5 -->
+  <section class="version-section" id="v1.8.5">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge">Beta</span>
+        <h2 class="version-title">1.8.5 - 好友系统完工</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2025-07-17
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">person_add</span>
+          社交功能
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">「加我好友」页正式完工，点击图标即可添加</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">鼠标悬停上浮效果，深色模式部分覆盖</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb816.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb816.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="好友页面">
+            <div class="image-caption">好友页面 - 浅色模式</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb814.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb814.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="悬停效果">
+            <div class="image-caption">悬停上浮效果</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6878c38458cb8da5c8beb801.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6878c38458cb8da5c8beb801.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="深色模式">
+            <div class="image-caption">深色模式（部分）</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">music_note</span>
+          音乐播放器
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">PC 端侧边栏音乐播放器移除，改用全局播放器</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">移除自动播放功能（修复移动端未知 Bug）</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">调整内置歌曲库，优化播放列表</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb812.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb812.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="侧边栏对比">
+            <div class="image-caption">侧边栏优化对比</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb815.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb815.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="全局播放器">
+            <div class="image-caption">全局音乐播放器</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb813.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb813.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="播放列表">
+            <div class="image-caption">新播放列表</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">home</span>
+          主页调整
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">移除首页 Bug 反馈入口，统一至菜单设置</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">「关于」页面完成 75%</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6878cb4858cb8da5c8bebe72.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6878cb4858cb8da5c8bebe72.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="新主页">
+            <div class="image-caption">新版主页</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.7.8 -->
+  <section class="version-section" id="v1.7.8">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge">快速修复</span>
+        <h2 class="version-title">1.7.8 - 音乐体验升级</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2025-07-16
+                        </span>
+          <span class="meta-item">
+                            <span class="material-icons md-18">update</span>
+                            23:17 紧急更新
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">网页版侧边栏与手机版下拉空间各新增音乐播放器</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">手机版默认关闭自动播放，PC 端开启自动播放（纯音乐）</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877624f58cb8da5c8b90430.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877624f58cb8da5c8b90430.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="PC播放器">
+            <div class="image-caption">PC 端播放器</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877624f58cb8da5c8b9042f.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877624f58cb8da5c8b9042f.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="手机播放器">
+            <div class="image-caption">手机端播放器</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.7.3 -->
+  <section class="version-section" id="v1.7.3">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge">预览版</span>
+        <h2 class="version-title">1.7.3 - 史诗级更新</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2025-07-16
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">bug_report</span>
+          重大修复
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">修复 1.1.7 至 1.3.9 存在的 <span class="highlight">内存泄漏漏洞</span>（Loop 导致浏览器崩溃）</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">修复文章分类页无法访问问题（原来是打错字了）</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://s21.ax1x.com/2025/07/16/pV1om3d.jpg" class="lazyload" data-srcset="https://s21.ax1x.com/2025/07/16/pV1om3d.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="版本代号">
+            <div class="image-caption">版本代号图</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776be.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776be.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="错误修复">
+            <div class="image-caption">修复打字错误</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">music_video</span>
+          文章内音乐
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">新增文章内音乐播放器，支持 6 首纯音乐（手机端暂不支持）</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bf.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bf.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="文章播放器">
+            <div class="image-caption">文章内播放器</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877386d58cb8da5c8b7769b.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877386d58cb8da5c8b7769b.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="播放列表">
+            <div class="image-caption">6 首纯音乐</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">visibility</span>
+          视觉优化
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">主页沉浸模式：主图片区域自动隐藏状态栏</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">下拉至非图片区域唤出菜单栏</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">鼠标指针样式替换</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">文章显示优化：限制 4 行摘要，新增头图显示</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877386d58cb8da5c8b7769e.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877386d58cb8da5c8b7769e.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="沉浸模式">
+            <div class="image-caption">主页沉浸模式</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/68773da558cb8da5c8b7aa0d.jpg" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/68773da558cb8da5c8b7aa0d.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="鼠标指针">
+            <div class="image-caption">新鼠标指针</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776c3.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776c3.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="文章优化">
+            <div class="image-caption">文章卡片优化</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">menu</span>
+          交互升级
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">新增改版右键菜单，JavaScript 接管原生菜单</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">网页设置新增「获取帮助」与「Bug 反馈」</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bc.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bc.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="右键菜单">
+            <div class="image-caption">新版右键菜单</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877386c58cb8da5c8b77699.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877386c58cb8da5c8b77699.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="设置项">
+            <div class="image-caption">新增设置项</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">copyright</span>
+          文章页增强
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">新增 CopyRight 许可专区</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">新增微信与 Telegram 分享按钮</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">新增「过期文章」标签提示</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bd.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bd.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="版权区">
+            <div class="image-caption">版权许可区</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bb.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bb.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="分享按钮">
+            <div class="image-caption">社交分享</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877387a58cb8da5c8b776a9.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877387a58cb8da5c8b776a9.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="过期标签">
+            <div class="image-caption">过期文章标识</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">support</span>
+          支持页面
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">「加好友」聚合页面再次优化，排版更美观</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">新增「帮助中心」页面，支持留言咨询</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">「支持 UP 主」页面优化，投喂功能正常化</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">鸣谢页面新增 4 个开源项目</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877387b58cb8da5c8b776ad.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877387b58cb8da5c8b776ad.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="好友页">
+            <div class="image-caption">优化后的好友页</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877387b58cb8da5c8b776ab.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877387b58cb8da5c8b776ab.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="帮助中心">
+            <div class="image-caption">帮助中心</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877386c58cb8da5c8b7769a.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877386c58cb8da5c8b7769a.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="鸣谢">
+            <div class="image-caption">鸣谢页面</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877387b58cb8da5c8b776ac.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877387b58cb8da5c8b776ac.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="支持UP">
+            <div class="image-caption">支持 UP 主</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">error</span>
+          崩溃处理
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">新增崩溃界面：监听 JavaScript 错误/浏览器错误/Loop 错误，自动重定向</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6877386d58cb8da5c8b7769c.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6877386d58cb8da5c8b7769c.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="崩溃页面">
+            <div class="image-caption">崩溃提示页</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.3.9 -->
+  <section class="version-section" id="v1.3.9">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge">公测版</span>
+        <h2 class="version-title">1.3.9 - 公开测试</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2025-07-15
+                        </span>
+          <span class="meta-item">
+                            <span class="warning-text" style="color: #f44336; font-weight: 500;">
+                                <span class="material-icons md-18" style="color: #f44336;">warning</span>
+                                存在严重内存 Bug 已撤回
+                            </span>
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">link</span>
+          域名与赞助
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">半永久域名：<code>jacklu346.github.io</code></span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">赞助页更换：弃用爱发电平台，自建赞助页面（开发中）</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6876180958cb8da5c8b25406.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6876180958cb8da5c8b25406.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="赞助页">
+            <div class="image-caption">新赞助页预览</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">block</span>
+          兼容性调整
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text"><span class="highlight">彻底禁用 IE 浏览器</span> 访问权限</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text"><span class="highlight">禁用低版本 JavaScript</span> 环境</span>
+          </li>
+        </ul>
+        <div class="code-block">
+          killOldVersionsOfIE:
+          enable: true
+          killNoScript:
+          enable: true
+        </div>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6876181f58cb8da5c8b254bc.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6876181f58cb8da5c8b254bc.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="IE拒绝">
+            <div class="image-caption">IE 访问提示</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">group_add</span>
+          社交页面
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">「加好友」All In One 页面史诗级更新，排版重构</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6876180358cb8da5c8b253d8.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6876180358cb8da5c8b253d8.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="好友页">
+            <div class="image-caption">新版好友聚合页</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">font_download</span>
+          字体与界面
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">显示文本字体替换：圆体 → 微软雅黑（系统默认）</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">通知栏位置上移至左上角</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6876181a58cb8da5c8b25490.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6876181a58cb8da5c8b25490.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="字体">
+            <div class="image-caption">新字体效果</div>
+          </div>
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6876183658cb8da5c8b25581.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6876183658cb8da5c8b25581.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="通知栏">
+            <div class="image-caption">新通知栏位置</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">queue_music</span>
+          音乐播放器
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">音乐播放器升级为<span class="highlight">播放列表模式</span>，支持多首歌曲</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6876180758cb8da5c8b253f8.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6876180758cb8da5c8b253f8.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="播放器">
+            <div class="image-caption">播放列表面板</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.2.5 -->
+  <section class="version-section" id="v1.2.5">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge">Beta</span>
+        <h2 class="version-title">1.2.5 - 页脚与视觉优化</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2025-07-14
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">footer</span>
+          页脚重构
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">页脚显示方式与样式全面修改</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6874e8e158cb8da5c8ad3d91.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6874e8e158cb8da5c8ad3d91.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="新页脚">
+            <div class="image-caption">新版页脚设计</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">image</span>
+          视觉优化
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">网页标题图像加载成功</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">封面图片更新（必应每日壁纸）</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">网页进入图片优化（已移除加载图）</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://pic1.imgdb.cn/item/6874e8e158cb8da5c8ad3d90.png" class="lazyload" data-srcset="https://pic1.imgdb.cn/item/6874e8e158cb8da5c8ad3d90.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="顶图">
+            <div class="image-caption">首页顶图优化</div>
+          </div>
+          <div class="image-card">
+            <img src="https://s21.ax1x.com/2025/07/14/pV1eC4O.jpg" class="lazyload" data-srcset="https://s21.ax1x.com/2025/07/14/pV1eC4O.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="版本代号">
+            <div class="image-caption">版本代号图</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <h3 class="feature-title">
+          <span class="material-icons md-18">bug_report</span>
+          Bug 修复
+        </h3>
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">修复页脚 QQ 跳转 404 问题</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.0.0 -->
+  <section class="version-section" id="v1.0.0">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge" style="background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);">首次公开</span>
+        <h2 class="version-title">1.0.0 - Dev-Public</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2025-07-14
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">开发阶段从 Dev 转入 Dev-Public，版本号从 0.X 跃升至 1.X</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">获得首个域名：<code>jacklu346.github.io</code></span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">评论功能与超链接修复可用</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">文章页脚分享功能修复</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">「关于我」页面开发中（预计 3 天，实际耗时 1 周）</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 0.9.7 -->
+  <section class="version-section" id="v0.9.7">
+    <div class="content-card">
+      <div class="version-header">
+        <span class="version-badge" style="background-color: #9e9e9e;">内测版</span>
+        <h2 class="version-title">0.9.7 - 初具雏形</h2>
+        <div class="version-meta">
+                        <span class="meta-item">
+                            <span class="material-icons md-18">event</span>
+                            2025-07-13
+                        </span>
+          <span class="meta-item">
+                            <span class="material-icons md-18">build</span>
+                            LocalHost 内测
+                        </span>
+        </div>
+      </div>
+
+      <div class="feature-section">
+        <ul class="feature-list">
+          <li class="feature-item">
+            <span class="feature-text">首个初具雏形的网页主页与文章界面可正常打开</span>
+          </li>
+          <li class="feature-item">
+            <span class="feature-text">文章分享与评论区功能暂不可用（开发中）</span>
+          </li>
+        </ul>
+        <div class="image-grid">
+          <div class="image-card">
+            <img src="https://s21.ax1x.com/2025/07/12/pVl1VZd.jpg" class="lazyload" data-srcset="https://s21.ax1x.com/2025/07/12/pVl1VZd.jpg" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="首个版本">
+            <div class="image-caption">首个版本代号图</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // 检测当前主题（适配 Volantis 机制）
+  function detectTheme() {
+    const html = document.documentElement;
+    const hasLightAttr = html.getAttribute('color-scheme') === 'light';
+    return hasLightAttr ? 'light' : 'dark';
+  }
+
+  // 切换主题
+  function toggleTheme() {
+    const html = document.documentElement;
+    const currentTheme = detectTheme();
+    const icon = document.getElementById('theme-icon');
+    const body = document.body;
+
+    if (body.classList.contains('reading-mode')) {
+      body.classList.remove('reading-mode');
+      document.getElementById('reading-icon').textContent = 'menu_book';
+    }
+
+    if (currentTheme === 'dark') {
+      html.setAttribute('color-scheme', 'light');
+      icon.textContent = 'dark_mode';
+    } else {
+      html.removeAttribute('color-scheme');
+      icon.textContent = 'light_mode';
+    }
+
+    localStorage.setItem('theme-preference', currentTheme === 'dark' ? 'light' : 'dark');
+  }
+
+  // 切换阅读模式
+  function toggleReadingMode() {
+    const body = document.body;
+    const icon = document.getElementById('reading-icon');
+    const html = document.documentElement;
+
+    if (body.classList.contains('reading-mode')) {
+      body.classList.remove('reading-mode');
+      icon.textContent = 'menu_book';
+
+      const saved = localStorage.getItem('theme-preference');
+      if (saved === 'light') {
+        html.setAttribute('color-scheme', 'light');
+        document.getElementById('theme-icon').textContent = 'dark_mode';
+      } else {
+        html.removeAttribute('color-scheme');
+        document.getElementById('theme-icon').textContent = 'light_mode';
+      }
+    } else {
+      body.classList.add('reading-mode');
+      icon.textContent = 'auto_stories';
+      const currentTheme = detectTheme();
+      localStorage.setItem('theme-before-reading', currentTheme);
+    }
+  }
+
+  // 初始化主题
+  function initTheme() {
+    const saved = localStorage.getItem('theme-preference');
+    const html = document.documentElement;
+    const icon = document.getElementById('theme-icon');
+
+    if (saved === 'light') {
+      html.setAttribute('color-scheme', 'light');
+      icon.textContent = 'dark_mode';
+    } else {
+      html.removeAttribute('color-scheme');
+      icon.textContent = 'light_mode';
+    }
+  }
+
+  // 侧边栏切换（移动端）
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.querySelector('.overlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('show');
+  }
+
+  // 平滑滚动到指定区域
+  function scrollToSection(id, event) {
+    const element = document.getElementById(id);
+    if (element) {
+      const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - 80;
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      const duration = 800;
+      let startTime = null;
+
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const ease = easeInOutCubic(progress);
+
+        window.scrollTo(0, startPosition + distance * ease);
+
+        if (timeElapsed < duration) {
+          requestAnimationFrame(animation);
+        }
+      }
+
+      requestAnimationFrame(animation);
+
+      if (window.innerWidth <= 960) {
+        toggleSidebar();
+      }
+
+      if (event && event.target) {
+        document.querySelectorAll('.toc-item').forEach(item => {
+          item.classList.remove('active');
+        });
+        event.target.classList.add('active');
+      }
+    }
+  }
+
+  // 滚动监听更新目录激活状态
+  function updateActiveToc() {
+    const sections = document.querySelectorAll('.version-section');
+    const tocItems = document.querySelectorAll('.toc-item');
+
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (scrollY >= sectionTop - 100) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    tocItems.forEach(item => {
+      item.classList.remove('active');
+      if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(current)) {
+        item.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveToc);
+  window.addEventListener('load', () => {
+    initTheme();
+    updateActiveToc();
+  });
+
+  if (window.matchMedia) {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addListener((e) => {
+      if (!localStorage.getItem('theme-preference') && !document.body.classList.contains('reading-mode')) {
+        const html = document.documentElement;
+        const icon = document.getElementById('theme-icon');
+        if (e.matches) {
+          html.removeAttribute('color-scheme');
+          icon.textContent = 'light_mode';
+        } else {
+          html.setAttribute('color-scheme', 'light');
+          icon.textContent = 'dark_mode';
+        }
+      }
+    });
+  }
+</script>
+
+
+<script>
+  // 修复Volantis主题懒加载问题 - 强制加载所有图片
+  (function() {
+    function fixImages() {
+      // 1. 处理data-src属性
+      document.querySelectorAll('img[data-src]').forEach(function(img) {
+        img.src = img.getAttribute('data-src');
+        img.removeAttribute('data-src');
+      });
+
+      // 2. 处理data-srcset属性 - 这是关键！
+      document.querySelectorAll('img[data-srcset]').forEach(function(img) {
+        img.srcset = img.getAttribute('data-srcset');
+        img.removeAttribute('data-srcset');
+      });
+
+      // 3. 处理srcset中的base64占位图
+      document.querySelectorAll('img[srcset*="data:image"]').forEach(function(img) {
+        if (img.getAttribute('data-srcset')) {
+          img.srcset = img.getAttribute('data-srcset');
+        }
+      });
+
+      // 4. 移除lazyload类
+      document.querySelectorAll('img.lazyload, img.lazyloading').forEach(function(img) {
+        img.classList.remove('lazyload', 'lazyloading');
+        img.classList.add('lazyloaded');
+      });
+
+      // 5. 强制触发图片加载
+      document.querySelectorAll('img').forEach(function(img) {
+        if (img.getAttribute('data-srcset') && !img.srcset.includes('http')) {
+          img.srcset = img.getAttribute('data-srcset');
+        }
+      });
+    }
+
+    // 立即执行
+    fixImages();
+
+    // DOM加载完成后再次执行
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fixImages);
+    }
+
+    // 延迟执行，确保Volantis脚本执行后再次修复
+    setTimeout(fixImages, 100);
+    setTimeout(fixImages, 500);
+    setTimeout(fixImages, 1000);
+
+    // 使用MutationObserver监听新添加的图片
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeName === 'IMG') {
+            if (node.getAttribute('data-srcset')) {
+              node.srcset = node.getAttribute('data-srcset');
+            }
+            if (node.getAttribute('data-src')) {
+              node.src = node.getAttribute('data-src');
+            }
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
+</body>
+
+</html>

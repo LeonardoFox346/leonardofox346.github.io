@@ -1,0 +1,874 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Δ-107 CLASSIFIED ACCESS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+            52% { opacity: 0.8; }
+            54% { opacity: 0.95; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 140, 0, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(255, 140, 0, 0.8); }
+        }
+
+        @keyframes warning-flash {
+            0%, 100% { background-color: rgba(255, 140, 0, 0); }
+            50% { background-color: rgba(255, 140, 0, 0.1); }
+        }
+
+        @keyframes text-glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        @keyframes border-pulse {
+            0%, 100% { border-color: #ff8c00; }
+            50% { border-color: #cc5500; }
+        }
+
+        body {
+            background: #050505;
+            color: #ff8c00;
+            font-family: 'Courier New', 'Consolas', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    rgba(18, 16, 16, 0) 50%,
+                    rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 1000;
+            animation: flicker 0.15s infinite;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 140, 0, 0.1);
+            box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .warning-strip {
+            background: repeating-linear-gradient(
+                    45deg,
+                    #ff8c00,
+                    #ff8c00 10px,
+                    #000000 10px,
+                    #000000 20px
+            );
+            color: #000;
+            text-align: center;
+            padding: 8px;
+            font-weight: bold;
+            font-size: 0.85em;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            border: 2px solid #ff8c00;
+            margin-bottom: 30px;
+            animation: warning-flash 2s infinite;
+            text-shadow: none;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .classification-badge {
+            display: inline-block;
+            background: #000;
+            border: 3px double #ff8c00;
+            padding: 10px 30px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            letter-spacing: 6px;
+            color: #ff8c00;
+            text-shadow: 0 0 10px rgba(255, 140, 0, 0.8);
+            animation: border-pulse 2s infinite;
+        }
+
+        .logo-img {
+            display: block;
+            max-width: 320px;
+            width: 100%;
+            margin: 0 auto 30px;
+            border-radius: 4px;
+            filter: drop-shadow(0 0 20px rgba(255, 140, 0, 0.6));
+            animation: pulse 3s infinite;
+        }
+
+        h1 {
+            font-size: 3.2em;
+            color: #ff8c00;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            margin: 15px 0;
+            text-shadow:
+                    0 0 10px rgba(255, 140, 0, 0.8),
+                    0 0 20px rgba(255, 140, 0, 0.5),
+                    0 0 30px rgba(255, 140, 0, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: "Δ-107";
+            position: absolute;
+            left: 2px;
+            top: 2px;
+            color: #8b4513;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .subtitle {
+            color: #ffb84d;
+            font-size: 1em;
+            letter-spacing: 3px;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        .terminal-window {
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid #ff8c00;
+            border-radius: 0;
+            margin: 40px 0;
+            position: relative;
+            box-shadow:
+                    0 0 20px rgba(255, 140, 0, 0.3),
+                    inset 0 0 50px rgba(255, 140, 0, 0.05);
+        }
+
+        .terminal-header {
+            background: #1a0f00;
+            border-bottom: 1px solid #ff8c00;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8em;
+        }
+
+        .terminal-title {
+            color: #ffb84d;
+            letter-spacing: 2px;
+        }
+
+        .terminal-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff8c00;
+            border: 1px solid #ffb84d;
+        }
+
+        .terminal-body {
+            padding: 25px;
+            position: relative;
+        }
+
+        .terminal-body::before {
+            content: "> MULTILATERAL_SECURITY_PROTOCOL_INITIATED...";
+            display: block;
+            color: #ff8c00;
+            margin-bottom: 15px;
+            animation: text-glitch 3s infinite;
+            font-size: 0.9em;
+        }
+
+        .agreement-content {
+            background: #000;
+            border: 1px solid #332200;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 0.85em;
+            line-height: 1.7;
+            color: #ffb84d;
+            position: relative;
+        }
+
+        .agreement-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .agreement-content::-webkit-scrollbar-track {
+            background: #1a0f00;
+        }
+
+        .agreement-content::-webkit-scrollbar-thumb {
+            background: #ff8c00;
+            border-radius: 0;
+        }
+
+        .agreement-content::-webkit-scrollbar-thumb:hover {
+            background: #ffb84d;
+        }
+
+        .lang-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #332200;
+        }
+
+        .lang-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .lang-header {
+            color: #ff8c00;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-code {
+            background: #ff8c00;
+            color: #000;
+            padding: 2px 8px;
+            font-size: 0.8em;
+        }
+
+        .lang-content {
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            padding-left: 15px;
+            border-left: 2px solid #332200;
+        }
+
+        .highlight {
+            color: #ff8c00;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+        }
+
+        .warning {
+            color: #ffaa00;
+            background: rgba(255, 170, 0, 0.1);
+            padding: 2px 4px;
+        }
+
+        .classified {
+            background: #ff8c00;
+            color: #000;
+            padding: 2px 6px;
+            font-weight: bold;
+        }
+
+        .article-num {
+            color: #ffb84d;
+            font-weight: bold;
+        }
+
+        .tracking-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 140, 0, 0.05);
+            border-left: 3px solid #ff8c00;
+            font-size: 0.75em;
+            color: #ffb84d;
+        }
+
+        .tracking-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            font-family: monospace;
+        }
+
+        .tracking-label {
+            color: #ffaa66;
+        }
+
+        .tracking-value {
+            color: #ff8c00;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+        }
+
+        .confirmation-section {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #ff8c00;
+            position: relative;
+        }
+
+        .confirmation-section::before {
+            content: "⚠ MULTILATERAL_ACKNOWLEDGEMENT_REQUIRED";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #000;
+            padding: 0 10px;
+            color: #ff8c00;
+            font-size: 0.75em;
+            letter-spacing: 2px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            cursor: pointer;
+            padding: 15px;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .checkbox-container:hover {
+            background: rgba(255, 140, 0, 0.05);
+            border-color: #ff8c00;
+        }
+
+        input[type="checkbox"] {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #ff8c00;
+            background: #000;
+            margin-right: 15px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
+
+        input[type="checkbox"]:checked {
+            background: #ff8c00;
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.6);
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: "✓";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .checkbox-label {
+            color: #ffb84d;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            user-select: none;
+            line-height: 1.5;
+        }
+
+        .checkbox-label strong {
+            color: #ff8c00;
+            text-shadow: 0 0 5px rgba(255, 140, 0, 0.5);
+        }
+
+        .enter-button {
+            width: 100%;
+            padding: 18px;
+            background: #1a0f00;
+            color: #ff8c00;
+            border: 2px solid #ff8c00;
+            font-size: 1.1em;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            cursor: not-allowed;
+            opacity: 0.5;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enter-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 140, 0, 0.4),
+                    transparent
+            );
+            transition: left 0.5s;
+        }
+
+        .enter-button:not(:disabled) {
+            cursor: pointer;
+            opacity: 1;
+            background: #ff8c00;
+            color: #000;
+            box-shadow:
+                    0 0 20px rgba(255, 140, 0, 0.6),
+                    inset 0 0 20px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        .enter-button:not(:disabled):hover {
+            background: #ffb84d;
+            transform: translateY(-2px);
+            box-shadow:
+                    0 5px 30px rgba(255, 140, 0, 0.8),
+                    inset 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .enter-button:not(:disabled):hover::before {
+            left: 100%;
+        }
+
+        .enter-button:not(:disabled):active {
+            transform: translateY(0);
+        }
+
+        .footer-info {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.7em;
+            color: #ffaa66;
+            opacity: 0.6;
+            letter-spacing: 2px;
+        }
+
+        .timestamp {
+            font-family: monospace;
+            margin-top: 10px;
+        }
+
+        .corner-decoration {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff8c00;
+        }
+
+        .corner-tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+        .corner-tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+        .corner-bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+        .corner-br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8em; letter-spacing: 5px; }
+            .classification-badge { font-size: 0.8em; letter-spacing: 3px; }
+            .agreement-content { max-height: 300px; font-size: 0.8em; }
+            .lang-content { padding-left: 10px; }
+            .logo-img { max-width: 260px; }
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 998;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .rtl {
+            direction: rtl;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div class="noise"></div>
+
+<div class="container">
+    <div class="warning-strip">
+        ⚠ 安全理事会特别授权 // SC SPECIAL MANDATE ⚠
+    </div>
+
+    <div class="header-section">
+        <div class="classification-badge">最高机密 // TOP SECRET // СОВЕРШЕННО СЕКРЕТНО</div>
+
+        <img src="https://s21.ax1x.com/2025/07/23/pVGfoE8.png" class="lazyload" data-srcset="https://s21.ax1x.com/2025/07/23/pVGfoE8.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Project Δ-107 Logo" class="logo-img lazyload">
+
+        <h1>Δ-107</h1>
+        <div class="subtitle">生物安全紧急协议 //  BIO-SAFETY EMERGENCY PROTOCOL</div>
+    </div>
+
+    <div class="terminal-window">
+        <div class="corner-decoration corner-tl"></div>
+        <div class="corner-decoration corner-tr"></div>
+        <div class="corner-decoration corner-bl"></div>
+        <div class="corner-decoration corner-br"></div>
+
+        <div class="terminal-header">
+            <span class="terminal-title">MULTILATERAL_NON_DISCLOSURE_AGREEMENT.exe</span>
+            <div class="terminal-controls">
+                <div class="control-btn"></div>
+                <div class="control-btn"></div>
+                <div class="control-btn"></div>
+            </div>
+        </div>
+
+        <div class="terminal-body">
+            <div class="agreement-content" id="scrollBox">
+
+                <!-- 中文（第一） -->
+                <div class="lang-section">
+                    <div class="lang-header"><span class="lang-code">ZH</span> 中文</div>
+                    <div class="lang-content">
+                        <span class="classified">[Δ-107 多边保密协定]</span>
+
+                        <span class="article-num">第一条：缄默义务</span>
+                        严禁以任何形式（口头、书面、电子、示意）泄露：
+                        • 莱昂纳多·福克斯仍存活之事实
+                        • 旧实验区地理坐标及地下三层入口方位
+
+                        <span class="article-num">第二条：准入代价</span>
+                        继续浏览即视为自愿同意：
+                        • 终端记录并保存当前设备MAC、IMEI、IP及硬件UUID
+                        • 采集声纹特征、指纹残留及视网膜扫描数据
+
+                        <span class="article-num">第三条：禁区法则</span>
+                        于禁区30公里范围内目击耳廓带黑色裂纹之米黄狐影，须立即：
+                        ① 切断所有通讯链路
+                        ② 保持绝对静止30秒
+                        ③ 缓慢后退至最近硬化公路
+
+                        <span class="warning">警告：任何奔跑、呼救或影像记录将被视为敌对行为，后果自负</span>
+
+                        <span class="article-num">第四条：法律豁免</span>
+                        本协定受《国际紧急状态法》第107条保护
+                        任何司法机构无权介入调查
+
+                        <span class="highlight">本人确认知晓此乃虚构世界之设定</span>
+                    </div>
+                </div>
+
+                <!-- 英语 -->
+                <div class="lang-section">
+                    <div class="lang-header"><span class="lang-code">EN</span> English</div>
+                    <div class="lang-content">
+                        <span class="classified">[MULTILATERAL NON-DISCLOSURE AGREEMENT Δ-107]</span>
+
+                        <span class="article-num">ARTICLE I: OBLIGATION OF SILENCE</span>
+                        Strictly prohibited from disclosing by any means (verbal, written, electronic, or gestural):
+                        • The fact that Leonardo Fox remains alive
+                        • Coordinates of the Old Experimental Zone and entrance to Sublevel 3
+
+                        <span class="article-num">ARTICLE II: COST OF ACCESS</span>
+                        Continued browsing constitutes voluntary consent to:
+                        • Terminal recording and storage of current device MAC, IMEI, IP, and hardware UUID
+                        • Collection of voiceprint, fingerprint residue, and retinal scan data
+
+                        <span class="article-num">ARTICLE III: FORBIDDEN ZONE PROTOCOLS</span>
+                        Upon visual contact with beige fox exhibiting black fissures on ear pinnae within 30km radius:
+                        1. IMMEDIATELY sever all communications
+                        2. MAINTAIN absolute immobility for 30 seconds
+                        3. RETREAT slowly to nearest paved roadway
+
+                        <span class="warning">CAUTION: Any running, distress signaling, or image capture shall be deemed hostile action</span>
+
+                        <span class="article-num">ARTICLE IV: LEGAL IMMUNITY</span>
+                        This Agreement is protected under International Emergency Statute Article 107
+                        No judicial authority may intervene
+
+                        <span class="highlight">I ACKNOWLEDGE THIS IS A WORK OF FICTION</span>
+                    </div>
+                </div>
+
+                <!-- 法语 -->
+                <div class="lang-section">
+                    <div class="lang-header"><span class="lang-code">FR</span> Français</div>
+                    <div class="lang-content">
+                        <span class="classified">[ACCORD MULTILATÉRAL DE CONFIDENTIALITÉ Δ-107]</span>
+
+                        <span class="article-num">ARTICLE PREMIER : DEVOIR DE RÉSERVE</span>
+                        Il est strictement interdit de divulguer sous quelque forme que ce soit (orale, écrite, électronique ou gestuelle) :
+                        • Le fait que Leonardo Fox soit encore en vie
+                        • Les coordonnées de l'Ancienne Zone Expérimentale et l'entrée du Sous-sol 3
+
+                        <span class="article-num">ARTICLE II : PRIX D'ACCÈS</span>
+                        La poursuite de la navigation vaut consentement volontaire à :
+                        • L'enregistrement et la conservation par le terminal de l'adresse MAC, IMEI, IP et UUID du dispositif
+                        • La collecte des empreintes vocales, digitales et de la rétine
+
+                        <span class="article-num">ARTICLE III : RÈGLES DE LA ZONE INTERDITE</span>
+                        En cas d'observation d'un renard beige présentant des fissures noires sur les pavillons auditifs dans un rayon de 30 km :
+                        • Couper immédiatement toutes communications
+                        • Rester absolument immobile pendant 30 secondes
+                        • Reculer lentement vers la route goudronnée la plus proche
+
+                        <span class="warning">AVERTISSEMENT : Toute course, appel à l'aide ou prise de photographie sera considérée comme un acte hostile</span>
+
+                        <span class="article-num">ARTICLE IV : IMMUNITÉ JURIDIQUE</span>
+                        Le présent Accord est protégé par l'Article 107 du Statut de l'État d'Urgence International
+                        Aucune autorité judiciaire ne peut intervenir
+
+                        <span class="highlight">JE RECONNAIS QU'IL S'AGIT D'UN MONDE FICTIONNEL</span>
+                    </div>
+                </div>
+
+                <!-- 俄语 -->
+                <div class="lang-section">
+                    <div class="lang-header"><span class="lang-code">RU</span> Русский</div>
+                    <div class="lang-content">
+                        <span class="classified">[МНОГОСТОРОННЕЕ СОГЛАШЕНИЕ О НЕРАЗГЛАШЕНИИ Δ-107]</span>
+
+                        <span class="article-num">СТАТЬЯ I: ОБЯЗАННОСТЬ МОЛЧАНИЯ</span>
+                        Категорически запрещено разглашать любым способом (устным, письменным, электронным или жестикуляцией):
+                        • Факт выживания Леонардо Фокса
+                        • Координаты Старой Экспериментальной Зоны и вход на Минус 3-й этаж
+
+                        <span class="article-num">СТАТЬЯ II: ЦЕНА ДОСТУПА</span>
+                        Продолжение просмотра считается добровольным согласием на:
+                        • Запись и хранение терминалом MAC, IMEI, IP и UUID текущего устройства
+                        • Сбор голосовых отпечатков, остаточных отпечатков пальцев и сетчатки глаза
+
+                        <span class="article-num">СТАТЬЯ III: ПРАВИЛА ЗАПРЕТНОЙ ЗОНЫ</span>
+                        При визуальном контакте с бежевой лисой с чёрными трещинами на ушных раковинах в радиусе 30 км:
+                        1. НЕМЕДЛЕННО прервать все коммуникации
+                        2. СОХРАНЯТЬ абсолютную неподвижность 30 секунд
+                        3. МЕДЛЕННО отступить к ближайшей асфальтированной дороге
+
+                        <span class="warning">ПРЕДУПРЕЖДЕНИЕ: Бег, сигналы бедствия или фотосъёмка расцениваются как враждебные действия</span>
+
+                        <span class="article-num">СТАТЬЯ IV: ЮРИДИЧЕСКИЙ ИММУНИТЕТ</span>
+                        Настоящее Соглашение защищено Статьёй 107 Международного Статута Чрезвычайного Положения
+                        Никакое судебное учреждение не вправе вмешиваться
+
+                        <span class="highlight">Я ПОДТВЕРЖДАЮ, ЧТО ЭТО ВЫМЫШЛЕННЫЙ МИР</span>
+                    </div>
+                </div>
+
+                <!-- 西班牙语 -->
+                <div class="lang-section">
+                    <div class="lang-header"><span class="lang-code">ES</span> Español</div>
+                    <div class="lang-content">
+                        <span class="classified">[ACUERDO MULTILATERAL DE CONFIDENCIALIDAD Δ-107]</span>
+
+                        <span class="article-num">ARTÍCULO I: OBLIGACIÓN DE SILENCIO</span>
+                        Estrictamente prohibido divulgar por cualquier medio (verbal, escrito, electrónico o gestual):
+                        • El hecho de que Leonardo Fox sigue con vida
+                        • Las coordenadas de la Antigua Zona Experimental y la entrada al Subnivel 3
+
+                        <span class="article-num">ARTÍCULO II: COSTO DE ACCESO</span>
+                        Continuar navegando constituye consentimiento voluntario para:
+                        • Registro y almacenamiento por parte del terminal de la MAC, IMEI, IP y UUID del dispositivo actual
+                        • Recopilación de huellas vocales, residuos dactilares y escaneo de retina
+
+                        <span class="article-num">ARTÍCULO III: PROTOCOLOS DE ZONA PROHIBIDA</span>
+                        Al establecer contacto visual con zorro beige exhibiendo fisuras negras en los pabellones auditivos dentro de un radio de 30 km:
+                        1. CORTAR inmediatamente todas las comunicaciones
+                        2. MANTENER inmovilidad absoluta durante 30 segundos
+                        3. RETIRARSE lentamente hacia la carretera pavimentada más cercana
+
+                        <span class="warning">ADVERTENCIA: Cualquier carrera, señal de socorro o captura de imagen será considerada acción hostil</span>
+
+                        <span class="article-num">ARTÍCULO IV: INMUNIDAD LEGAL</span>
+                        Este Acuerdo está protegido bajo el Artículo 107 del Estatuto de Emergencia Internacional
+                        Ninguna autoridad judicial puede intervenir
+
+                        <span class="highlight">RECONOZCO QUE ESTO ES UN MUNDO DE FICCIÓN</span>
+                    </div>
+                </div>
+
+                <!-- 阿拉伯语（最后） -->
+                <div class="lang-section">
+                    <div class="lang-header"><span class="lang-code">AR</span> اللغة العربية</div>
+                    <div class="lang-content rtl">
+                        <span class="classified">[اتفاقية السرية متعددة الأطراف Δ-107]</span>
+
+                        <span class="article-num">المادة الأولى: واجب الصمت</span>
+                        يحظر بشكل قاطع الإفصاح بأي شكل (شفهي أو كتابي أو إلكتروني أو إشاري) عن:
+                        • حقيقة بقاء ليوناردو فوكس على قيد الحياة
+                        • إحداثيات المنطقة التجريبية القديمة ومدخل الطابق السفلي الثالث
+
+                        <span class="article-num">المادة الثانية: ثمن الدخول</span>
+                        يُعتبر الاستمرار في التصفح موافقة طوعية على:
+                        • تسجيل وحفظ MAC وIMEI وIP وUUID للجهاز الحالي
+                        • تخزين بصمات الأصابع ونمط الصوت وبصمة الشبكية
+
+                        <span class="article-num">المادة الثالثة: قواعد المنطقة المحظورة</span>
+                        عند رؤية ثعلب بيج بشق أسود على الأذنين ضمن نطاق 30 كم:
+                        • قطع جميع الاتصالات فوراً
+                        • البقاء ثابتاً لمدة 30 ثانية
+                        • التراجع ببطء إلى أقرب طريق معبد
+
+                        <span class="warning">تحذير: الجري أو الاستغاثة أو التصوير يُعتبر عملاً عدائياً</span>
+
+                        <span class="article-num">المادة الرابعة: إعفاء قانوني</span>
+                        تخضع هذه الاتفاقية لـ"قانون حالة الطوارئ" المادة 107
+                        لا يحق لأي جهة قضائية التدخل
+
+                        <span class="highlight">أقر بأن هذا عالم خيالي</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tracking-info">
+                <div class="tracking-row">
+                    <span class="tracking-label">SESSION_ID:</span>
+                    <span class="tracking-value" id="sessionId">GENERATING...</span>
+                </div>
+                <div class="tracking-row">
+                    <span class="tracking-label">ENCRYPTION:</span>
+                    <span class="tracking-value">AES-256-GCM [ACTIVE]</span>
+                </div>
+                <div class="tracking-row">
+                    <span class="tracking-label">MULTILATERAL_VERIFICATION:</span>
+                    <span class="tracking-value">PENDING</span>
+                </div>
+                <div class="tracking-row">
+                    <span class="tracking-label">THREAT_LEVEL:</span>
+                    <span class="tracking-value" style="color: #ff8c00; animation: text-glitch 2s infinite;">CRITICAL // КРИТИЧЕСКИЙ // CRÍTICO</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="confirmation-section">
+        <label class="checkbox-container">
+            <input type="checkbox" id="agreeCheck">
+            <span class="checkbox-label">
+                    我已阅读并同意上述条款<br>
+                    I have read and agree to the above terms <br>
+                </span>
+        </label>
+
+        <button id="acceptBtn" class="enter-button" disabled onclick="enterArchive()">
+            [ 进入档案 // ENTER ARCHIVE // ENTRER DANS L'ARCHIVE ]
+        </button>
+    </div>
+
+    <div class="footer-info">
+        <div>UNITED NATIONS SECURITY COUNCIL // CONSEIL DE SÉCURITÉ DE L'ONU</div>
+        <div>СОВЕТ БЕЗОПАСНОСТИ ООН // CONSEJO DE SEGURIDAD DE LA ONU</div>
+        <div class="timestamp" id="timestamp">SYSTEM_TIME: 2075-01-19 07:00:00 UTC</div>
+        <div style="margin-top: 10px; font-size: 0.8em;">SECURE MULTILATERAL CONNECTION ESTABLISHED // CONNEXION MULTILATÉRALE SÉCURISÉE ÉTABLIE</div>
+    </div>
+</div>
+
+<script>
+    function generateSessionId() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let result = 'UNSC-DELTA-';
+        for (let i = 0; i < 12; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+
+    document.getElementById('sessionId').textContent = generateSessionId();
+
+    function updateTime() {
+        const now = new Date();
+        const year = 2075;
+        const month = '01';
+        const day = '19';
+        const hours = String(now.getUTCHours()).padStart(2, '0');
+        const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+        const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+
+        document.getElementById('timestamp').textContent =
+            `SYSTEM_TIME: ${year}-${month}-${day} ${hours}:${minutes}:${seconds} UTC`;
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    const agreeChk = document.getElementById('agreeCheck');
+    const acceptBtn = document.getElementById('acceptBtn');
+
+    agreeChk.addEventListener('change', () => {
+        acceptBtn.disabled = !agreeChk.checked;
+        if (agreeChk.checked) {
+            acceptBtn.style.animation = 'pulse 1.5s infinite';
+        }
+    });
+
+    function enterArchive() {
+        document.body.style.animation = 'flicker 0.1s 5';
+        acceptBtn.textContent = '[ 验证中... // VERIFYING... // VÉRIFICATION... ]';
+        acceptBtn.disabled = true;
+
+        setTimeout(() => {
+            window.location.href = '/delta107/delta107-2/';
+        }, 1500);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && agreeChk.checked && !acceptBtn.disabled) {
+            enterArchive();
+        }
+    });
+
+    setInterval(() => {
+        if (Math.random() > 0.95) {
+            document.body.style.filter = 'hue-rotate(10deg) brightness(1.2)';
+            setTimeout(() => {
+                document.body.style.filter = 'none';
+            }, 50);
+        }
+    }, 2000);
+</script>
+</body>
+</html>

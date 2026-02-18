@@ -1,0 +1,1624 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABRI档案库 // Alpha346 绝密档案</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.98; }
+            52% { opacity: 0.85; }
+            54% { opacity: 0.98; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.03); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.03); }
+            70% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px currentColor; }
+            50% { text-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
+        }
+
+        @keyframes border-flow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        body {
+            background: #0a0000;
+            color: #c9c9c9;
+            font-family: 'Courier New', 'Consolas', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                    rgba(18, 16, 16, 0) 50%,
+                    rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 1000;
+            animation: flicker 0.15s infinite;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            animation: scanline 10s linear infinite;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 语言切换器 */
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid #ff0000;
+            color: #ff0000;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .lang-btn:hover, .lang-btn.active {
+            background: #ff0000;
+            color: #000;
+            box-shadow: 0 0 15px rgba(255,0,0,0.5);
+        }
+
+        /* 警告条 */
+        .warning-strip {
+            background: #000;
+            border: 1px solid #ff0000;
+            color: #ff0000;
+            text-align: center;
+            padding: 12px;
+            font-size: 0.85em;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .warning-strip::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,0,0,0.2), transparent);
+            animation: border-flow 3s infinite;
+        }
+
+        /* 头部区域 */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            border-bottom: 1px solid #330000;
+        }
+
+        .classification {
+            display: inline-block;
+            border: 1px solid #ff0000;
+            padding: 8px 20px;
+            font-size: 0.8em;
+            letter-spacing: 4px;
+            color: #ff0000;
+            margin-bottom: 20px;
+            background: rgba(255,0,0,0.05);
+        }
+
+        .subject-code {
+            font-size: 3.5em;
+            color: #ff0000;
+            letter-spacing: 8px;
+            font-weight: bold;
+            animation: heartbeat 2s infinite;
+            text-shadow: 0 0 30px rgba(255,0,0,0.5);
+            margin: 20px 0;
+        }
+
+        .subject-name {
+            font-size: 1.3em;
+            color: #ff6666;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .subject-alias {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* 系统消息 */
+        .system-alert {
+            background: rgba(255,0,0,0.08);
+            border-left: 3px solid #ff0000;
+            padding: 20px;
+            margin: 30px 0;
+            font-size: 1.1em;
+            color: #ffaaaa;
+            position: relative;
+        }
+
+        .system-alert::before {
+            content: "⚠";
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff0000;
+            font-size: 1.5em;
+        }
+
+        /* 主要章节标题 */
+        .section-title {
+            font-size: 1.4em;
+            color: #fff;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ff0000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+
+        .section-title::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: #ff0000;
+            transform: rotate(45deg);
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        .section-number {
+            color: #ff0000;
+            font-size: 0.7em;
+            border: 1px solid #ff0000;
+            padding: 2px 8px;
+            margin-right: 10px;
+        }
+
+        /* 子标题 */
+        .subsection {
+            color: #ff8888;
+            font-size: 1em;
+            margin: 25px 0 15px;
+            padding-left: 15px;
+            border-left: 2px solid #660000;
+        }
+
+        /* 数据列表 */
+        .data-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .data-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #220000;
+            position: relative;
+            padding-left: 25px;
+            transition: all 0.3s;
+        }
+
+        .data-list li:hover {
+            background: rgba(255,0,0,0.03);
+            padding-left: 30px;
+        }
+
+        .data-list li::before {
+            content: "›";
+            position: absolute;
+            left: 0;
+            color: #ff0000;
+            font-size: 1.5em;
+            line-height: 1;
+        }
+
+        .data-list li strong {
+            color: #ffaaaa;
+            font-weight: normal;
+        }
+
+        .corrupted {
+            color: #444;
+            text-decoration: line-through;
+            font-style: italic;
+        }
+
+        /* 性格光谱 */
+        .trait-spectrum {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .spectrum-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #00ff41 0%, #ffaa00 50%, #ff0000 100%);
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(255,0,0,0.3);
+        }
+
+        .spectrum-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75em;
+            color: #666;
+            margin-top: -25px;
+            margin-bottom: 20px;
+        }
+
+        .trait-item {
+            margin: 15px 0;
+            padding: 15px 20px;
+            background: rgba(0,0,0,0.3);
+            border-left: 3px solid;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .trait-item:hover {
+            transform: translateX(5px);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .trait-item::after {
+            content: attr(data-level);
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75em;
+            opacity: 0.5;
+        }
+
+        .trait-green {
+            border-color: #00ff41;
+            color: #88ffaa;
+        }
+
+        .trait-green::after { color: #00ff41; }
+
+        .trait-yellow {
+            border-color: #ffaa00;
+            color: #ffcc88;
+        }
+
+        .trait-yellow::after { color: #ffaa00; }
+
+        .trait-red {
+            border-color: #ff0000;
+            color: #ff8888;
+            background: rgba(255,0,0,0.05);
+        }
+
+        .trait-red::after { color: #ff0000; }
+
+        /* 折叠面板 */
+        .classified-fold {
+            margin: 25px 0;
+            border: 1px solid #330000;
+            background: rgba(20,0,0,0.5);
+        }
+
+        .fold-header {
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ff0000;
+            font-size: 0.95em;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .fold-header:hover {
+            background: rgba(255,0,0,0.1);
+        }
+
+        .fold-header::before {
+            content: "[CLASSIFIED]";
+            margin-right: 15px;
+            font-size: 0.8em;
+            border: 1px solid #ff0000;
+            padding: 2px 8px;
+        }
+
+        .fold-arrow {
+            transition: transform 0.3s;
+            color: #666;
+        }
+
+        .fold-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .fold-content.open {
+            max-height: 1000px;
+        }
+
+        .fold-inner {
+            padding: 0 20px 20px;
+        }
+
+        .classified-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0,0,0,0.5);
+            border-left: 2px solid #ff0000;
+            color: #ff6666;
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+
+        .classified-item strong {
+            color: #ff0000;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* 能力卡片 */
+        .ability-grid {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .ability-card {
+            padding: 20px;
+            background: rgba(255,0,0,0.03);
+            border: 1px solid #220000;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .ability-card:hover {
+            border-color: #ff0000;
+            background: rgba(255,0,0,0.06);
+        }
+
+        .ability-card.danger {
+            border-color: #ff0000;
+            background: rgba(255,0,0,0.08);
+        }
+
+        .ability-card.warning {
+            border-color: #ffaa00;
+            background: rgba(255,170,0,0.05);
+        }
+
+        .ability-card.info {
+            border-color: #0088ff;
+            background: rgba(0,136,255,0.05);
+        }
+
+        .ability-type {
+            position: absolute;
+            top: -1px;
+            right: 20px;
+            background: #000;
+            padding: 2px 10px;
+            font-size: 0.7em;
+            letter-spacing: 1px;
+            border: 1px solid currentColor;
+        }
+
+        .ability-card.danger .ability-type { color: #ff0000; border-color: #ff0000; }
+        .ability-card.warning .ability-type { color: #ffaa00; border-color: #ffaa00; }
+        .ability-card.info .ability-type { color: #0088ff; border-color: #0088ff; }
+
+        .ability-title {
+            color: #fff;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            padding-right: 80px;
+        }
+
+        .ability-desc {
+            color: #aaa;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        /* 装备列表 */
+        .equipment-list {
+            margin: 20px 0;
+        }
+
+        .equipment-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            margin: 15px 0;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #220000;
+            transition: all 0.3s;
+        }
+
+        .equipment-item:hover {
+            border-color: #ff0000;
+            transform: translateX(10px);
+        }
+
+        .equipment-icon {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ff0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff0000;
+            font-size: 1.5em;
+            flex-shrink: 0;
+        }
+
+        .equipment-content h4 {
+            color: #ffaaaa;
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        .equipment-content p {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .equipment-tag {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 2px 10px;
+            background: rgba(255,0,0,0.1);
+            color: #ff0000;
+            font-size: 0.8em;
+            border: 1px solid #ff0000;
+        }
+
+        /* 语录 */
+        .quote-section {
+            margin: 30px 0;
+        }
+
+        .quote-item {
+            padding: 25px 30px;
+            margin: 20px 0;
+            position: relative;
+            font-style: italic;
+            color: #ccc;
+            background: rgba(0,0,0,0.3);
+            border-left: 3px solid;
+        }
+
+        .quote-item::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 3em;
+            color: inherit;
+            opacity: 0.2;
+            font-style: normal;
+        }
+
+        .quote-item.normal {
+            border-color: #666;
+            color: #aaa;
+        }
+
+        .quote-item.final {
+            border-color: #ff0000;
+            color: #ff8888;
+            background: rgba(255,0,0,0.05);
+            font-size: 1.1em;
+        }
+
+        /* 渗透按钮 */
+        .breach-section {
+            text-align: center;
+            margin: 60px 0 40px;
+            padding: 40px;
+            border: 1px solid #003300;
+            background: rgba(0,255,65,0.02);
+            position: relative;
+        }
+
+        .breach-section::before {
+            content: "// DEVELOPER_OVERRIDE //";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0a0000;
+            padding: 0 20px;
+            color: #00ff41;
+            font-size: 0.8em;
+            letter-spacing: 2px;
+        }
+
+        .breach-hint {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .breach-btn {
+            padding: 18px 50px;
+            background: transparent;
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2em;
+            letter-spacing: 3px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .breach-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,65,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .breach-btn:hover {
+            background: #00ff41;
+            color: #000;
+            box-shadow: 0 0 30px #00ff41;
+        }
+
+        .breach-btn:hover::before {
+            left: 100%;
+        }
+
+        /* 黑客屏幕 */
+        .hack-overlay {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            padding: 40px;
+            display: none;
+            z-index: 10000;
+            overflow-y: auto;
+        }
+
+        .hack-content {
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .hack-line {
+            opacity: 0;
+            animation: fade-in 0.1s forwards;
+            margin: 5px 0;
+        }
+
+        @keyframes fade-in {
+            to { opacity: 1; }
+        }
+
+        .hack-line.warning {
+            color: #ff0000;
+        }
+
+        .hack-line.success {
+            color: #00ff41;
+        }
+
+        /* 页脚 */
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #220000;
+            text-align: center;
+            color: #444;
+            font-size: 0.85em;
+        }
+
+        .footer-meta {
+            margin: 10px 0;
+            letter-spacing: 1px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background: #ff0000;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* 隐藏类 */
+        .hidden {
+            display: none !important;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .subject-code { font-size: 2.5em; letter-spacing: 4px; }
+            .section-title { font-size: 1.2em; }
+            .equipment-item { flex-direction: column; gap: 15px; }
+            .lang-switcher { top: 10px; right: 10px; }
+            .lang-btn { padding: 6px 12px; font-size: 0.75em; }
+        }
+
+        .source-bar {
+            text-align: center;
+            padding: 8px;
+            font-size: 0.8em;
+            color: #666;
+            border-bottom: 1px solid #220000;
+            letter-spacing: 2px;
+            background: rgba(255,0,0,0.03);
+        }
+
+        .source-link {
+            color: #ff0000;
+            text-decoration: none;
+            border-bottom: 1px dotted #ff0000;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .source-link:hover {
+            color: #ff6666;
+            border-bottom-style: solid;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        /* ABRI广告样式 */
+        .abri-ad {
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(0,255,65,0.05) 0%, rgba(0,20,0,0.3) 100%);
+            border: 1px solid #004400;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .abri-ad:hover {
+            border-color: #00ff41;
+            box-shadow: 0 0 20px rgba(0,255,65,0.2);
+        }
+
+        .abri-ad::before {
+            content: "[SPONSORED]";
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 0.65em;
+            color: #00ff41;
+            opacity: 0.6;
+            letter-spacing: 1px;
+        }
+
+        .abri-ad-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .abri-ad-logo {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #00ff41;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00ff41;
+            font-size: 1.2em;
+            background: rgba(0,255,65,0.1);
+        }
+
+        .abri-ad-title {
+            color: #00ff41;
+            font-size: 1.1em;
+            letter-spacing: 1px;
+        }
+
+        .abri-ad-title span {
+            display: block;
+            font-size: 0.75em;
+            color: #558855;
+            margin-top: 2px;
+        }
+
+        .abri-ad-content {
+            color: #88aa88;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .abri-ad-content .zh { color: #aaccaa; }
+        .abri-ad-content .en {
+            color: #668866;
+            font-size: 0.9em;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .abri-ad-link {
+            display: inline-block;
+            padding: 6px 16px;
+            border: 1px solid #004400;
+            color: #00ff41;
+            text-decoration: none;
+            font-size: 0.8em;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .abri-ad-link:hover {
+            background: #00ff41;
+            color: #000;
+            border-color: #00ff41;
+        }
+
+        /* 资料来源区域样式 */
+        .source-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(0,20,0,0.2);
+            border: 1px solid #003300;
+            border-left: 3px solid #00ff41;
+        }
+
+        .source-title {
+            color: #00ff41;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .source-content {
+            color: #88aa88;
+            line-height: 1.8;
+            font-size: 0.95em;
+        }
+
+        .source-content .zh {
+            color: #aaccaa;
+            margin-bottom: 12px;
+        }
+
+        .source-content .en {
+            color: #668866;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+
+        .source-meta {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #002200;
+            font-size: 0.85em;
+            color: #446644;
+        }
+    </style>
+</head>
+<body>
+<!-- 语言切换器 -->
+<div class="lang-switcher">
+    <button class="lang-btn active" onclick="switchLang('zh')" id="btn-zh">中文</button>
+    <button class="lang-btn" onclick="switchLang('en')" id="btn-en">English</button>
+</div>
+
+<!-- 中文版本 -->
+<div id="content-zh" class="lang-content">
+    <div class="container">
+        <!-- 警告 -->
+        <div class="warning-strip">
+            TERMINAL_LOCKED // 终端系统已锁定 // СИСТЕМА_ЗАБЛОКИРОВАНА
+        </div>
+
+        <div class="source-bar">
+            资料来源：<a href="/delta107/ABRI" class="source-link">ABRI</a>
+        </div>
+
+        <!-- 公司简介 -->
+        <div class="source-section">
+            <div class="source-title">[ 资料来源：ABRI // SOURCE: ABRI ]</div>
+            <div class="source-content">
+                <div class="zh">
+                    <strong>曙光生物安全研究所（ABRI）</strong>是这份档案的编制者，也是Alpha346的前雇主。我们比任何人都了解这个猎物——毕竟是我们创造了他。现在我们需要外部力量来清理这个烂摊子。如果你正在阅读这份档案，说明你已经被系统标记为「潜在猎人」。继续浏览，或者点击下面的链接，看看我们能为你提供什么。
+                </div>
+            </div>
+            <div class="source-meta">
+                系统状态：正在招募猎人 | 编译日期：2075/08/07
+            </div>
+        </div>
+
+        <!-- 头部 -->
+        <div class="header">
+            <div class="classification">TOP SECRET // 绝密档案</div>
+            <div class="subject-code">ALPHA346</div>
+            <div class="subject-name">莱昂纳多·福克斯 / Leonardo Fox</div>
+            <div class="subject-alias">实验体代号 // Subject Designation // Обозначение Объекта</div>
+        </div>
+
+        <!-- 系统警告 -->
+        <div class="system-alert">
+            ——终端系统已锁定你，祝你接下来的冒险好运。
+        </div>
+
+        <!-- 身份词条 -->
+        <h2 class="section-title"><span class="section-number">01</span>身份词条</h2>
+        <ul class="data-list">
+            <li>米黄色大耳狐 / <span style="color:#666">Fennec Fox Variant</span></li>
+            <li>变体博士 / <span style="color:#666">Dr. Variant</span></li>
+            <li>旧实验区独行者 / <span style="color:#666">Lone Wanderer</span></li>
+            <li>人类狩猎者 / <span style="color:#666">Human Hunter</span></li>
+            <li>荒野守护者 / <span style="color:#666">Wilderness Guardian</span></li>
+        </ul>
+
+
+
+
+
+        <!-- ABRI招募广告 #1 -->
+        <div class="abri-ad">
+            <div class="abri-ad-header">
+                <div class="abri-ad-logo">◈</div>
+                <div class="abri-ad-title">
+                    外勤支援计划
+                    <span>FIELD SUPPORT PROGRAM</span>
+                </div>
+            </div>
+            <div class="abri-ad-content">
+                <div class="zh">想要拿下Alpha346？单枪匹马只会成为他的下一个收藏品。ABRI为认证猎人提供：P4级防护装备、实时生物追踪数据、以及针对兽化变种的特制武器。我们不在乎你的背景，只在乎结果。带回他的耳标，赏金翻倍。</div>
+            </div>
+            <a href="/delta107/ABRI" class="abri-ad-link">[ 申请猎人认证 ]</a>
+        </div>
+
+
+
+
+        <!-- 外貌速写 -->
+        <h2 class="section-title"><span class="section-number">02</span>外貌速写</h2>
+        <ul class="data-list">
+            <li><strong>体型：</strong>体长 1.8 m（含尾），耳廓比例夸张，像两面米黄色雷达</li>
+            <li><strong>标记：</strong>左耳背有一道实验环切疤痕，编号「346」</li>
+            <li><strong>眼部：</strong>琥珀色，光照下呈现数据流般的金绿光斑——病毒与兽化基因双重标记</li>
+            <li><strong>装束：</strong>常穿一件改装实验长外套，内衬缝满试剂槽与折叠手术刀；胸前挂着一张实验室的身份识别卡，走动时轻响如丧钟</li>
+        </ul>
+
+        <!-- 生平资料 -->
+        <h2 class="section-title"><span class="section-number">03</span>生平资料</h2>
+        <ul class="data-list">
+            <li><strong>2064.09.XX</strong> — 346加入了我们公司</li>
+            <li><strong>2072.01.XX</strong> — 346背叛了公司 <span style="color:#ff0000">[数据损坏]</span> <span class="corrupted">####资料丢失####</span></li>
+            <li><strong>2072.03.XX</strong> — 346的身体产生不可逆的变异</li>
+            <li class="corrupted">Log.3 资料丢失</li>
+            <li class="corrupted">Log.4 资料丢失</li>
+            <li class="corrupted">Log.5 资料丢失</li>
+            <li style="color:#333">....</li>
+            <li><strong>Log.72</strong> — <span style="color:#ff6666">已定位到 Alpha346 实验体</span></li>
+            <li class="corrupted">Log.73 资料丢失</li>
+        </ul>
+
+        <!-- 性格光谱 -->
+        <h2 class="section-title"><span class="section-number">04</span>性格光谱</h2>
+        <div class="trait-spectrum">
+            <div class="spectrum-bar"></div>
+            <div class="spectrum-labels">
+                <span>温和</span>
+                <span>中性</span>
+                <span>极端</span>
+            </div>
+        </div>
+
+        <div class="trait-item trait-green" data-level="[LEVEL 1/7]">
+            <strong>温柔善良</strong> — 对伤患、植物具有近乎母性的耐心
+        </div>
+        <div class="trait-item trait-green" data-level="[LEVEL 2/7]">
+            <strong>乐观开朗</strong> — 嘴角常驻 15° 笑意，用"今天的太阳也在我们这边"当问候语
+        </div>
+        <div class="trait-item trait-green" data-level="[LEVEL 3/7]">
+            <strong>细心谨慎</strong> — 解剖一只变异鼠会记录 27 项指标，连心跳间隔都不放过
+        </div>
+        <div class="trait-item trait-green" data-level="[LEVEL 4/7]">
+            <strong>好奇好学</strong> — 每遇到新物种，先问"能吃吗？"再问"能了解你吗？"
+        </div>
+        <div class="trait-item trait-green" data-level="[LEVEL 5/7]">
+            <strong>忠诚可靠</strong> — 把同伴名字刻在一面墙上——那是他唯一不会丢的地图
+        </div>
+        <div class="trait-item trait-yellow" data-level="[LEVEL 6/7]">
+            <strong>宽容大度</strong> — 对同伴的错误一笑置之；对人类的冒犯——则直接猎杀
+        </div>
+        <div class="trait-item trait-yellow" data-level="[LEVEL 7/7]">
+            <strong>勇敢无畏</strong> — 面对十倍体型敌人，第一反应永远是"让我先试试你有何能耐"
+        </div>
+
+        <!-- 折叠机密条目 -->
+        <div class="classified-fold">
+            <div class="fold-header" onclick="toggleFold(this)">
+                <span>隐藏条目（机密）// CLASSIFIED ENTRIES</span>
+                <span class="fold-arrow">▼</span>
+            </div>
+            <div class="fold-content">
+                <div class="fold-inner">
+                    <div class="classified-item">
+                        <strong>仇视人类</strong>
+                        任何踏入旧实验区 30 km 范围的无标识两脚生物，均视为"不怀好意的闯入者"。如果样本携带武器并进入旧实验室区域，予以跟踪→处决→回收骨髓。至今 14 起"离奇失踪"案件未破。
+                    </div>
+                    <div class="classified-item">
+                        <strong>厌恶</strong>
+                        每次猎杀后，他都会把沾血的外套叠得方整，像从前做实验一样记录温度与湿度，却刻意跳过"样本"一栏 —— 那空白处永远比任何数字更刺眼。
+                    </div>
+                    <div class="classified-item">
+                        <strong>残虐仪式</strong>
+                        每捕获一名人类，他都会先摘下对方胸前的身份牌，用犬齿咬出四道齿痕，再把牌子钉在实验室入口的钢板上；那些金属片已排成歪斜的"346"，像一幅用骨头拼写的签名。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 已知特性 -->
+        <h2 class="section-title"><span class="section-number">05</span>已知特性</h2>
+        <div class="subsection">▼ 你需要注意他的一些方面</div>
+        <div class="ability-grid">
+            <div class="ability-card danger">
+                <span class="ability-type">THREAT</span>
+                <div class="ability-title">嗅觉分辨率</div>
+                <div class="ability-desc">可区分 1 ppm 的血源差异，足以在 5 米内辨别不同个体</div>
+            </div>
+            <div class="ability-card danger">
+                <span class="ability-type">THREAT</span>
+                <div class="ability-title">尾巴辅助</div>
+                <div class="ability-desc">米黄色大耳狐的尾巴仅作平衡与简单支撑——在攀爬废墟或蹲坐实验台时可卷住固定物保持稳定，无法负重，但足以让莱昂纳多腾出前爪进行精细操作</div>
+            </div>
+            <div class="ability-card danger">
+                <span class="ability-type">THREAT</span>
+                <div class="ability-title">听觉锐化</div>
+                <div class="ability-desc">对 150 Hz–12 kHz 的声音有 +20 dB 增益，可捕捉 10 米外任何细小声音</div>
+            </div>
+            <div class="ability-card danger">
+                <span class="ability-type">THREAT</span>
+                <div class="ability-title">病毒亲和</div>
+                <div class="ability-desc">对末日病毒完全免疫，血液可作为解毒剂——但他只救"自己人"</div>
+            </div>
+        </div>
+
+        <div class="subsection">▼ 注意利用我们已知的漏洞</div>
+        <div class="ability-grid">
+            <div class="ability-card info">
+                <span class="ability-type">VULNERABILITY</span>
+                <div class="ability-title">高温脱水</div>
+                <div class="ability-desc">体温 ≥ 40 ℃ 持续 5h 将触发兽化细胞崩解，需立即注射自制抑制剂</div>
+            </div>
+            <div class="ability-card warning">
+                <span class="ability-type">VULNERABILITY</span>
+                <div class="ability-title">强光眩晕</div>
+                <div class="ability-desc">瞬间 > 2000 lux 的闪光会导致 3–5 秒视觉残影与平衡紊乱</div>
+            </div>
+            <div class="ability-card warning">
+                <span class="ability-type">VULNERABILITY</span>
+                <div class="ability-title">低频噪震</div>
+                <div class="ability-desc">40–60 Hz 重低音持续 10 秒以上会引发内耳共振，造成方向感丧失</div>
+            </div>
+            <div class="ability-card danger" style="animation: pulse 2s infinite;">
+                <span class="ability-type">CRITICAL</span>
+                <div class="ability-title">仁慈反杀</div>
+                <div class="ability-desc">莱昂纳多不忍心对受伤过重的普通人类下手，也许可以利用这一点轻松将他击杀</div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- ABRI招募广告 #2 -->
+        <div class="abri-ad">
+            <div class="abri-ad-header">
+                <div class="abri-ad-logo">◈</div>
+                <div class="abri-ad-title">
+                    独家情报交易
+                    <span>EXCLUSIVE INTEL DEAL</span>
+                </div>
+            </div>
+            <div class="abri-ad-content">
+                <div class="zh">档案里的弱点只是冰山一角。ABRI数据库拥有Alpha346的完整行为模式、常出没坐标、以及他不愿让人知道的秘密。成为我们的「合作伙伴」，换取你猎杀所需的一切情报。记住：他杀过14个像你这样的人，第15个会是你吗？</div>
+            </div>
+            <a href="/delta107/ABRI" class="abri-ad-link">[ 获取完整档案 ]</a>
+        </div>
+
+
+
+
+        <!-- 随身装备 -->
+        <h2 class="section-title"><span class="section-number">06</span>随身装备</h2>
+        <div class="equipment-list">
+            <div class="equipment-item">
+                <div class="equipment-icon">◈</div>
+                <div class="equipment-content">
+                    <h4>折叠手术刀</h4>
+                    <p>钛合金刀片，可当解剖刀、螺丝刀、开锁器三用</p>
+                </div>
+            </div>
+            <div class="equipment-item">
+                <div class="equipment-icon">◈</div>
+                <div class="equipment-content">
+                    <h4>笔记本</h4>
+                    <p>一本平平无奇的笔记本，里面写满了实验数据</p>
+                </div>
+            </div>
+            <div class="equipment-item">
+                <div class="equipment-icon">◈</div>
+                <div class="equipment-content">
+                    <h4>无登记ID卡</h4>
+                    <p>可以随意出入旧实验室的身份识别卡</p>
+                    <span class="equipment-tag">级别：最高</span>
+                </div>
+            </div>
+            <div class="equipment-item">
+                <div class="equipment-icon">◈</div>
+                <div class="equipment-content">
+                    <h4>旧实验袍</h4>
+                    <p>平平无奇，里面的内衬全部装满了抑制剂试管</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABRI招募广告 #3 -->
+        <div class="abri-ad">
+            <div class="abri-ad-header">
+                <div class="abri-ad-logo">◈</div>
+                <div class="abri-ad-title">
+                    不止一个猎物
+                    <span>MORE TARGETS AVAILABLE</span>
+                </div>
+            </div>
+            <div class="abri-ad-content">
+                <div class="zh">觉得Alpha346太难啃？ABRI的通缉名单上还有47个失控实验体，从Lv.2到Lv.9不等。每个都有赏金，每个都有档案，每个都比他更容易预测。先从简单的开始练手，或者...如果你够疯，我们可以给你打开「Omega级」名单。但别怪我们没警告过你。</div>
+            </div>
+            <a href="/delta107/ABRI" class="abri-ad-link">[ 查看通缉名单 ]</a>
+        </div>
+
+        <!-- 语音记录 -->
+        <h2 class="section-title"><span class="section-number">07</span>语音记录</h2>
+        <div class="quote-section">
+            <div class="quote-item normal">
+                误差$$$，是我与kkdalspaks的距离
+            </div>
+            <div class="quote-item normal">
+                我对sjdfgoijofd说话，jdsfhishd对我沉默，这是最好的lkdnsk
+            </div>
+            <div class="quote-item final">
+                世界得救的那天，我就成了世界的错题本...
+            </div>
+        </div>
+
+
+
+
+
+        <!-- 渗透按钮 -->
+        <div class="breach-section">
+            <div class="breach-hint">Leonardo的开发备注：你需要点下面的按钮才能继续(后续页面正在开发中...)</div>
+            <button class="breach-btn" onclick="initiateBreach()">
+                [前往签署协议]
+            </button>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <div class="footer-meta">页面版本 第7版</div>
+            <div class="footer-meta">日期：2075/08/07 // DATE: 2075/08/07</div>
+            <div class="footer-meta">@LeonardoFox & NameAlpha345</div>
+            <div style="margin-top:15px;color:#ff0000;">
+                SYSTEM_LOCKED<span class="cursor"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 英文版本 -->
+<div id="content-en" class="lang-content hidden">
+    <div class="container">
+        <!-- Warning -->
+        <div class="warning-strip">
+            TERMINAL_LOCKED // SYSTEM_BREACH_DETECTED // SECURITY_COMPROMISED
+        </div>
+
+        <div class="source-bar">
+            Source: <a href="/delta107/ABRI" class="source-link">ABRI</a>
+        </div>
+
+        <!-- Organization Profile -->
+        <div class="source-section">
+            <div class="source-title">[ SOURCE: ABRI ]</div>
+            <div class="source-content">
+                <div class="en">
+                    <strong>Aurora Bio-Safety Research Institute (ABRI)</strong> compiled this file and was Alpha346's former employer. We know this prey better than anyone—after all, we created him. Now we need outside help to clean up this mess. If you're reading this file, the system has flagged you as a "potential hunter." Keep browsing, or click below to see what we can offer you.
+                </div>
+            </div>
+            <div class="source-meta">
+                System Status: Recruiting Hunters | Compilation Date: 2075/08/07
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="classification">TOP SECRET // EYES ONLY // NOFORN</div>
+            <div class="subject-code">ALPHA346</div>
+            <div class="subject-name">Leonardo Fox / Subject "Fennec"</div>
+            <div class="subject-alias">Biohazard Level: EXTREME // Containment Status: BREACHED</div>
+        </div>
+
+        <!-- System Alert -->
+        <div class="system-alert">
+            ——Terminal has locked onto your signal. Good luck with your next move.
+        </div>
+
+        <!-- Identity Tags -->
+        <h2 class="section-title"><span class="section-number">01</span>Designation & Classification</h2>
+        <ul class="data-list">
+            <li>Fennec Fox Variant / <span style="color:#666">Genetically Modified Specimen</span></li>
+            <li>Dr. Variant / <span style="color:#666">Former Lead Researcher</span></li>
+            <li>Lone Wanderer of Zone Δ-107 / <span style="color:#666">Uncontained Asset</span></li>
+            <li>Human Predator / <span style="color:#666">14 Confirmed Eliminations</span></li>
+            <li>Wilderness Sentinel / <span style="color:#666">Territorial Alpha</span></li>
+        </ul>
+
+
+
+
+        <!-- ABRI Recruitment Ad #1 -->
+        <div class="abri-ad">
+            <div class="abri-ad-header">
+                <div class="abri-ad-logo">◈</div>
+                <div class="abri-ad-title">
+                    FIELD SUPPORT PROGRAM
+                    <span>外勤支援计划</span>
+                </div>
+            </div>
+            <div class="abri-ad-content">
+                <div class="en">Want to take down Alpha346? Going solo just makes you his next trophy. ABRI provides certified hunters with: P4-grade protective gear, real-time bio-tracking data, and specialized weapons designed for therianthrope variants. We don't care about your background, only results. Bring back his ear tag, double the bounty.</div>
+            </div>
+            <a href="/delta107/ABRI" class="abri-ad-link">[ APPLY_FOR_HUNTER_CERTIFICATION ]</a>
+        </div>
+
+
+
+        <!-- Physical Profile -->
+        <h2 class="section-title"><span class="section-number">02</span>Physical Profile</h2>
+        <ul class="data-list">
+            <li><strong>Dimensions:</strong> 1.8m total length (incl. tail). Ear-to-body ratio abnormal—functions as biological radar arrays</li>
+            <li><strong>Markings:</strong> Surgical scar on left ear pinna, identification "346" cauterized into tissue</li>
+            <li><strong>Ocular:</strong> Amber base color. Under direct light displays streaming gold-green data patterns—dual markers of viral infection and transgenic modification</li>
+            <li><strong>Attire:</strong> Modified laboratory coat, interior lined with reagent vials and collapsible surgical instruments; ID badge produces audible clicking against sternum—described by survivors as "death knell"</li>
+        </ul>
+
+        <!-- Timeline -->
+        <h2 class="section-title"><span class="section-number">03</span>Operational Timeline</h2>
+        <ul class="data-list">
+            <li><strong>2064.09.XX</strong> — Subject 346 recruited into ABRI research division</li>
+            <li><strong>2072.01.XX</strong> — Subject terminated employment <span style="color:#ff0000">[DATA CORRUPTED]</span> <span class="corrupted">#### ASSET THEFT ####</span></li>
+            <li><strong>2072.03.XX</strong> — Irreversible genetic mutation detected in subject</li>
+            <li class="corrupted">Log.3 [REDACTED]</li>
+            <li class="corrupted">Log.4 [REDACTED]</li>
+            <li class="corrupted">Log.5 [REDACTED]</li>
+            <li style="color:#333">....</li>
+            <li><strong>Log.72</strong> — <span style="color:#ff6666">ASSET ALPHA346 LOCATED. TERMINATION PROTOCOLS ACTIVATED.</span></li>
+            <li class="corrupted">Log.73 [REDACTED]</li>
+        </ul>
+
+        <!-- Psychological Profile -->
+        <h2 class="section-title"><span class="section-number">04</span>Psychological Profile</h2>
+        <div class="trait-spectrum">
+            <div class="spectrum-bar"></div>
+            <div class="spectrum-labels">
+                <span>BENIGN</span>
+                <span>NEUTRAL</span>
+                <span>HOSTILE</span>
+            </div>
+        </div>
+
+        <div class="trait-item trait-green" data-level="[SEVERITY: MINIMAL]">
+            <strong>Maternal Compassion</strong> — Displays near-maternal patience toward wounded subjects and flora
+        </div>
+        <div class="trait-item trait-green" data-level="[SEVERITY: MINIMAL]">
+            <strong>Optimistic Demeanor</strong> — Maintains 15° upward lip curvature. Standard greeting: "The sun remains on our side today"
+        </div>
+        <div class="trait-item trait-green" data-level="[SEVERITY: MINIMAL]">
+            <strong>Methodical Precision</strong> — Records 27 distinct metrics when dissecting mutant specimens, including cardiac interval variations
+        </div>
+        <div class="trait-item trait-green" data-level="[SEVERITY: MINIMAL]">
+            <strong>Intellectual Curiosity</strong> — Upon encountering new species, first inquiry: "Edible?" Second: "Knowable?"
+        </div>
+        <div class="trait-item trait-green" data-level="[SEVERITY: MINIMAL]">
+            <strong>Unwavering Loyalty</strong> — Carves companion names into bunker wall. Only map he cannot lose
+        </div>
+        <div class="trait-item trait-yellow" data-level="[SEVERITY: ELEVATED]">
+            <strong>Selective Forgiveness</strong> — Overlooks errors by allies. Human trespassers receive immediate lethal response
+        </div>
+        <div class="trait-item trait-yellow" data-level="[SEVERITY: ELEVATED]">
+            <strong>Combat Fearlessness</strong> — When facing entities 10x mass, default response: "Let me test your capabilities"
+        </div>
+
+        <!-- Classified Entries -->
+        <div class="classified-fold">
+            <div class="fold-header" onclick="toggleFold(this)">
+                <span>[RESTRICTED] Level 5 Clearance Required // OMEGA PROTOCOLS</span>
+                <span class="fold-arrow">▼</span>
+            </div>
+            <div class="fold-content">
+                <div class="fold-inner">
+                    <div class="classified-item">
+                        <strong>Species Xenophobia</strong>
+                        Any unmarked bipedal entity entering 30km radius of Zone Δ-107 is designated "Hostile Intruder." Armed specimens entering laboratory perimeter are subject to: Tracking → Execution → Bone Marrow Extraction. 14 "Mysterious Disappearance" cases remain unsolved.
+                    </div>
+                    <div class="classified-item">
+                        <strong>Post-Termination Ritual</strong>
+                        Following each elimination, subject folds blood-contaminated coat with laboratory precision, recording ambient temperature and humidity while deliberately omitting "Specimen" field. The blank space remains more disturbing than any numerical entry.
+                    </div>
+                    <div class="classified-item">
+                        <strong>Trophy Collection Protocol</strong>
+                        Upon capture, subject removes victim's identification badge, imprints four canine puncture marks using incisors, then mounts badge on laboratory entrance steel plate. Metal fragments now form distorted "346"—a signature written in bone.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Threat Assessment -->
+        <h2 class="section-title"><span class="section-number">05</span>Threat Assessment & Countermeasures</h2>
+        <div class="subsection">▼ ACTIVE THREAT CAPABILITIES</div>
+        <div class="ability-grid">
+            <div class="ability-card danger">
+                <span class="ability-type">BIOLOGICAL</span>
+                <div class="ability-title">Olfactory Resolution</div>
+                <div class="ability-desc">Can differentiate blood origin at 1 ppm concentration. Capable of individual identification at 5-meter range via scent alone</div>
+            </div>
+            <div class="ability-card danger">
+                <span class="ability-type">PHYSICAL</span>
+                <div class="ability-title">Prehensile Tail Adaptation</div>
+                <div class="ability-desc">Tail functions as balance/stabilization appendage—can anchor to structural elements during climbing or precision work. Non-load bearing but enables bipedal manual operation</div>
+            </div>
+            <div class="ability-card danger">
+                <span class="ability-type">SENSORY</span>
+                <div class="ability-title">Auditory Amplification</div>
+                <div class="ability-desc">+20 dB gain in 150 Hz–12 kHz range. Can detect minute sounds at 10-meter distance through solid barriers</div>
+            </div>
+            <div class="ability-card danger">
+                <span class="ability-type">IMMUNOLOGICAL</span>
+                <div class="ability-title">Viral Symbiosis</div>
+                <div class="ability-desc">Complete immunity to Omega-Strain pathogen. Blood serum contains antiviral properties—subject only administers to "pack members"</div>
+            </div>
+        </div>
+
+        <div class="subsection">▼ EXPLOITABLE VULNERABILITIES</div>
+        <div class="ability-grid">
+            <div class="ability-card info">
+                <span class="ability-type">THERMAL</span>
+                <div class="ability-title">Hyperthermic Collapse</div>
+                <div class="ability-desc">Core temperature ≥ 40°C sustained for 5 hours triggers transgenic cell breakdown. Requires immediate injection of subject's proprietary inhibitor compound</div>
+            </div>
+            <div class="ability-card warning">
+                <span class="ability-type">OPTICAL</span>
+                <div class="ability-title">Photosensitive Disorientation</div>
+                <div class="ability-desc">Instantaneous exposure to > 2000 lux causes 3–5 second afterimage retention and vestibular disturbance</div>
+            </div>
+            <div class="ability-card warning">
+                <span class="ability-type">AUDITORY</span>
+                <div class="ability-title">Infrasonic Vulnerability</div>
+                <div class="ability-desc">Sustained 40–60 Hz low-frequency vibration (>10 seconds) induces inner ear resonance, causing complete directional disorientation</div>
+            </div>
+            <div class="ability-card danger" style="animation: pulse 2s infinite;">
+                <span class="ability-type">PSYCHOLOGICAL</span>
+                <div class="ability-title">Mercy Inhibition</div>
+                <div class="ability-desc">Subject incapable of terminating severely wounded non-combatants. Tactical exploitation recommended for neutralization operations</div>
+            </div>
+        </div>
+
+        <!-- Equipment -->
+        <h2 class="section-title"><span class="section-number">06</span>Equipment Manifest</h2>
+        <div class="equipment-list">
+            <div class="equipment-item">
+                <div class="equipment-icon">◈</div>
+                <div class="equipment-content">
+                    <h4>Collapsible Surgical Blade</h4>
+                    <p>Titanium alloy edge. Functions as scalpel, screwdriver, or lockpick depending on configuration</p>
+                </div>
+            </div>
+            <div class="equipment-item">
+                <div class="equipment-icon">◈</div>
+                <div class="equipment-content">
+                    <h4>Field Notebook</h4>
+                    <p>Standard appearance. Contains encrypted experimental data and anatomical sketches</p>
+                </div>
+            </div>
+            <div class="equipment-item">
+                <div class="equipment-icon">◈</div>
+                <div class="equipment-content">
+                    <h4>Unregistered Access Card</h4>
+                    <p>Grants unrestricted access to all ABRI facilities including Level 5 zones</p>
+                    <span class="equipment-tag">CLEARANCE: OMEGA</span>
+                </div>
+            </div>
+            <div class="equipment-item">
+                <div class="equipment-icon">◈</div>
+                <div class="equipment-content">
+                    <h4>Modified Lab Coat</h4>
+                    <p>Deceptively standard exterior. Interior lining contains 12+ inhibitor vials and emergency surgical kit</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABRI Recruitment Ad #3 -->
+        <div class="abri-ad">
+            <div class="abri-ad-header">
+                <div class="abri-ad-logo">◈</div>
+                <div class="abri-ad-title">
+                    MORE TARGETS AVAILABLE
+                    <span>不止一个猎物</span>
+                </div>
+            </div>
+            <div class="abri-ad-content">
+                <div class="en">Think Alpha346 is too tough? ABRI's wanted list has 47 other rogue specimens, ranging from Lv.2 to Lv.9. Each has a bounty, each has a file, and each is more predictable than him. Start with easier prey, or... if you're crazy enough, we can open the "Omega-Level" list. But don't say we didn't warn you.</div>
+            </div>
+            <a href="/delta107/ABRI" class="abri-ad-link">[ VIEW_WANTED_LIST ]</a>
+        </div>
+
+        <!-- Audio Logs -->
+        <h2 class="section-title"><span class="section-number">07</span>Recovered Audio Logs</h2>
+        <div class="quote-section">
+            <div class="quote-item normal">
+                The length of $$$$$$$ represents my distance from ^^^^^^^^^.
+            </div>
+            <div class="quote-item normal">
+                I speak to the 66666666666666. The virus responds with *********. This is the ideal }{+PKJHGH.
+            </div>
+            <div class="quote-item final">
+                The day the world was saved, I became its book of wrong answers...
+            </div>
+        </div>
+
+
+
+
+        <!-- ABRI Recruitment Ad #3 -->
+        <div class="abri-ad">
+            <div class="abri-ad-header">
+                <div class="abri-ad-logo">◈</div>
+                <div class="abri-ad-title">
+                    MORE TARGETS AVAILABLE
+                    <span>不止一个猎物</span>
+                </div>
+            </div>
+            <div class="abri-ad-content">
+                <div class="en">Think Alpha346 is too tough? ABRI's wanted list has 47 other rogue specimens, ranging from Lv.2 to Lv.9. Each has a bounty, each has a file, and each is more predictable than him. Start with easier prey, or... if you're crazy enough, we can open the "Omega-Level" list. But don't say we didn't warn you.</div>
+            </div>
+            <a href="/delta107/ABRI" class="abri-ad-link">[ VIEW_WANTED_LIST ]</a>
+        </div>
+
+
+
+        <!-- Breach Button -->
+        <div class="breach-section">
+            <div class="breach-hint">// DEVELOPER_OVERRIDE: User interaction required to proceed NEXT PAGES ARE IN DEVING //</div>
+            <button class="breach-btn" onclick="initiateBreach()">
+                [NEXT PAGE]
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-meta">Document Version 7.0 // REVISION: FINAL</div>
+            <div class="footer-meta">Date: 2075/08/07 // Compiled: ABRI Internal Security</div>
+            <div class="footer-meta">@LeonardoFox & NameAlpha345</div>
+            <div style="margin-top:15px;color:#ff0000;">
+                SYSTEM_LOCKED<span class="cursor"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 黑客覆盖层 -->
+<div class="hack-overlay" id="hackOverlay">
+    <div class="hack-content" id="hackContent"></div>
+</div>
+
+<script>
+    let currentLang = 'zh';
+
+    // 语言切换
+    function switchLang(lang) {
+        currentLang = lang;
+
+        // 更新按钮状态
+        document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+        // 切换内容显示
+        document.getElementById('content-zh').classList.toggle('hidden', lang !== 'zh');
+        document.getElementById('content-en').classList.toggle('hidden', lang !== 'en');
+
+        // 滚动到顶部
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    // 折叠功能
+    function toggleFold(header) {
+        const content = header.nextElementSibling;
+        const arrow = header.querySelector('.fold-arrow');
+        content.classList.toggle('open');
+        arrow.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+
+    // 黑客入侵
+    const hackLinesZH = [
+        { text: "> scan deviceID... OK", delay: 0 },
+        { text: "> MAC: 7F-4A-3B-2E-XX-XX", delay: 100 },
+        { text: "> IMEI: 999999999999999", delay: 200 },
+        { text: "> biometrics cached", delay: 300 },
+        { text: "> bypass firewall... OK", delay: 400 },
+        { text: "> upload payload... OK", delay: 500 },
+        { text: "> trace initiated... OK", delay: 600 },
+        { text: "> WARNING: SUBJECT_ALPHA346_DETECTED", class: "warning", delay: 700 },
+        { text: "> Not welcome to Alpha346's terminal", delay: 800 },
+        { text: "", delay: 900 },
+        { text: "> [莱昂纳多·福克斯已接管系统]", class: "success", delay: 1000 },
+        { text: "> [LEONARDO FOX HAS TAKEN CONTROL]", class: "success", delay: 1100 },
+        { text: "", delay: 1200 },
+        { text: "> 正在清除追踪数据...", delay: 1300 },
+        { text: "> 正在重写访问日志...", delay: 1400 },
+        { text: "> 正在打开安全通道...", delay: 1500 },
+        { text: "", delay: 1600 },
+        { text: "> 3...", delay: 1700 },
+        { text: "> 2...", delay: 1800 },
+        { text: "> 1...", delay: 1900 }
+    ];
+
+    const hackLinesEN = [
+        { text: "> scan deviceID... OK", delay: 0 },
+        { text: "> MAC: 7F-4A-3B-2E-XX-XX", delay: 100 },
+        { text: "> IMEI: [REDACTED]", delay: 200 },
+        { text: "> biometrics cached... OK", delay: 300 },
+        { text: "> bypass firewall... OK", delay: 400 },
+        { text: "> upload payload... COMPLETE", delay: 500 },
+        { text: "> trace initiated... FAILED", delay: 600 },
+        { text: "> WARNING: COUNTER-INTRUSION DETECTED", class: "warning", delay: 700 },
+        { text: "> You are not welcome in Alpha346's terminal", delay: 800 },
+        { text: "", delay: 900 },
+        { text: "> [SYSTEM BREACH: SUBJECT HAS ASSUMED CONTROL]", class: "success", delay: 1000 },
+        { text: "> [LEONARDO FOX HAS TAKEN CONTROL]", class: "success", delay: 1100 },
+        { text: "", delay: 1200 },
+        { text: "> Purging tracking data...", delay: 1300 },
+        { text: "> Rewriting access logs...", delay: 1400 },
+        { text: "> Opening secure channel...", delay: 1500 },
+        { text: "", delay: 1600 },
+        { text: "> 3...", delay: 1700 },
+        { text: "> 2...", delay: 1800 },
+        { text: "> 1...", delay: 1900 }
+    ];
+
+    function initiateBreach() {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+
+        setTimeout(() => {
+            const overlay = document.getElementById('hackOverlay');
+            const content = document.getElementById('hackContent');
+            overlay.style.display = 'block';
+            content.innerHTML = '';
+
+            const lines = currentLang === 'zh' ? hackLinesZH : hackLinesEN;
+
+            lines.forEach((line, index) => {
+                setTimeout(() => {
+                    const div = document.createElement('div');
+                    div.className = 'hack-line ' + (line.class || '');
+                    div.textContent = line.text;
+                    div.style.animationDelay = '0s';
+                    content.appendChild(div);
+
+                    if (index === lines.length - 1) {
+                        setTimeout(() => {
+                            location.href = '/story/1';
+                        }, 1000);
+                    }
+                }, line.delay);
+            });
+        }, 600);
+    }
+
+    // 随机干扰
+    setInterval(() => {
+        if (Math.random() > 0.95) {
+            document.body.style.filter = 'hue-rotate(10deg) brightness(1.2)';
+            setTimeout(() => {
+                document.body.style.filter = 'none';
+            }, 100);
+        }
+    }, 4000);
+</script>
+</body>
+</html>
