@@ -532,6 +532,34 @@
       .main-title { font-size: 32px; }
       .tech-card { padding: 20px; }
     }
+
+    /* 强制图片立即显示，防止Volantis懒加载 */
+    img {
+      opacity: 1 !important;
+      filter: none !important;
+      transition: none !important;
+      transform: none !important;
+    }
+
+    img.lazyload,
+    img.lazyloading,
+    img.lazyloaded,
+    img[data-src],
+    img[data-srcset] {
+      opacity: 1 !important;
+      filter: none !important;
+    }
+
+    .img-frame img,
+    .refactor-big img {
+      min-height: auto !important;
+      background: transparent !important;
+      visibility: visible !important;
+    }
+
+    [class*="lazy"] {
+      background-image: none !important;
+    }
   </style>
 </head>
 <body>
@@ -733,5 +761,68 @@
   document.addEventListener('DOMContentLoaded', initTheme);
 </script>
 
+
+<script>
+  // 修复Volantis主题懒加载问题 - 强制加载所有图片
+  (function() {
+    function fixImages() {
+      // 处理data-src属性
+      document.querySelectorAll('img[data-src]').forEach(function(img) {
+        img.src = img.getAttribute('data-src');
+        img.removeAttribute('data-src');
+      });
+
+      // 处理data-srcset属性
+      document.querySelectorAll('img[data-srcset]').forEach(function(img) {
+        img.srcset = img.getAttribute('data-srcset');
+        img.removeAttribute('data-srcset');
+      });
+
+      // 处理srcset中的base64占位图
+      document.querySelectorAll('img[srcset*="data:image"]').forEach(function(img) {
+        if (img.getAttribute('data-srcset')) {
+          img.srcset = img.getAttribute('data-srcset');
+        }
+      });
+
+      // 移除lazyload类
+      document.querySelectorAll('img.lazyload, img.lazyloading').forEach(function(img) {
+        img.classList.remove('lazyload', 'lazyloading');
+        img.classList.add('lazyloaded');
+      });
+    }
+
+    // 立即执行
+    fixImages();
+
+    // DOM加载完成后再次执行
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fixImages);
+    }
+
+    // 延迟执行，确保Volantis脚本执行后再次修复
+    setTimeout(fixImages, 100);
+    setTimeout(fixImages, 500);
+    setTimeout(fixImages, 1000);
+
+    // 使用MutationObserver监听新添加的图片
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeName === 'IMG') {
+            if (node.getAttribute('data-srcset')) {
+              node.srcset = node.getAttribute('data-srcset');
+            }
+            if (node.getAttribute('data-src')) {
+              node.src = node.getAttribute('data-src');
+            }
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
 </body>
 </html>
