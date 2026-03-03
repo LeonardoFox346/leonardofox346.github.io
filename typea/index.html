@@ -3,7 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
     <title>About | LeonardoFox</title>
+    
+    <!-- 防止主题闪烁：在 CSS 加载前应用正确的主题 -->
+    <script>
+        (function() {
+            // 立即执行，防止页面闪烁
+            var savedTheme = localStorage.getItem('theme');
+            var followSystem = localStorage.getItem('theme-follow-system') === 'true' || !savedTheme;
+            var isDark = false;
+            
+            if (followSystem) {
+                isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            } else {
+                isDark = savedTheme === 'dark';
+            }
+            
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1797,43 +1820,123 @@
 </footer>
 
 <script>
-    // 主题切换系统
+    // 主题切换系统 - 增强版：支持自动检测浏览器系统主题
     const navThemeToggle = document.getElementById('navThemeToggle');
     const navThemeIcon = document.getElementById('navThemeIcon');
     const html = document.documentElement;
-
-    function getInitialTheme() {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            return savedTheme;
+    
+    // 主题管理器
+    const ThemeManager = {
+        // 获取当前系统主题偏好
+        getSystemTheme() {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        },
+        
+        // 获取保存的主题设置
+        getSavedTheme() {
+            return localStorage.getItem('theme');
+        },
+        
+        // 检查是否设置了"跟随系统"
+        isFollowingSystem() {
+            return localStorage.getItem('theme-follow-system') === 'true' || !this.getSavedTheme();
+        },
+        
+        // 获取有效主题（系统或保存的）
+        getEffectiveTheme() {
+            if (this.isFollowingSystem()) {
+                return this.getSystemTheme();
+            }
+            return this.getSavedTheme() || 'light';
+        },
+        
+        // 应用主题
+        applyTheme(theme, isSystemAuto = false) {
+            const isDark = theme === 'dark';
+            
+            if (isDark) {
+                html.classList.add('dark');
+                navThemeIcon.textContent = '☀️';
+            } else {
+                html.classList.remove('dark');
+                navThemeIcon.textContent = '🌙';
+            }
+            
+            // 更新按钮提示文字
+            const themeText = isDark ? '浅色模式' : '深色模式';
+            const sourceText = isSystemAuto ? '（跟随系统）' : '（手动）';
+            navThemeToggle.title = `切换主题 - 当前: ${themeText}${sourceText}`;
+            
+            // 触发主题变化事件（供其他组件监听）
+            window.dispatchEvent(new CustomEvent('themechange', { 
+                detail: { theme, isDark, isSystemAuto } 
+            }));
+        },
+        
+        // 设置主题（用户手动切换）
+        setTheme(theme) {
+            localStorage.setItem('theme', theme);
+            localStorage.setItem('theme-follow-system', 'false'); // 用户手动切换后不再跟随系统
+            this.applyTheme(theme, false);
+        },
+        
+        // 设置跟随系统
+        followSystem() {
+            localStorage.removeItem('theme');
+            localStorage.setItem('theme-follow-system', 'true');
+            this.applyTheme(this.getSystemTheme(), true);
+        },
+        
+        // 初始化主题
+        init() {
+            const effectiveTheme = this.getEffectiveTheme();
+            const isFollowingSystem = this.isFollowingSystem();
+            this.applyTheme(effectiveTheme, isFollowingSystem);
+            
+            // 调试信息
+            console.log('[ThemeManager] 初始化完成:', {
+                theme: effectiveTheme,
+                isDark: effectiveTheme === 'dark',
+                isFollowingSystem: isFollowingSystem,
+                systemTheme: this.getSystemTheme()
+            });
         }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-
-    function applyTheme(theme) {
-        if (theme === 'dark') {
-            html.classList.add('dark');
-            navThemeIcon.textContent = '☀️';
-        } else {
-            html.classList.remove('dark');
-            navThemeIcon.textContent = '🌙';
+    };
+    
+    // 监听系统主题变化
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        const newTheme = e.matches ? 'dark' : 'light';
+        const isFollowingSystem = ThemeManager.isFollowingSystem();
+        
+        console.log('[ThemeManager] 检测到系统主题变化:', newTheme, '- 是否跟随系统:', isFollowingSystem);
+        
+        if (isFollowingSystem) {
+            ThemeManager.applyTheme(newTheme, true);
         }
-        localStorage.setItem('theme', theme);
-    }
-
-    applyTheme(getInitialTheme());
-
+    });
+    
+    // 按钮点击切换主题
     navThemeToggle.addEventListener('click', () => {
         const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        applyTheme(newTheme);
+        ThemeManager.setTheme(newTheme);
     });
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('theme')) {
-            applyTheme(e.matches ? 'dark' : 'light');
+    
+    // 页面可见性变化时检查系统主题（处理切换标签页的情况）
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && ThemeManager.isFollowingSystem()) {
+            const currentSystemTheme = ThemeManager.getSystemTheme();
+            const currentAppliedTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            
+            if (currentSystemTheme !== currentAppliedTheme) {
+                console.log('[ThemeManager] 页面恢复可见，同步系统主题:', currentSystemTheme);
+                ThemeManager.applyTheme(currentSystemTheme, true);
+            }
         }
     });
+    
+    // 初始化
+    ThemeManager.init();
 
     // 名言切换系统
     let currentQuote = 0;
