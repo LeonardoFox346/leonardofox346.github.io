@@ -1,3 +1,29 @@
+// ========== 友链页面防护：阻止 list.js 报错 ==========
+(function() {
+  if (window.__friendsProtectionInstalled) return;
+  window.__friendsProtectionInstalled = true;
+  
+  console.log('[Friends] 安装 querySelector 防护');
+  
+  // 劫持 Element.querySelector
+  var originalQS = Element.prototype.querySelector;
+  Element.prototype.querySelector = function(selector) {
+    var result = originalQS.call(this, selector);
+    if (!result && /friends|friend-content|friends-group/.test(selector)) {
+      console.log('[Friends] 拦截: ' + selector);
+      return {
+        classList: {
+          add: function() {}, remove: function() {}, toggle: function() { return false; },
+          contains: function() { return false; }
+        },
+        style: {}, appendChild: function() {}, setAttribute: function() {},
+        getAttribute: function() { return null; }
+      };
+    }
+    return result;
+  };
+})();
+
 document.addEventListener("DOMContentLoaded", function () {
   volantis.requestAnimationFrame(() => {
     VolantisApp.init();
@@ -6,11 +32,17 @@ document.addEventListener("DOMContentLoaded", function () {
     highlightKeyWords.startFromURL();
     locationHash();
 
-    volantis.pjax.push(() => {
+volantis.pjax.push(() => {
       VolantisApp.pjaxReload();
       VolantisFancyBox.init();
       sessionStorage.setItem("domTitle", document.title);
       highlightKeyWords.startFromURL();
+            // 友链页面修复
+      setTimeout(function() {
+        if (document.querySelector('article.l_friends') || document.getElementById('friends')) {
+          VolantisApp.fixFriendsPage();
+        }
+      }, 300);  // 从 100 改为 300，给 DOM 更多时间渲染
     }, 'app.js');
     volantis.pjax.send(() => {
       volantis.dom.switcher.removeClass('active'); // 关闭移动端激活的搜索框
@@ -51,6 +83,310 @@ const VolantisApp = (() => {
   const fn = {},
     COPYHTML = '<button class="btn-copy" data-clipboard-snippet=""><i class="fa-solid fa-copy"></i><span>COPY</span></button>';
   let scrollCorrection = 80;
+
+    // ========== 友链页面修复函数 ==========
+  fn.fixFriendsPage = () => {
+    var article = document.querySelector('article.l_friends') || document.getElementById('friends');
+    if (!article) return;
+    
+    console.log('[Friends] 开始修复');
+    
+    // 1. 强制显示分组容器
+    document.querySelectorAll('.friends-group-md2').forEach(function(el, i) {
+      el.style.display = 'block';
+      el.style.visibility = 'visible';
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      el.style.marginBottom = '40px';
+      // 动画延迟
+      el.style.animation = 'none';
+      setTimeout(function() {
+        el.style.transition = 'all 0.6s ease';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, i * 150);
+    });
+    
+    // 2. 强制显示分组标题
+    document.querySelectorAll('.md2-group-header').forEach(function(el) {
+      el.style.display = 'flex';
+      el.style.flexDirection = 'column';
+      el.style.alignItems = 'center';
+      el.style.justifyContent = 'center';
+      el.style.gap = '8px';
+      el.style.marginBottom = '24px';
+      el.style.padding = '0 4px';
+      el.style.textAlign = 'center';
+      el.style.visibility = 'visible';
+      el.style.opacity = '1';
+    });
+    
+    // 3. 强制显示徽章
+    document.querySelectorAll('.md2-group-badge').forEach(function(el) {
+      el.style.display = 'inline-flex';
+      el.style.alignItems = 'center';
+      el.style.gap = '10px';
+      el.style.padding = '10px 20px';
+      el.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+      el.style.color = '#ffffff';
+      el.style.borderRadius = '24px';
+      el.style.fontSize = '18px';
+      el.style.fontWeight = '600';
+      el.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.35)';
+      el.style.visibility = 'visible';
+    });
+    
+    // 4. 强制显示描述文字
+    document.querySelectorAll('.md2-group-desc').forEach(function(el) {
+      el.style.fontSize = '16px';
+      el.style.color = '#666';
+      el.style.opacity = '0.85';
+      el.style.fontWeight = '500';
+      el.style.visibility = 'visible';
+    });
+    
+    // 5. 强制显示网格
+    document.querySelectorAll('.md2-friends-grid').forEach(function(el) {
+      el.style.display = 'grid';
+      el.style.visibility = 'visible';
+      el.style.opacity = '1';
+      el.style.gap = '16px';
+      // 响应式列数
+      var width = window.innerWidth;
+      if (width <= 768) {
+        el.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        el.style.gap = '12px';
+      } else if (width <= 1200) {
+        el.style.gridTemplateColumns = 'repeat(3, 1fr)';
+      } else {
+        el.style.gridTemplateColumns = 'repeat(4, 1fr)';
+      }
+    });
+    
+    // 6. 强制显示卡片（带延迟动画）
+    document.querySelectorAll('.md2-friend-card').forEach(function(el, i) {
+      el.style.display = 'flex';
+      el.style.flexDirection = 'column';
+      el.style.alignItems = 'center';
+      el.style.padding = '20px 12px';
+      el.style.background = '#ffffff';
+      el.style.borderRadius = '12px';
+      el.style.border = '1px solid #e0e0e0';
+      el.style.boxShadow = '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.12)';
+      el.style.position = 'relative';
+      el.style.overflow = 'hidden';
+      el.style.minHeight = '150px';
+      el.style.textDecoration = 'none';
+      el.style.visibility = 'visible';
+      el.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      
+      // 初始状态
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(15px) scale(0.97)';
+      
+      // 延迟动画
+      setTimeout(function() {
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0) scale(1)';
+      }, i * 50 + 200);
+      
+      // 悬停效果
+      el.onmouseenter = function() {
+        this.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.12), 0 4px 12px rgba(0,0,0,0.08)';
+        this.style.transform = 'translateY(-3px)';
+        this.style.borderColor = 'rgba(102, 126, 234, 0.15)';
+        var ripple = this.querySelector('.md2-ripple');
+        if (ripple) {
+          ripple.style.width = '200%';
+          ripple.style.height = '200%';
+        }
+        var icon = this.querySelector('.md2-external-icon');
+        if (icon) {
+          icon.style.opacity = '1';
+          icon.style.transform = 'scale(1)';
+        }
+        var media = this.querySelector('.md2-card-media');
+        if (media) {
+          media.style.transform = 'scale(1.05)';
+        }
+        var img = this.querySelector('.md2-avatar');
+        if (img) {
+          img.style.filter = 'brightness(1.08)';
+        }
+      };
+      el.onmouseleave = function() {
+        this.style.boxShadow = '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.12)';
+        this.style.transform = 'translateY(0)';
+        this.style.borderColor = '#e0e0e0';
+        var ripple = this.querySelector('.md2-ripple');
+        if (ripple) {
+          ripple.style.width = '0';
+          ripple.style.height = '0';
+        }
+        var icon = this.querySelector('.md2-external-icon');
+        if (icon) {
+          icon.style.opacity = '0';
+          icon.style.transform = 'scale(0.8)';
+        }
+        var media = this.querySelector('.md2-card-media');
+        if (media) {
+          media.style.transform = 'scale(1)';
+        }
+        var img = this.querySelector('.md2-avatar');
+        if (img) {
+          img.style.filter = 'none';
+        }
+      };
+    });
+    
+    // 7. 强制显示头像区域
+    document.querySelectorAll('.md2-card-media').forEach(function(el) {
+      el.style.position = 'relative';
+      el.style.width = '64px';
+      el.style.height = '64px';
+      el.style.marginBottom = '12px';
+      el.style.borderRadius = '50%';
+      el.style.overflow = 'hidden';
+      el.style.background = '#f0f0f0';
+      el.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+      el.style.transition = 'transform 0.3s ease';
+      el.style.visibility = 'visible';
+      // 禁止选择
+      el.style.webkitUserSelect = 'none';
+      el.style.userSelect = 'none';
+    });
+    
+    // 8. 强制显示头像
+    document.querySelectorAll('.md2-avatar').forEach(function(img) {
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      img.style.borderRadius = '50%';
+      img.style.transition = 'all 0.3s ease';
+      img.style.webkitUserDrag = 'none';
+      img.style.pointerEvents = 'none';
+      // 图片保护
+      img.setAttribute('draggable', 'false');
+      img.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+      img.addEventListener('dragstart', function(e) { e.preventDefault(); });
+    });
+    
+    // 9. 头像占位符
+    document.querySelectorAll('.md2-avatar-placeholder').forEach(function(el) {
+      el.style.width = '100%';
+      el.style.height = '100%';
+      el.style.display = 'flex';
+      el.style.alignItems = 'center';
+      el.style.justifyContent = 'center';
+      el.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+      el.style.color = '#ffffff';
+      el.style.fontSize = '24px';
+    });
+    
+    // 10. 波纹效果
+    document.querySelectorAll('.md2-ripple').forEach(function(el) {
+      el.style.position = 'absolute';
+      el.style.top = '50%';
+      el.style.left = '50%';
+      el.style.width = '0';
+      el.style.height = '0';
+      el.style.background = 'rgba(255,255,255,0.25)';
+      el.style.borderRadius = '50%';
+      el.style.transform = 'translate(-50%, -50%)';
+      el.style.transition = 'width 0.5s ease, height 0.5s ease';
+      el.style.pointerEvents = 'none';
+    });
+    
+    // 11. 强制显示内容区域
+    document.querySelectorAll('.md2-card-content').forEach(function(el) {
+      el.style.textAlign = 'center';
+      el.style.width = '100%';
+      el.style.zIndex = '1';
+      el.style.position = 'relative';
+      el.style.visibility = 'visible';
+    });
+    
+    // 12. 强制显示标题
+    document.querySelectorAll('.md2-friend-title').forEach(function(el) {
+      el.style.fontSize = '15px';
+      el.style.fontWeight = '600';
+      el.style.color = '#333';
+      el.style.margin = '0 0 6px 0';
+      el.style.lineHeight = '1.4';
+      el.style.whiteSpace = 'nowrap';
+      el.style.overflow = 'hidden';
+      el.style.textOverflow = 'ellipsis';
+      el.style.textAlign = 'center';
+      el.style.visibility = 'visible';
+    });
+    
+    // 13. 强制显示描述
+    document.querySelectorAll('.md2-friend-desc').forEach(function(el) {
+      el.style.fontSize = '12px';
+      el.style.color = '#667eea';
+      el.style.margin = '0';
+      el.style.lineHeight = '1.5';
+      el.style.textAlign = 'center';
+      el.style.minHeight = '1.5em';
+      el.style.visibility = 'visible';
+      // 逗号换行处理
+      if (el.getAttribute('data-desc')) {
+        var desc = el.getAttribute('data-desc');
+        el.innerHTML = desc.replace(/，/g, '，<wbr>').replace(/,/g, ',<wbr>');
+      }
+    });
+    
+    // 14. 空描述样式
+    document.querySelectorAll('.md2-desc-empty').forEach(function(el) {
+      el.style.opacity = '0.5';
+      el.style.fontStyle = 'italic';
+    });
+    
+    // 15. 强制显示外部图标
+    document.querySelectorAll('.md2-external-icon').forEach(function(el) {
+      el.style.position = 'absolute';
+      el.style.top = '8px';
+      el.style.right = '8px';
+      el.style.width = '24px';
+      el.style.height = '24px';
+      el.style.display = 'flex';
+      el.style.alignItems = 'center';
+      el.style.justifyContent = 'center';
+      el.style.background = '#f5f5f5';
+      el.style.borderRadius = '6px';
+      el.style.color = '#999';
+      el.style.fontSize = '10px';
+      el.style.opacity = '0';
+      el.style.transform = 'scale(0.8)';
+      el.style.transition = 'all 0.2s ease';
+      el.style.visibility = 'visible';
+    });
+    
+    // 16. 头像容器防拖拽覆盖层
+    document.querySelectorAll('.md2-card-media').forEach(function(el) {
+      // 检查是否已有覆盖层
+      if (!el.querySelector('.md2-media-overlay')) {
+        var overlay = document.createElement('div');
+        overlay.className = 'md2-media-overlay';
+        overlay.style.position = 'absolute';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.zIndex = '10';
+        overlay.style.background = 'transparent';
+        overlay.style.borderRadius = '50%';
+        el.appendChild(overlay);
+      }
+      // 禁止右键
+      el.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+    });
+    
+    console.log('[Friends] 修复完成，共 ' + document.querySelectorAll('.md2-friend-card').length + ' 张卡片');
+  };
+
+
+
 
   fn.init = () => {
     if (volantis.dom.header) {
@@ -106,6 +442,8 @@ const VolantisApp = (() => {
     document.body.oncopy = function () {
       fn.messageCopyright()
     };
+    // ========== 友链页面修复 ==========
+    fn.fixFriendsPage();
   }
 
   fn.restData = () => {
@@ -704,6 +1042,9 @@ const VolantisApp = (() => {
       fn.setTabs();
       fn.footnotes();
       fn.mathjaxRef();
+      fn.fixFriendsPage();
+
+
 
       // 移除小尾巴的移除
       document.querySelector("#l_header .nav-main").querySelectorAll('.list-v:not(.menu-phone)').forEach(function (e) {
@@ -711,6 +1052,7 @@ const VolantisApp = (() => {
       })
       document.querySelector("#l_header .menu-phone.list-v").removeAttribute("style");
       messageCopyrightShow = 0;
+      fn.fixFriendsPage();
     },
     utilCopyCode: fn.utilCopyCode,
     utilWriteClipText: fn.utilWriteClipText,
@@ -719,6 +1061,7 @@ const VolantisApp = (() => {
     question: fn.question,
     hideMessage: fn.hideMessage,
     messageCopyright: fn.messageCopyright,
+    fixFriendsPage: fn.fixFriendsPage,
     scrolltoElement: fn.scrolltoElement
   }
 })()
