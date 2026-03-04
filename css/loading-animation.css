@@ -1,7 +1,39 @@
 /* ============================================
-   加载动画方案 5 升级版: 几何变换 + 毛玻璃
-   特点: 现代几何感 + 毛玻璃背景
+   加载动画: 翻牌式 LOADING (原作者样式)
    ============================================ */
+
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+
+/* 浅色模式变量 */
+:root {
+  --loading-bg: #000;
+  --loading-text: #fff;
+  --loading-card-bg: linear-gradient(180deg, #222 0, #444 100%);
+  --loading-card-border-left: #444;
+  --loading-card-border-right: #222;
+  --loading-cover-bg: linear-gradient(180deg, white 0, #ddd 100%);
+  --loading-hint-bg: rgba(255, 255, 255, 0.05);
+  --loading-hint-border: rgba(255, 255, 255, 0.1);
+  --loading-hint-text: rgba(255, 255, 255, 0.7);
+  --loading-slow-text: rgba(255, 255, 255, 0.5);
+  --loading-countdown: rgba(255, 255, 255, 0.3);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --loading-bg: #f5f5f5;
+    --loading-text: #333;
+    --loading-card-bg: linear-gradient(180deg, #e0e0e0 0, #c0c0c0 100%);
+    --loading-card-border-left: #d0d0d0;
+    --loading-card-border-right: #a0a0a0;
+    --loading-cover-bg: linear-gradient(180deg, #fff 0, #f0f0f0 100%);
+    --loading-hint-bg: rgba(0, 0, 0, 0.05);
+    --loading-hint-border: rgba(0, 0, 0, 0.1);
+    --loading-hint-text: rgba(0, 0, 0, 0.7);
+    --loading-slow-text: rgba(0, 0, 0, 0.5);
+    --loading-countdown: rgba(0, 0, 0, 0.3);
+  }
+}
 
 #loading-screen {
   position: fixed;
@@ -9,15 +41,27 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.9) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--loading-bg);
   z-index: 99999;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+  clip-path: circle(150% at 50% 50%);
+}
+
+#loading-screen.shrink-out {
+  animation: shrinkToCenter 0.8s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+}
+
+@keyframes shrinkToCenter {
+  0% {
+    clip-path: circle(150% at 50% 50%);
+  }
+  100% {
+    clip-path: circle(0% at 50% 50%);
+  }
 }
 
 #loading-screen.hidden {
@@ -26,142 +70,199 @@
   pointer-events: none;
 }
 
-/* 毛玻璃卡片容器 */
-.loading-glass-card {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 48px 64px;
+/* 内容容器 */
+.loading-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  padding: 20px;
 }
 
-/* 站点标题 */
+.loading-content.fade-out {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+/* ============================================
+   站点大标题
+   ============================================ */
 .loading-site-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 32px;
-  letter-spacing: 2px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  font-size: 52px;
+  font-weight: 900;
+  color: var(--loading-text);
+  margin-bottom: 50px;
+  letter-spacing: 8px;
+  text-shadow: 
+    0 0 20px rgba(128, 128, 128, 0.3),
+    0 0 40px rgba(128, 128, 128, 0.2);
+  animation: titlePulse 3s ease-in-out infinite;
 }
 
-/* 几何动画容器 */
-.loading-geo-container {
+@keyframes titlePulse {
+  0%, 100% {
+    text-shadow: 
+      0 0 20px rgba(128, 128, 128, 0.3),
+      0 0 40px rgba(128, 128, 128, 0.2);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 
+      0 0 30px rgba(128, 128, 128, 0.5),
+      0 0 60px rgba(128, 128, 128, 0.3);
+    transform: scale(1.02);
+  }
+}
+
+/* 浅色模式标题发光 */
+@media (prefers-color-scheme: light) {
+  .loading-site-title {
+    text-shadow: 
+      0 0 20px rgba(0, 0, 0, 0.1),
+      0 0 40px rgba(0, 0, 0, 0.05);
+  }
+  
+  @keyframes titlePulse {
+    0%, 100% {
+      text-shadow: 
+        0 0 20px rgba(0, 0, 0, 0.1),
+        0 0 40px rgba(0, 0, 0, 0.05);
+    }
+    50% {
+      text-shadow: 
+        0 0 30px rgba(0, 0, 0, 0.15),
+        0 0 60px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+/* ============================================
+   翻牌式 LOADING 动画 (原作者样式)
+   ============================================ */
+.flip-loading {
   position: relative;
-  width: 100px;
+  margin: 0 auto 50px;
+  width: 350px;
+  color: white;
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 250%;
+  background: var(--loading-card-bg);
+  box-shadow: inset 0 5px 20px rgba(0,0,0,0.5);
+  text-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+}
+
+.flip-loading:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.flip-loading > span {
+  float: left;
   height: 100px;
+  line-height: 100px;
+  width: 50px;
+  border-left: 1px solid var(--loading-card-border-left);
+  border-right: 1px solid var(--loading-card-border-right);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+}
+
+.flip-covers {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.flip-covers span {
+  float: left;
+  height: 100px;
+  line-height: 100px;
+  width: 50px;
+  background: var(--loading-cover-bg);
+  animation: flipUp 2s infinite;
+}
+
+@keyframes flipUp {
+  0%   { margin-bottom: 0; }
+  16%  { margin-bottom: 100%; height: 20px; }
+  50%  { margin-bottom: 0; }
+  100% { margin-bottom: 0; }
+}
+
+.flip-covers span:nth-child(1) { animation-delay: 0s; }
+.flip-covers span:nth-child(2) { animation-delay: .142857s; }
+.flip-covers span:nth-child(3) { animation-delay: .285714s; }
+.flip-covers span:nth-child(4) { animation-delay: .428571s; }
+.flip-covers span:nth-child(5) { animation-delay: .571428s; }
+.flip-covers span:nth-child(6) { animation-delay: .714285s; }
+.flip-covers span:nth-child(7) { animation-delay: .857142s; }
+
+/* ============================================
+   提示信息 + 发光灯泡
+   ============================================ */
+.loading-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 550px;
+  padding: 16px 24px;
+  background: var(--loading-hint-bg);
+  border: 1px solid var(--loading-hint-border);
+  border-radius: 12px;
   margin-bottom: 24px;
 }
 
-/* 旋转的正方形 */
-.loading-geo-square {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 50px;
-  height: 50px;
-  border: 3px solid #667eea;
-  transform: translate(-50%, -50%);
-  animation: geo-square 2s ease-in-out infinite;
+.hint-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: #ffd700;
+  animation: bulbGlow 2s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
 }
 
-@keyframes geo-square {
-  0%, 100% { 
-    transform: translate(-50%, -50%) rotate(0deg);
-    border-radius: 0;
-  }
-  50% { 
-    transform: translate(-50%, -50%) rotate(180deg);
-    border-radius: 50%;
-    border-color: #764ba2;
-  }
+.hint-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
-/* 内部旋转的正方形 */
-.loading-geo-inner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 30px;
-  height: 30px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  transform: translate(-50%, -50%);
-  animation: geo-inner 2s ease-in-out infinite reverse;
-}
-
-@keyframes geo-inner {
-  0%, 100% { 
-    transform: translate(-50%, -50%) rotate(0deg);
-    border-radius: 0;
+@keyframes bulbGlow {
+  from {
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+    opacity: 0.8;
   }
-  50% { 
-    transform: translate(-50%, -50%) rotate(-180deg);
-    border-radius: 50%;
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  to {
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9))
+            drop-shadow(0 0 30px rgba(255, 215, 0, 0.6));
+    opacity: 1;
   }
 }
 
-/* 脉冲环 */
-.loading-geo-ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  border: 1px solid rgba(102, 126, 234, 0.3);
-  border-radius: 50%;
-  animation: geo-ring 2s ease-out infinite;
-}
-
-@keyframes geo-ring {
-  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-}
-
-/* 载入中文字 */
-.loading-status-text {
+.hint-text {
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
-  letter-spacing: 2px;
-  margin-bottom: 12px;
+  color: var(--loading-hint-text);
+  line-height: 1.6;
+  letter-spacing: 0.5px;
 }
 
-/* 载入中动画点 */
-.loading-dots {
-  display: inline-flex;
-  gap: 4px;
-  margin-left: 2px;
+.hint-label {
+  color: #ffd700;
+  font-weight: 600;
 }
 
-.loading-dots span {
-  width: 6px;
-  height: 6px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 50%;
-  animation: dot-bounce 1.4s ease-in-out infinite both;
-}
-
-.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
-.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
-.loading-dots span:nth-child(3) { animation-delay: 0s; }
-
-@keyframes dot-bounce {
-  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
-  40% { transform: scale(1); opacity: 1; }
-}
-
-/* 慢速提示文字 */
+/* ============================================
+   慢速提示文字
+   ============================================ */
 .loading-slow-hint {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--loading-slow-text);
+  letter-spacing: 2px;
   opacity: 0;
   transform: translateY(10px);
   transition: all 0.5s ease;
@@ -173,41 +274,212 @@
   transform: translateY(0);
 }
 
-/* 移动端适配 */
+/* ============================================
+   倒计时显示
+   ============================================ */
+.loading-countdown {
+  font-size: 12px;
+  color: var(--loading-countdown);
+  margin-top: 12px;
+  font-family: monospace;
+  letter-spacing: 2px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+/* 倒计时已隐藏，但保留DOM用于调试 */
+.loading-countdown.show {
+  /* 保持隐藏，不显示给用户 */
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ============================================
+   加载完成动画 - 苹果风格
+   ============================================ */
+.loading-complete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-complete.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.complete-circle {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.circle-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+/* 背景圆环 */
+.circle-bg {
+  fill: none;
+  stroke: var(--loading-hint-border);
+  stroke-width: 3;
+}
+
+/* 进度圆环 - 绘制动画 */
+.circle-progress {
+  fill: none;
+  stroke: #4CAF50;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 0.8s ease-out;
+}
+
+.circle-progress.animate {
+  stroke-dashoffset: 0;
+}
+
+/* 对勾 - 苹果风格 */
+.check-mark {
+  fill: none;
+  stroke: #4CAF50;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  transition: stroke-dashoffset 0.4s ease-out;
+  opacity: 0;
+  transform: rotate(90deg);      /* 新增：抵消父级的 -90deg 旋转 */
+  transform-origin: center;      /* 新增：确保围绕中心旋转 */
+}
+.check-mark.animate {
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+/* 完成时的光晕效果 */
+.complete-circle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(76, 175, 80, 0.3) 0%, transparent 70%);
+  opacity: 0;
+  animation: pulseGlow 1s ease-out 0.5s forwards;
+}
+
+@keyframes pulseGlow {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+}
+
+.complete-text {
+  font-size: 32px;
+  font-weight: 700;
+  color: #4CAF50;
+  letter-spacing: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+.complete-text.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   移动端适配
+   ============================================ */
 @media (max-width: 768px) {
-  .loading-glass-card {
-    padding: 36px 40px;
-    margin: 0 20px;
-  }
-  
   .loading-site-title {
-    font-size: 24px;
-    margin-bottom: 24px;
+    font-size: 36px;
+    letter-spacing: 4px;
+    margin-bottom: 40px;
   }
   
-  .loading-geo-container {
-    width: 80px;
-    height: 80px;
+  .flip-loading {
+    width: 280px;
+    font-size: 200%;
   }
   
-  .loading-geo-square {
+  .flip-loading > span,
+  .flip-covers span {
     width: 40px;
-    height: 40px;
+    height: 80px;
+    line-height: 96px;
   }
   
-  .loading-geo-inner {
+  .loading-hint {
+    padding: 12px 16px;
+    max-width: 90%;
+    margin-bottom: 20px;
+  }
+  
+  .hint-icon {
     width: 24px;
     height: 24px;
   }
   
-  .loading-status-text {
-    font-size: 14px;
+  .hint-text {
+    font-size: 12px;
+  }
+  
+  .complete-circle {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .complete-text {
+    font-size: 26px;
+    letter-spacing: 6px;
   }
 }
 
-/* 深色模式适配 */
-@media (prefers-color-scheme: dark) {
-  #loading-screen {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(2, 6, 23, 0.98) 100%);
+@media (max-width: 480px) {
+  .loading-site-title {
+    font-size: 28px;
+    letter-spacing: 3px;
+  }
+  
+  .flip-loading {
+    width: 245px;
+    font-size: 175%;
+  }
+  
+  .flip-loading > span,
+  .flip-covers span {
+    width: 35px;
+    height: 70px;
+    line-height: 84px;
   }
 }

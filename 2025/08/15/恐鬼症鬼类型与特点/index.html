@@ -2419,7 +2419,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1772604987025),
+    lastupdate: new Date(1772642022707),
     cdn: {
       izitoast_css: 'https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2482,30 +2482,71 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <!-- Custom Files headEnd end-->
 </head>
   <body itemscope itemtype="http://schema.org/WebPage">
-    <!-- 页面加载动画 - 方案5 升级版：几何变换 + 毛玻璃 -->
+    <!-- 页面加载动画 - 翻牌式 LOADING + 大标题 -->
     <div id="loading-screen">
-      <div class="loading-glass-card">
-        <!-- 站点标题 -->
+      <div class="loading-content" id="loadingContent">
+        <!-- 站点大标题 -->
         <div class="loading-site-title">纳多狐狐的实验室</div>
-        <!-- 几何动画 -->
-        <div class="loading-geo-container">
-          <div class="loading-geo-ring"></div>
-          <div class="loading-geo-square"></div>
-          <div class="loading-geo-inner"></div>
+        
+        <!-- 翻牌式 LOADING 动画 (原作者样式) -->
+        <div class="flip-loading">
+          <span>L</span>
+          <span>O</span>
+          <span>A</span>
+          <span>D</span>
+          <span>I</span>
+          <span>N</span>
+          <span>G</span>
+          
+          <div class="flip-covers">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
-        <!-- 载入中状态 -->
-        <div class="loading-status-text">
-          载入中<span class="loading-dots"><span></span><span></span><span></span></span>
+        
+        <!-- 提示信息 + 发光灯泡 -->
+        <div class="loading-hint">
+          <div class="hint-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z" fill="currentColor"/>
+              <path d="M9 21h6v-2H9v2z" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="hint-text">
+            <span class="hint-label">提示：</span>
+            为了网页的体验 我们会在网站完成加载后为您显示内容 此过程不超过30秒
+          </div>
         </div>
+        
         <!-- 慢速提示（5秒后显示） -->
         <div class="loading-slow-hint">您可能加载比较缓慢 请稍等</div>
+        
+        <!-- 倒计时显示（可选） -->
+        <div class="loading-countdown" id="loadingCountdown"></div>
+      </div>
+      
+      <!-- 加载完成画面 -->
+      <div class="loading-complete" id="loadingComplete">
+        <div class="complete-circle">
+          <svg viewBox="0 0 100 100" class="circle-svg">
+            <circle class="circle-bg" cx="50" cy="50" r="45"/>
+            <circle class="circle-progress" cx="50" cy="50" r="45"/>
+            <path class="check-mark" d="M30 52 L45 67 L70 35"/>
+          </svg>
+        </div>
+        <div class="complete-text">欢迎</div>
       </div>
     </div>
     <!-- import body_begin begin-->
     <!-- import body_begin end-->
     <!-- Custom Files bodyBegin begin-->
     
-    <!-- Custom Files bodyBegin end-->
+    <!-- Custom Files bodyEnd end-->
     <header itemscope itemtype="http://schema.org/WPHeader" id="l_header" class="l_header auto shadow blur floatable show" style='opacity: 0' >
   <div class='container'>
   <div id='wrapper'>
