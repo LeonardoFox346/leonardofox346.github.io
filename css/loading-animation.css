@@ -1,5 +1,5 @@
 /* ============================================
-   加载动画: 翻牌式 LOADING (原作者样式)
+   加载动画: 翻牌式 LOADING
    ============================================ */
 
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
@@ -94,23 +94,23 @@
   color: var(--loading-text);
   margin-bottom: 50px;
   letter-spacing: 8px;
-  text-shadow: 
-    0 0 20px rgba(128, 128, 128, 0.3),
-    0 0 40px rgba(128, 128, 128, 0.2);
+  text-shadow:
+          0 0 20px rgba(128, 128, 128, 0.3),
+          0 0 40px rgba(128, 128, 128, 0.2);
   animation: titlePulse 3s ease-in-out infinite;
 }
 
 @keyframes titlePulse {
   0%, 100% {
-    text-shadow: 
-      0 0 20px rgba(128, 128, 128, 0.3),
-      0 0 40px rgba(128, 128, 128, 0.2);
+    text-shadow:
+            0 0 20px rgba(128, 128, 128, 0.3),
+            0 0 40px rgba(128, 128, 128, 0.2);
     transform: scale(1);
   }
   50% {
-    text-shadow: 
-      0 0 30px rgba(128, 128, 128, 0.5),
-      0 0 60px rgba(128, 128, 128, 0.3);
+    text-shadow:
+            0 0 30px rgba(128, 128, 128, 0.5),
+            0 0 60px rgba(128, 128, 128, 0.3);
     transform: scale(1.02);
   }
 }
@@ -118,27 +118,27 @@
 /* 浅色模式标题发光 */
 @media (prefers-color-scheme: light) {
   .loading-site-title {
-    text-shadow: 
-      0 0 20px rgba(0, 0, 0, 0.1),
-      0 0 40px rgba(0, 0, 0, 0.05);
+    text-shadow:
+            0 0 20px rgba(0, 0, 0, 0.1),
+            0 0 40px rgba(0, 0, 0, 0.05);
   }
-  
+
   @keyframes titlePulse {
     0%, 100% {
-      text-shadow: 
-        0 0 20px rgba(0, 0, 0, 0.1),
-        0 0 40px rgba(0, 0, 0, 0.05);
+      text-shadow:
+              0 0 20px rgba(0, 0, 0, 0.1),
+              0 0 40px rgba(0, 0, 0, 0.05);
     }
     50% {
-      text-shadow: 
-        0 0 30px rgba(0, 0, 0, 0.15),
-        0 0 60px rgba(0, 0, 0, 0.1);
+      text-shadow:
+              0 0 30px rgba(0, 0, 0, 0.15),
+              0 0 60px rgba(0, 0, 0, 0.1);
     }
   }
 }
 
 /* ============================================
-   翻牌式 LOADING 动画 (原作者样式)
+   翻牌式 LOADING 动画
    ============================================ */
 .flip-loading {
   position: relative;
@@ -239,13 +239,13 @@
   }
   to {
     filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9))
-            drop-shadow(0 0 30px rgba(255, 215, 0, 0.6));
+    drop-shadow(0 0 30px rgba(255, 215, 0, 0.6));
     opacity: 1;
   }
 }
 
 .hint-text {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--loading-hint-text);
   line-height: 1.6;
   letter-spacing: 0.5px;
@@ -254,6 +254,7 @@
 .hint-label {
   color: #ffd700;
   font-weight: 600;
+  font-size: 16px;
 }
 
 /* ============================================
@@ -288,15 +289,13 @@
   transition: opacity 0.3s ease;
 }
 
-/* 倒计时已隐藏，但保留DOM用于调试 */
 .loading-countdown.show {
-  /* 保持隐藏，不显示给用户 */
   opacity: 0;
   visibility: hidden;
 }
 
 /* ============================================
-   加载完成动画 - 苹果风格
+   加载完成动画 - 苹果风格（极速版）
    ============================================ */
 .loading-complete {
   position: absolute;
@@ -346,27 +345,28 @@
   stroke-linecap: round;
   stroke-dasharray: 283;
   stroke-dashoffset: 283;
-  transition: stroke-dashoffset 0.8s ease-out;
+  transition: stroke-dashoffset 0.6s ease-out;
 }
 
 .circle-progress.animate {
   stroke-dashoffset: 0;
 }
 
-/* 对勾 - 苹果风格 */
+/* 对勾 - 极速绘制版 */
 .check-mark {
   fill: none;
   stroke: #4CAF50;
   stroke-width: 5;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-dasharray: 50;
-  stroke-dashoffset: 50;
-  transition: stroke-dashoffset 0.4s ease-out;
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  transition: stroke-dashoffset 0.2s ease-out;
   opacity: 0;
-  transform: rotate(90deg);      /* 新增：抵消父级的 -90deg 旋转 */
-  transform-origin: center;      /* 新增：确保围绕中心旋转 */
+  transform: rotate(90deg);
+  transform-origin: center;
 }
+
 .check-mark.animate {
   stroke-dashoffset: 0;
   opacity: 1;
@@ -403,14 +403,18 @@
 }
 
 .complete-text {
-  font-size: 32px;
+  font-size: 50px;
   font-weight: 700;
   color: #4CAF50;
-  letter-spacing: 10px;
+  letter-spacing: 0px;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.5s ease;
+  text-align: center;        /* ← 添加这行：水平居中 */
+  width: 100%;               /* ← 添加这行：确保宽度撑满容器 */
+  margin: 0 auto;            /* ← 添加这行：自动边距辅助居中 */
 }
+
 
 .complete-text.show {
   opacity: 1;
@@ -426,39 +430,39 @@
     letter-spacing: 4px;
     margin-bottom: 40px;
   }
-  
+
   .flip-loading {
     width: 280px;
     font-size: 200%;
   }
-  
+
   .flip-loading > span,
   .flip-covers span {
     width: 40px;
     height: 80px;
     line-height: 96px;
   }
-  
+
   .loading-hint {
     padding: 12px 16px;
     max-width: 90%;
     margin-bottom: 20px;
   }
-  
+
   .hint-icon {
     width: 24px;
     height: 24px;
   }
-  
+
   .hint-text {
     font-size: 12px;
   }
-  
+
   .complete-circle {
     width: 80px;
     height: 80px;
   }
-  
+
   .complete-text {
     font-size: 26px;
     letter-spacing: 6px;
@@ -470,12 +474,12 @@
     font-size: 28px;
     letter-spacing: 3px;
   }
-  
+
   .flip-loading {
     width: 245px;
     font-size: 175%;
   }
-  
+
   .flip-loading > span,
   .flip-covers span {
     width: 35px;

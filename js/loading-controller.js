@@ -1,17 +1,17 @@
 /**
- * 页面加载动画控制器 v5
- * 30秒自动关闭、翻牌动画、苹果风格完成动画
+ * 页面加载动画控制器 v5 - 极速版
+ * 30秒自动关闭、翻牌动画、苹果风格完成动画（加速）
  */
 
 (function() {
   'use strict';
 
-  // 加载动画配置
+  // 加载动画配置（已优化为极速版）
   const config = {
     minDisplayTime: 1500,
     fadeDuration: 600,
     slowHintDelay: 5000,
-    completeDuration: 1800,
+    completeDuration: 1200,  // 原来是 1800ms，缩短为 1200ms
     maxLoadTime: 30000
   };
 
@@ -56,11 +56,11 @@
     if (countdownEl && !loaded) {
       countdownEl.classList.add('show');
       updateCountdown();
-      
+
       countdownTimer = setInterval(() => {
         remainingSeconds--;
         updateCountdown();
-        
+
         if (remainingSeconds <= 0) {
           clearInterval(countdownTimer);
         }
@@ -72,58 +72,61 @@
     const countdownEl = getCountdownElement();
     if (countdownEl) {
       countdownEl.textContent = remainingSeconds + 's';
-      
+
       if (remainingSeconds <= 10) {
         countdownEl.style.color = '#ff6b6b';
       }
     }
   }
 
-  // 苹果风格完成动画：先画圆，再画√，最后显示文字
+  // 苹果风格完成动画：极速版
   function showCompleteAnimation(callback) {
     const loadingContent = getLoadingContent();
     const loadingComplete = getLoadingComplete();
-    
+
     if (countdownTimer) {
       clearInterval(countdownTimer);
     }
-    
+
     if (loadingContent && loadingComplete) {
       // 淡出原内容
       loadingContent.classList.add('fade-out');
-      
+
       setTimeout(() => {
         loadingComplete.classList.add('show');
-        
+
         // 获取动画元素
         const circleProgress = loadingComplete.querySelector('.circle-progress');
         const checkMark = loadingComplete.querySelector('.check-mark');
         const completeText = loadingComplete.querySelector('.complete-text');
-        
-        // 第1步：画圆（0ms开始）
+
+        // 第1步：画圆（0ms开始，0.6秒完成）
         if (circleProgress) {
           circleProgress.classList.add('animate');
         }
-        
-        // 第2步：画√（800ms后开始，圆画完之后）
+
+        // 第2步：画√（500ms后开始，圆画到一半时）
+        // 原来是 800ms，改为 500ms
         setTimeout(() => {
           if (checkMark) {
             checkMark.classList.add('animate');
           }
-        }, 800);
-        
-        // 第3步：显示文字（1200ms后）
+        }, 500);
+
+        // 第3步：显示文字（800ms后）
+        // 原来是 1200ms，改为 800ms
         setTimeout(() => {
           if (completeText) {
             completeText.classList.add('show');
           }
-        }, 1200);
-        
-        // 动画全部完成后回调
+        }, 800);
+
+        // 动画全部完成后回调（1200ms后）
+        // 原来是 1800ms，改为 1200ms
         setTimeout(() => {
           if (callback) callback();
         }, config.completeDuration);
-        
+
       }, 400);
     } else {
       if (callback) callback();
@@ -149,11 +152,11 @@
 
     setTimeout(() => {
       if (!force && loaded) {
-        // 正常完成 - 显示苹果风格动画
+        // 正常完成 - 显示苹果风格动画（极速版）
         showCompleteAnimation(() => {
           // 使用收缩退出动画
           loadingScreen.classList.add('shrink-out');
-          
+
           setTimeout(() => {
             if (loadingScreen.parentNode) {
               loadingScreen.style.display = 'none';
@@ -164,7 +167,7 @@
       } else {
         // 强制关闭或超时 - 直接淡出
         loadingScreen.classList.add('hidden');
-        
+
         setTimeout(() => {
           if (loadingScreen.parentNode) {
             loadingScreen.style.display = 'none';
@@ -195,7 +198,7 @@
   function onPageLoad() {
     if (loaded) return;
     loaded = true;
-    
+
     if (minTimeElapsed) {
       hideLoading();
     }
@@ -237,43 +240,43 @@
       const loadingScreen = getLoadingScreen();
       const loadingContent = getLoadingContent();
       const loadingComplete = getLoadingComplete();
-      
+
       if (loadingScreen) {
         loaded = false;
         remainingSeconds = 30;
-        
+
         loadingScreen.style.display = 'flex';
         loadingScreen.classList.remove('hidden');
-        
+
         if (loadingContent) {
           loadingContent.classList.remove('fade-out');
         }
-        
+
         if (loadingComplete) {
           loadingComplete.classList.remove('show');
-          
+
           // 重置动画状态
           const circleProgress = loadingComplete.querySelector('.circle-progress');
           const checkMark = loadingComplete.querySelector('.check-mark');
           const completeText = loadingComplete.querySelector('.complete-text');
-          
+
           if (circleProgress) circleProgress.classList.remove('animate');
           if (checkMark) checkMark.classList.remove('animate');
           if (completeText) completeText.classList.remove('show');
         }
-        
+
         const slowHint = getSlowHint();
         if (slowHint) {
           slowHint.classList.remove('visible');
         }
-        
+
         const countdownEl = getCountdownElement();
         if (countdownEl) {
           countdownEl.classList.remove('show');
           countdownEl.style.color = '';
           updateCountdown();
         }
-        
+
         initSlowHint();
         initAutoClose();
         showCountdown();
