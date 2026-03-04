@@ -11,7 +11,7 @@
     <!-- 防止主题闪烁：在 CSS 加载前应用正确的主题 -->
     <script>
         (function() {
-            // 立即执行，防止页面闪烁
+            // 立即执行，防止页面闪�?
             var savedTheme = localStorage.getItem('theme');
             var followSystem = localStorage.getItem('theme-follow-system') === 'true' || !savedTheme;
             var isDark = false;
@@ -66,6 +66,32 @@
             box-sizing: border-box;
         }
 
+        /* 图片防保�?- 禁用选中和拖�?*/
+        img {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            pointer-events: none;
+        }
+        
+        /* 图片容器添加透明覆盖�?*/
+        .img-slot, .gallery-item {
+            position: relative;
+        }
+        
+        .img-slot::after, .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            background: transparent;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -81,7 +107,7 @@
 
         .mono { font-family: 'JetBrains Mono', monospace; }
 
-        /* 导航栏 - 纯色背景 */
+        /* 导航�?- 纯色背景 */
         .nav-solid {
             background: var(--nav-bg);
             border-bottom: 1px solid var(--border);
@@ -124,7 +150,7 @@
             opacity: 0.3;
         }
 
-        /* 扫描线背景 - 仅在深色模式显示 */
+        /* 扫描线背�?- 仅在深色模式显示 */
         .scan-bg {
             background-image: repeating-linear-gradient(
                     0deg,
@@ -155,7 +181,7 @@
             opacity: 0.2;
         }
 
-        /* Glitch 效果 - 仅深色模式 */
+        /* Glitch 效果 - 仅深色模�?*/
         .glitch {
             position: relative;
             display: inline-block;
@@ -205,7 +231,7 @@
 
         /* 光标 */
         .cursor::after {
-            content: '▋';
+            content: '�?;
             animation: blink 1s step-end infinite;
             color: var(--accent);
             margin-left: 4px;
@@ -215,7 +241,7 @@
             50% { opacity: 0; }
         }
 
-        /* 图片占位符 */
+        /* 图片占位�?*/
         .img-slot {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -306,7 +332,7 @@
             border-color: var(--accent);
         }
 
-        /* 进度条 */
+        /* 进度�?*/
         .progress-bar {
             height: 4px;
             background: var(--surface-2);
@@ -322,7 +348,7 @@
             box-shadow: 0 0 10px var(--accent);
         }
 
-        /* 分隔线 */
+        /* 分隔�?*/
         .divider {
             height: 1px;
             background: var(--border);
@@ -340,7 +366,7 @@
             box-shadow: 0 0 10px var(--accent);
         }
 
-        /* 警告框 */
+        /* 警告�?*/
         .alert {
             border-left: 3px solid;
             padding: 16px;
@@ -359,7 +385,7 @@
             border-color: var(--accent-secondary);
         }
 
-        /* 时间线 */
+        /* 时间�?*/
         .timeline-item {
             position: relative;
             padding-left: 30px;
@@ -409,7 +435,7 @@
             cursor: crosshair;
         }
 
-        /* 游戏内 TARGETS */
+        /* 游戏�?TARGETS */
         .game-targets {
             position: absolute;
             top: 16px;
@@ -427,7 +453,7 @@
             background: rgba(10, 10, 10, 0.95);
         }
 
-        /* 代码轮播 - 科幻感 */
+        /* 代码轮播 - 科幻�?*/
         .code-showcase {
             background: var(--code-bg, #050505);
             border: 1px solid var(--border);
@@ -486,7 +512,7 @@
         .code-comment { color: var(--text-muted); font-style: italic; }
         .code-function { color: #ff9800; }
 
-        /* 滚动条 */
+        /* 滚动�?*/
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -520,7 +546,7 @@
         .dark .img-slot:hover img {
             filter: brightness(0.95) contrast(1.05);
         }
-        /* 浅色模式代码框 */
+        /* 浅色模式代码�?*/
         html:not(.dark) .code-showcase {
             background: #f8f9fa;
             border-color: #e0e0e0;
@@ -563,7 +589,7 @@
             50% { opacity: 0.3; }
         }
 
-        /* 扫描线动画 */
+        /* 扫描线动�?*/
         .scan-bg {
             animation: scanMove 8s linear infinite;
         }
@@ -646,7 +672,7 @@
             100% { left: 100%; }
         }
 
-        /* 分隔线流动效果 */
+        /* 分隔线流动效�?*/
         .divider::after {
             animation: dividerFlow 2s linear infinite;
         }
@@ -659,12 +685,12 @@
 
 
 
-        /* 数据流动画 */
+        /* 数据流动�?*/
         .mono {
             position: relative;
         }
 
-        /* 进度条流光 */
+        /* 进度条流�?*/
         .progress-fill {
             position: relative;
             overflow: hidden;
@@ -686,7 +712,7 @@
             100% { left: 100%; }
         }
 
-        /* 警告框脉冲 */
+        /* 警告框脉�?*/
         .alert {
             animation: alertPulse 3s ease-in-out infinite;
         }
@@ -714,7 +740,7 @@
             50% { border-left-color: #b71c1c; }
         }
 
-        /* 时间线闪烁 */
+        /* 时间线闪�?*/
         .timeline-item::before {
             animation: timelinePulse 2s ease-in-out infinite;
         }
@@ -744,7 +770,7 @@
             box-shadow: inset 0 0 20px rgba(66, 165, 245, 0.2);
         }
 
-        /* 打字机光标闪烁 */
+        /* 打字机光标闪�?*/
         .cursor::after {
             animation: blink 1s step-end infinite, cursorGlow 2s ease-in-out infinite;
         }
@@ -774,7 +800,7 @@
             50% { opacity: 0.6; }
         }
 
-        /* 滚动条科幻效果 */
+        /* 滚动条科幻效�?*/
         ::-webkit-scrollbar-thumb {
             animation: scrollbarGlow 3s ease-in-out infinite;
         }
@@ -785,7 +811,7 @@
         }
 
 
-        /* Gallery新样式 */
+        /* Gallery新样�?*/
         .gallery-item {
             position: relative;
             overflow: hidden;
@@ -875,7 +901,7 @@
                 width: 100%;
             }
 
-            /* 卡片内边距调整 */
+            /* 卡片内边距调�?*/
             .sharp-card {
                 padding: 1rem;
             }
@@ -943,7 +969,7 @@
             box-shadow: 0 8px 24px rgba(13, 71, 161, 0.2);
         }
 
-        /* 名言切换 - 无箭头 */
+        /* 名言切换 - 无箭�?*/
         .quote-container {
             position: relative;
             height: 120px;
@@ -1036,7 +1062,7 @@
 <!-- 导航 -->
 <nav class="fixed top-0 w-full z-50 px-6 py-4 nav-solid transition-colors">
     <div class="max-w-6xl mx-auto flex justify-between items-center relative">
-        <button onclick="history.back()" class="absolute left-0 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors text-sm mono" style="transform: translateX(-100%); margin-left: -24px;" title="返回上一页">
+        <button onclick="history.back()" class="absolute left-0 text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors text-sm mono" style="transform: translateX(-100%); margin-left: -24px;" title="返回上一�?>
             [←] BACK
         </button>
         <a href="/" class="mono text-[var(--accent)] font-bold text-lg tracking-tighter hover:opacity-80 transition-opacity cursor-pointer">
@@ -1086,7 +1112,7 @@
 
             <div class="relative">
                 <div class="aspect-square img-slot max-w-md mx-auto" style="position:relative; background:var(--surface);">
-                    <img src="https://s41.ax1x.com/2026/02/08/pZTtzkQ.png" alt="Avatar"
+                    <img oncontextmenu="return false;" ondragstart="return false;" src="https://s41.ax1x.com/2026/02/08/pZTtzkQ.png" alt="Avatar"
                          style="width:100%; height:100%; object-fit:cover; display:block; position:relative; z-index:0;"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="absolute inset-0 flex flex-col items-center justify-center text-[var(--text-muted)]" style="display:none; z-index:1;">
@@ -1174,7 +1200,7 @@
                 <div class="alert alert-warning mt-6">
                     <div class="text-sm">
                         <span class="text-[#f9ab00] font-bold">WARNING:</span>
-                        身为湖南人的 Leonardo 不能吃很辣的食物。<p>消化系统版本过低。</p>
+                        身为湖南人的 Leonardo 不能吃很辣的食物�?p>消化系统版本过低�?/p>
                     </div>
                 </div>
             </div>
@@ -1189,14 +1215,14 @@
                                     "What Doesn't Kill Me,<br>
                                     Only Makes Me Stronger"
                                 </p>
-                                <p class="text-sm text-[var(--text-muted)] mt-3 mono">— Friedrich Nietzsche</p>
+                                <p class="text-sm text-[var(--text-muted)] mt-3 mono">�?Friedrich Nietzsche</p>
                             </div>
                             <div class="quote-slide">
                                 <p class="text-xl font-light italic text-[var(--text)] leading-relaxed">
-                                    "任何杀不死我的，<br>
+                                    "任何杀不死我的�?br>
                                     都会使我变得更加强大"
                                 </p>
-                                <p class="text-sm text-[var(--text-muted)] mt-3 mono">— 尼采</p>
+                                <p class="text-sm text-[var(--text-muted)] mt-3 mono">�?尼采</p>
                             </div>
                         </div>
 
@@ -1259,12 +1285,12 @@
 
         </div>
 
-        <!-- 桌面端布局 - 4列整齐网格 -->
+        <!-- 桌面端布局 - 4列整齐网�?-->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
 
-            <!-- 第1行：两个16:9 -->
+            <!-- �?行：两个16:9 -->
             <div class="col-span-2 img-slot gallery-item aspect-video" style="background: var(--surface);">
-                <img src="https://s41.ax1x.com/2026/01/30/pZfKDAg.jpg" alt="COMMISSION_01"
+                <img oncontextmenu="return false;" ondragstart="return false;" src="https://s41.ax1x.com/2026/01/30/pZfKDAg.jpg" alt="COMMISSION_01"
                      style="width:100%; height:100%; object-fit:cover; display:block;"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="gallery-content" style="display:none;">
@@ -1273,7 +1299,7 @@
                 </div>
             </div>
             <div class="col-span-2 img-slot gallery-item aspect-video" style="background: var(--surface);">
-                <img src="https://s41.ax1x.com/2026/01/30/pZfKrNQ.jpg" alt="COMMISSION_02"
+                <img oncontextmenu="return false;" ondragstart="return false;" src="https://s41.ax1x.com/2026/01/30/pZfKrNQ.jpg" alt="COMMISSION_02"
                      style="width:100%; height:100%; object-fit:cover; display:block;"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="gallery-content" style="display:none;">
@@ -1282,9 +1308,9 @@
                 </div>
             </div>
 
-            <!-- 第2行：两个16:9 -->
+            <!-- �?行：两个16:9 -->
             <div class="col-span-2 img-slot gallery-item aspect-video" style="background: var(--surface);">
-                <img src="https://s21.ax1x.com/2025/10/03/pVT4rtO.jpg" alt="COMMISSION_03"
+                <img oncontextmenu="return false;" ondragstart="return false;" src="https://s21.ax1x.com/2025/10/03/pVT4rtO.jpg" alt="COMMISSION_03"
                      style="width:100%; height:100%; object-fit:cover; display:block;"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="gallery-content" style="display:none;">
@@ -1293,7 +1319,7 @@
                 </div>
             </div>
             <div class="col-span-2 img-slot gallery-item aspect-video" style="background: var(--surface);">
-                <img src="https://s41.ax1x.com/2026/02/18/pZORuK1.jpg" alt="COMMISSION_04"
+                <img oncontextmenu="return false;" ondragstart="return false;" src="https://s41.ax1x.com/2026/02/18/pZORuK1.jpg" alt="COMMISSION_04"
                      style="width:100%; height:100%; object-fit:cover; display:block;"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="gallery-content" style="display:none;">
@@ -1302,9 +1328,9 @@
                 </div>
             </div>
 
-            <!-- 第3行：两个16:9 -->
+            <!-- �?行：两个16:9 -->
             <div class="col-span-2 img-slot gallery-item aspect-video" style="background: var(--surface);">
-                <img src="https://s41.ax1x.com/2026/02/18/pZOR1UO.png" alt="COMMISSION_05"
+                <img oncontextmenu="return false;" ondragstart="return false;" src="https://s41.ax1x.com/2026/02/18/pZOR1UO.png" alt="COMMISSION_05"
                      style="width:100%; height:100%; object-fit:cover; display:block;"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="gallery-content" style="display:none;">
@@ -1313,7 +1339,7 @@
                 </div>
             </div>
             <div class="col-span-2 img-slot gallery-item aspect-video" style="background: var(--surface);">
-                <img src="https://s41.ax1x.com/2026/02/18/pZORY2d.jpg" alt="COMMISSION_06"
+                <img oncontextmenu="return false;" ondragstart="return false;" src="https://s41.ax1x.com/2026/02/18/pZORY2d.jpg" alt="COMMISSION_06"
                      style="width:100%; height:100%; object-fit:cover; display:block;"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="gallery-content" style="display:none;">
@@ -1322,9 +1348,9 @@
                 </div>
             </div>
 
-            <!-- 第4行：四个1:1 -->
+            <!-- �?行：四个1:1 -->
             <div class="col-span-1 img-slot gallery-item aspect-square" style="background: var(--surface);">
-                <img src="https://s41.ax1x.com/2026/02/18/pZORlVK.png" alt="COMMISSION_07"
+                <img oncontextmenu="return false;" ondragstart="return false;" src="https://s41.ax1x.com/2026/02/18/pZORlVK.png" alt="COMMISSION_07"
                      style="width:100%; height:100%; object-fit:cover; display:block;"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="gallery-content" style="display:none;">
@@ -1333,7 +1359,7 @@
                 </div>
             </div>
             <div class="col-span-1 img-slot gallery-item aspect-square" style="background: var(--surface);">
-                <img src="https://s41.ax1x.com/2026/02/18/pZORMb6.png" alt="COMMISSION_08"
+                <img oncontextmenu="return false;" ondragstart="return false;" src="https://s41.ax1x.com/2026/02/18/pZORMb6.png" alt="COMMISSION_08"
                      style="width:100%; height:100%; object-fit:cover; display:block;"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="gallery-content" style="display:none;">
@@ -1342,7 +1368,7 @@
                 </div>
             </div>
             <div class="col-span-1 img-slot gallery-item aspect-square" style="background: var(--surface);">
-                <img src="https://s21.ax1x.com/2025/08/03/pVNov90.jpg" alt="COMMISSION_09"
+                <img oncontextmenu="return false;" ondragstart="return false;" src="https://s21.ax1x.com/2025/08/03/pVNov90.jpg" alt="COMMISSION_09"
                      style="width:100%; height:100%; object-fit:cover; display:block;"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="gallery-content" style="display:none;">
@@ -1351,7 +1377,7 @@
                 </div>
             </div>
             <div class="col-span-1 img-slot gallery-item aspect-square" style="background: var(--surface);">
-                <img src="https://s41.ax1x.com/2026/02/18/pZORGPe.png" alt="COMMISSION_10"
+                <img oncontextmenu="return false;" ondragstart="return false;" src="https://s41.ax1x.com/2026/02/18/pZORGPe.png" alt="COMMISSION_10"
                      style="width:100%; height:100%; object-fit:cover; display:block;"
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="gallery-content" style="display:none;">
@@ -1365,7 +1391,7 @@
 
 <div class="divider max-w-6xl mx-auto"></div>
 
-<!-- Tech Section - LANGUAGES 大板块 -->
+<!-- Tech Section - LANGUAGES 大板�?-->
 <section id="tech" class="py-20 px-6">
     <div class="max-w-6xl mx-auto">
         <div class="flex items-end gap-4 mb-12">
@@ -1373,7 +1399,7 @@
 
         </div>
 
-        <!-- LANGUAGES 代码展示大板块 -->
+        <!-- LANGUAGES 代码展示大板�?-->
         <div class="sharp-card code-showcase mb-8">
             <div class="flex items-center justify-between px-6 py-4 border-b border-[var(--border)]">
                 <h3 class="text-lg font-bold mono text-[var(--accent)]">[LANGUAGES] // CODE_SHOWCASE</h3>
@@ -1501,7 +1527,7 @@
                 </div>
             </div>
 
-            <!-- 特殊技能 -->
+            <!-- 特殊技�?-->
             <div class="sharp-card p-6">
                 <h3 class="text-lg font-bold mb-6 mono text-[var(--accent)]">[SPECIAL]</h3>
                 <div class="flex flex-wrap gap-2">
@@ -1543,13 +1569,13 @@
 
                 <div class="alert alert-info mt-6">
                     <div class="text-xs mono">
-                        <span class="text-[var(--accent)]">NOTE:</span> 擅长做饭，简单的编程，Android玩机。肝物品，没肝出来不会睡觉。
+                        <span class="text-[var(--accent)]">NOTE:</span> 擅长做饭，简单的编程，Android玩机。肝物品，没肝出来不会睡觉�?
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 游戏状态 -->
+        <!-- 游戏状�?-->
         <div class="mt-8 sharp-card p-6">
             <h3 class="text-lg font-bold mb-4 mono text-[var(--accent)]">[STEAM_STATUS]</h3>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -1558,28 +1584,28 @@
                         <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                         <span class="font-bold text-sm">Hollow Knight</span>
                     </div>
-                    <div class="text-xs text-[var(--text-muted)] mono">睡觉了...</div>
+                    <div class="text-xs text-[var(--text-muted)] mono">睡觉�?..</div>
                 </div>
                 <div class="border border-[var(--border)] p-4 hover:border-[var(--accent-secondary)] transition-colors relative">
                     <div class="flex items-center gap-2 mb-2">
                         <div class="w-2 h-2 bg-[var(--accent-secondary)] rounded-full animate-pulse"></div>
                         <span class="font-bold text-sm">Ori Series</span>
                     </div>
-                    <div class="text-xs text-[var(--text-muted)] mono">平台跳跃爱好者</div>
+                    <div class="text-xs text-[var(--text-muted)] mono">平台跳跃爱好�?/div>
                 </div>
                 <div class="border border-[var(--border)] p-4 hover:border-[var(--accent)] transition-colors">
                     <div class="flex items-center gap-2 mb-2">
                         <div class="w-2 h-2 bg-green-500 rounded-full"></div>
                         <span class="font-bold text-sm">Super Animal Royale</span>
                     </div>
-                    <div class="text-xs text-[var(--text-muted)] mono">摆烂了</div>
+                    <div class="text-xs text-[var(--text-muted)] mono">摆烂�?/div>
                 </div>
                 <div class="border border-[var(--border)] p-4 hover:border-[var(--accent)] transition-colors">
                     <div class="flex items-center gap-2 mb-2">
                         <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
                         <span class="font-bold text-sm">Phasmophobia</span>
                     </div>
-                    <div class="text-xs text-[var(--text-muted)] mono">赞美愚者</div>
+                    <div class="text-xs text-[var(--text-muted)] mono">赞美愚�?/div>
                 </div>
             </div>
         </div>
@@ -1606,7 +1632,7 @@
                     </div>
                     <div class="timeline-item">
                         <div class="font-bold mb-1 text-[var(--text)]">环境</div>
-                        <div class="text-sm text-[var(--text-muted)]">极端的雨天/大风天，室内。能感到放松和奇怪的使命感。</div>
+                        <div class="text-sm text-[var(--text-muted)]">极端的雨�?大风天，室内。能感到放松和奇怪的使命感�?/div>
                     </div>
                     <div class="timeline-item">
                         <div class="font-bold mb-1 text-[var(--text)]">活动</div>
@@ -1628,11 +1654,11 @@
                     </div>
                     <div class="timeline-item border-l-[var(--accent-secondary)]">
                         <div class="font-bold mb-1 text-[var(--text)]">行为</div>
-                        <div class="text-sm text-[var(--text-muted)]">背叛、欺骗、贪婪。无法容忍背刺。</div>
+                        <div class="text-sm text-[var(--text-muted)]">背叛、欺骗、贪婪。无法容忍背刺�?/div>
                     </div>
                     <div class="timeline-item border-l-[var(--accent-secondary)]">
                         <div class="font-bold mb-1 text-[var(--text)]">环境</div>
-                        <div class="text-sm text-[var(--text-muted)]">嘈杂、拥挤、空气污染。会感到烦躁压抑。</div>
+                        <div class="text-sm text-[var(--text-muted)]">嘈杂、拥挤、空气污染。会感到烦躁压抑�?/div>
                     </div>
                 </div>
 
@@ -1650,15 +1676,15 @@
             <div class="grid md:grid-cols-3 gap-6 text-sm">
                 <div class="border border-[var(--border)] p-4">
                     <div class="text-[var(--text-muted)] mono mb-2">PARENTS</div>
-                    <div class="text-[var(--text)]">关系亲密，重要指引者。保持联系，互相关心近况。</div>
+                    <div class="text-[var(--text)]">关系亲密，重要指引者。保持联系，互相关心近况�?/div>
                 </div>
                 <div class="border border-[var(--border)] p-4">
                     <div class="text-[var(--text-muted)] mono mb-2">FRIENDS</div>
-                    <div class="text-[var(--text)]">志同道合。团队中默默支持，记得每个朋友的生日和喜好。</div>
+                    <div class="text-[var(--text)]">志同道合。团队中默默支持，记得每个朋友的生日和喜好�?/div>
                 </div>
                 <div class="border border-[var(--border)] p-4">
                     <div class="text-[var(--text-muted)] mono mb-2">STRANGERS</div>
-                    <div class="text-[var(--text)]">善于倾听，真诚建议，极具同理心。真诚坦率，从不伪装。</div>
+                    <div class="text-[var(--text)]">善于倾听，真诚建议，极具同理心。真诚坦率，从不伪装�?/div>
                 </div>
             </div>
         </div>
@@ -1672,12 +1698,12 @@
     <div class="max-w-6xl mx-auto">
         <div class="sharp-card p-8 border-l-4 border-l-[var(--accent)]">
             <div class="flex items-start gap-4">
-                <div class="text-4xl">🏳️‍🌈</div>
+                <div class="text-4xl">🏳️‍�?/div>
                 <div>
-                    <h3 class="text-xl font-bold mb-3 text-[var(--text)]">关于福瑞文化圈</h3>
+                    <h3 class="text-xl font-bold mb-3 text-[var(--text)]">关于福瑞文化�?/h3>
                     <p class="text-[var(--text-muted)] leading-relaxed mb-4">
-                        看到上面大家就知道我是一个福瑞文化爱好者了吧...但讲真的，我<span class="text-[var(--text)]">并不支持</span>这个圈子里的一些事，
-                        比如说 LGBT-Q 之类的。这里也就不多说了，大家知道我<span class="bg-[var(--accent)] text-white px-2 py-0.5 font-bold">不管也不理会</span>这些圈子里的一些乱事就对了 awa
+                        看到上面大家就知道我是一个福瑞文化爱好者了�?..但讲真的，我<span class="text-[var(--text)]">并不支持</span>这个圈子里的一些事�?
+                        比如�?LGBT-Q 之类的。这里也就不多说了，大家知道�?span class="bg-[var(--accent)] text-white px-2 py-0.5 font-bold">不管也不理会</span>这些圈子里的一些乱事就对了 awa
                     </p>
                     <div class="flex gap-4 text-xs mono">
                         <span class="text-[var(--text-muted)]">STANCE: NEUTRAL</span>
@@ -1706,12 +1732,12 @@
                         <h3 class="text-2xl font-bold text-[var(--text)]">Delta107</h3>
                     </div>
                     <p class="text-[var(--text-muted)] mb-6 leading-relaxed">
-                        这是我以前写的一个网页视觉小说，现在似乎停更了，不知道什么时候才会继续更新...
+                        这是我以前写的一个网页视觉小说，现在似乎停更了，不知道什么时候才会继续更�?..
                         <br><br>
                         <span class="text-[var(--accent)] mono text-sm">[STATUS: HIATUS]</span>
                     </p>
                     <a href="/delta107/delta107-1/" class="btn-primary inline-block">
-                        开始阅读 →
+                        开始阅�?�?
                     </a>
                 </div>
             </div>
@@ -1734,37 +1760,37 @@
                 <div class="relative">
                     <canvas id="gameCanvas" width="800" height="450" class="w-full h-auto max-w-full"></canvas>
 
-                    <!-- 游戏UI覆盖层 -->
+                    <!-- 游戏UI覆盖�?-->
                     <div id="gameUI" class="absolute top-4 left-4 mono text-sm pointer-events-none">
                         <div class="text-[var(--accent)] text-2xl font-bold mb-1">SCORE: <span id="scoreDisplay">0</span></div>
                         <div class="text-[var(--text-muted)]">TIME: <span id="timeDisplay">30</span>s</div>
                         <div id="comboDisplay" class="text-[var(--accent-secondary)] mt-1 opacity-0">COMBO x<span id="comboCount">0</span></div>
                     </div>
 
-                    <!-- 游戏内 TARGETS -->
+                    <!-- 游戏�?TARGETS -->
                     <div class="game-targets mono">
                         <div class="text-[var(--accent)] font-bold mb-2 text-xs">[TARGETS]</div>
                         <div class="space-y-1 text-xs">
                             <div class="flex justify-between">
-                                <span>🦋 普通蝴蝶</span>
+                                <span>🦋 普通蝴�?/span>
                                 <span class="text-[var(--accent)]">20pts</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>🐛 慢速毛虫</span>
+                                <span>🐛 慢速毛�?/span>
                                 <span class="text-[var(--accent)]">10pts</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>✨ 稀有星星</span>
+                                <span>�?稀有星�?/span>
                                 <span class="text-[var(--accent-secondary)]">50pts</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 开始/结束屏幕 -->
+                    <!-- 开�?结束屏幕 -->
                     <div id="gameOverlay" class="absolute inset-0 flex items-center justify-center bg-[var(--bg)]/90">
                         <div class="text-center">
                             <h3 class="text-3xl font-black mb-2 mono text-[var(--text)]">FOX HUNTER</h3>
-                            <p class="text-[var(--text-muted)] mb-6 text-sm">移动鼠标控制狐狸，点击捕捉蝴蝶</p>
+                            <p class="text-[var(--text-muted)] mb-6 text-sm">移动鼠标控制狐狸，点击捕捉蝴�?/p>
                             <button id="startBtn" class="btn-primary">START_GAME</button>
                             <div id="finalScore" class="hidden mt-4">
                                 <div class="text-4xl font-bold text-[var(--accent)] mb-2" id="finalScoreValue">0</div>
@@ -1781,9 +1807,9 @@
                     <h4 class="font-bold mb-4 mono text-[var(--accent)]">[HOW_TO_PLAY]</h4>
                     <ul class="space-y-2 text-sm text-[var(--text-muted)]">
                         <li>1. 移动鼠标控制狐狸位置</li>
-                        <li>2. 点击左键发射捕捉网</li>
+                        <li>2. 点击左键发射捕捉�?/li>
                         <li>3. 连续捕捉获得连击加分</li>
-                        <li>4. 30秒内获得尽可能高的分数</li>
+                        <li>4. 30秒内获得尽可能高的分�?/li>
                     </ul>
                 </div>
 
@@ -1825,14 +1851,14 @@
     const navThemeIcon = document.getElementById('navThemeIcon');
     const html = document.documentElement;
     
-    // 主题管理器
+    // 主题管理�?
     const ThemeManager = {
         // 获取当前系统主题偏好
         getSystemTheme() {
             return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         },
         
-        // 获取保存的主题设置
+        // 获取保存的主题设�?
         getSavedTheme() {
             return localStorage.getItem('theme');
         },
@@ -1856,7 +1882,7 @@
             
             if (isDark) {
                 html.classList.add('dark');
-                navThemeIcon.textContent = '☀️';
+                navThemeIcon.textContent = '☀�?;
             } else {
                 html.classList.remove('dark');
                 navThemeIcon.textContent = '🌙';
@@ -1867,7 +1893,7 @@
             const sourceText = isSystemAuto ? '（跟随系统）' : '（手动）';
             navThemeToggle.title = `切换主题 - 当前: ${themeText}${sourceText}`;
             
-            // 触发主题变化事件（供其他组件监听）
+            // 触发主题变化事件（供其他组件监听�?
             window.dispatchEvent(new CustomEvent('themechange', { 
                 detail: { theme, isDark, isSystemAuto } 
             }));
@@ -1876,7 +1902,7 @@
         // 设置主题（用户手动切换）
         setTheme(theme) {
             localStorage.setItem('theme', theme);
-            localStorage.setItem('theme-follow-system', 'false'); // 用户手动切换后不再跟随系统
+            localStorage.setItem('theme-follow-system', 'false'); // 用户手动切换后不再跟随系�?
             this.applyTheme(theme, false);
         },
         
@@ -1887,14 +1913,14 @@
             this.applyTheme(this.getSystemTheme(), true);
         },
         
-        // 初始化主题
+        // 初始化主�?
         init() {
             const effectiveTheme = this.getEffectiveTheme();
             const isFollowingSystem = this.isFollowingSystem();
             this.applyTheme(effectiveTheme, isFollowingSystem);
             
             // 调试信息
-            console.log('[ThemeManager] 初始化完成:', {
+            console.log('[ThemeManager] 初始化完�?', {
                 theme: effectiveTheme,
                 isDark: effectiveTheme === 'dark',
                 isFollowingSystem: isFollowingSystem,
@@ -1922,20 +1948,20 @@
         ThemeManager.setTheme(newTheme);
     });
     
-    // 页面可见性变化时检查系统主题（处理切换标签页的情况）
+    // 页面可见性变化时检查系统主题（处理切换标签页的情况�?
     document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible' && ThemeManager.isFollowingSystem()) {
             const currentSystemTheme = ThemeManager.getSystemTheme();
             const currentAppliedTheme = html.classList.contains('dark') ? 'dark' : 'light';
             
             if (currentSystemTheme !== currentAppliedTheme) {
-                console.log('[ThemeManager] 页面恢复可见，同步系统主题:', currentSystemTheme);
+                console.log('[ThemeManager] 页面恢复可见，同步系统主�?', currentSystemTheme);
                 ThemeManager.applyTheme(currentSystemTheme, true);
             }
         }
     });
     
-    // 初始化
+    // 初始�?
     ThemeManager.init();
 
     // 名言切换系统
@@ -1982,7 +2008,7 @@
         updateCode();
     }, 4000);
 
-    // 打字机效果
+    // 打字机效�?
     const phrases = [
         'Fennec_Fox.cs',
         'CS_Student.java',
@@ -2214,7 +2240,7 @@
         const types = [
             { emoji: '🦋', type: 'normal', speed: 2 },
             { emoji: '🐛', type: 'slow', speed: 1 },
-            { emoji: '✨', type: 'star', speed: 3 }
+            { emoji: '�?, type: 'star', speed: 3 }
         ];
 
         const type = types[Math.random() > 0.8 ? 2 : Math.random() > 0.6 ? 1 : 0];
@@ -2348,7 +2374,7 @@
         let rank = '';
         if (score >= 1000) rank = 'LEGENDARY HUNTER - 超越99%玩家';
         else if (score >= 600) rank = 'MASTER HUNTER -  impressive!';
-        else if (score >= 300) rank = 'SKILLED HUNTER - 不错的成绩';
+        else if (score >= 300) rank = 'SKILLED HUNTER - 不错的成�?;
         else if (score >= 100) rank = 'NOVICE HUNTER - 继续练习';
         else rank = 'NEED_MORE_CAFFEINE...';
 
@@ -2378,7 +2404,7 @@
 
 
     function calculateOnlineDays() {
-        const startDate = Date.UTC(2020, 5, 13); // 月份从0开始
+        const startDate = Date.UTC(2020, 5, 13); // 月份�?开�?
         const now = new Date();
         const currentDate = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
         const diffTime = currentDate - startDate;
@@ -2387,7 +2413,7 @@
     }
 
 
-    // 页面加载时更新
+    // 页面加载时更�?
     document.addEventListener('DOMContentLoaded', function() {
         // 更新Online Days
         const daysElement = document.getElementById('onlineDays');
@@ -2408,6 +2434,33 @@
             currentYearElement.textContent = new Date().getFullYear();
         }
     });
+</script>
+
+<!-- 图片防保护脚本 -->
+<script>
+    (function() {
+        // 禁用所有图片的右键菜单
+        document.querySelectorAll('img').forEach(function(img) {
+            img.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            img.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+        });
+        
+        // 禁用图片容器的右键
+        document.querySelectorAll('.img-slot, .gallery-item').forEach(function(container) {
+            container.addEventListener('contextmenu', function(e) {
+                if (e.target.tagName === 'IMG' || e.target === container) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    })();
 </script>
 </body>
 </html>

@@ -29,6 +29,8 @@
   <!-- Custom Files headBegin end-->
     <link rel="shortcut icon" type='image/x-icon' href="https://s21.ax1x.com/2025/08/05/pVUdq10.jpg">
   <link rel="preload" href="/css/style.css" as="style">
+  <!-- 加载动画样式 -->
+  <link rel="stylesheet" href="/css/loading-animation.css">
   <link rel="preload" href="https://unpkg.com/volantis-static@0.0.1660614606622/media/fonts/Microsoft YaHei/Microsoft YaHei-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 <link rel="preload" href="https://unpkg.com/volantis-static@0.0.1660614606622/media/fonts/Microsoft YaHei/Microsoft YaHei-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
@@ -2412,7 +2414,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1772532357875),
+    lastupdate: new Date(1772604987025),
     cdn: {
       izitoast_css: 'https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2475,6 +2477,25 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   <!-- Custom Files headEnd end-->
 </head>
   <body itemscope itemtype="http://schema.org/WebPage">
+    <!-- 页面加载动画 - 方案5 升级版：几何变换 + 毛玻璃 -->
+    <div id="loading-screen">
+      <div class="loading-glass-card">
+        <!-- 站点标题 -->
+        <div class="loading-site-title">纳多狐狐的实验室</div>
+        <!-- 几何动画 -->
+        <div class="loading-geo-container">
+          <div class="loading-geo-ring"></div>
+          <div class="loading-geo-square"></div>
+          <div class="loading-geo-inner"></div>
+        </div>
+        <!-- 载入中状态 -->
+        <div class="loading-status-text">
+          载入中<span class="loading-dots"><span></span><span></span><span></span></span>
+        </div>
+        <!-- 慢速提示（5秒后显示） -->
+        <div class="loading-slow-hint">您可能加载比较缓慢 请稍等</div>
+      </div>
+    </div>
     <!-- import body_begin begin-->
     <!-- import body_begin end-->
     <!-- Custom Files bodyBegin begin-->
@@ -2834,11 +2855,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             
               <li>
                 <a class="menuitem flat-box faa-parent animated-hover"
-                href="/support/" title="开发支持"
+                href="/donate/" title="开发支持"
                   
                   
                   
-                    active-action="action-support"
+                    active-action="action-donate"
                   >
                   <i class='fa-solid fa-hand-holding-dollar fa-fw' style="color:#4CAF50"></i>开发支持
                 </a>
@@ -3164,11 +3185,11 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
             
               <li>
                 <a class="menuitem flat-box faa-parent animated-hover"
-                href="/support/" title="开发支持"
+                href="/donate/" title="开发支持"
                   
                   
                   
-                    active-action="action-support"
+                    active-action="action-donate"
                   >
                   <i class='fa-solid fa-hand-holding-dollar fa-fw' style="color:#4CAF50"></i>开发支持
                 </a>
@@ -3644,7 +3665,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <div class="webinfo-item">
           <div>最后活动时间：</div>
-          <div id="last-update-show">2026-03-03 日</div>
+          <div id="last-update-show">2026-03-04 日</div>
         </div>
       
     </div>
@@ -3817,6 +3838,56 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <!-- Custom Files footer begin-->
     
     <!-- Custom Files footer end-->
+    
+    <!-- 自动更新版权年份 - 使用网络授时API获取准确时间 -->
+    <script>
+      (function() {
+        const localYear = new Date().getFullYear();
+        updateYear(localYear);
+        fetchNetworkTime();
+        
+        function updateYear(year) {
+          const yearElements = document.querySelectorAll('.copyright');
+          yearElements.forEach(function(el) {
+            if (el.innerHTML.includes('© 2020-')) {
+              el.innerHTML = el.innerHTML.replace(/© 2020-\d{4}/, '© 2020-' + year);
+            }
+          });
+        }
+        
+        function fetchNetworkTime() {
+          fetch('http://worldtimeapi.org/api/ip', { 
+            method: 'GET',
+            cache: 'no-cache'
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.datetime) {
+              const networkDate = new Date(data.datetime);
+              const networkYear = networkDate.getFullYear();
+              updateYear(networkYear);
+            }
+          })
+          .catch(function() {
+            tryBackupAPI();
+          });
+        }
+        
+        function tryBackupAPI() {
+          fetch('https://timeapi.io/api/Time/current/zone?timeZone=Asia/Shanghai', {
+            method: 'GET',
+            cache: 'no-cache'
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.year) {
+              updateYear(data.year);
+            }
+          })
+          .catch(function() {});
+        }
+      })();
+    </script>
   </footer>
 
 
@@ -4731,6 +4802,9 @@ window.matchMedia('(prefers-color-scheme: light)').addListener(darkModelListener
     }
   }
 </script>
+
+<!-- 加载动画控制脚本 -->
+<script src="/js/loading-controller.js"></script>
 
 
 

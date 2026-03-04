@@ -1,0 +1,213 @@
+/* ============================================
+   加载动画方案 5 升级版: 几何变换 + 毛玻璃
+   特点: 现代几何感 + 毛玻璃背景
+   ============================================ */
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* 毛玻璃卡片容器 */
+.loading-glass-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 48px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* 站点标题 */
+.loading-site-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 32px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 几何动画容器 */
+.loading-geo-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 24px;
+}
+
+/* 旋转的正方形 */
+.loading-geo-square {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  border: 3px solid #667eea;
+  transform: translate(-50%, -50%);
+  animation: geo-square 2s ease-in-out infinite;
+}
+
+@keyframes geo-square {
+  0%, 100% { 
+    transform: translate(-50%, -50%) rotate(0deg);
+    border-radius: 0;
+  }
+  50% { 
+    transform: translate(-50%, -50%) rotate(180deg);
+    border-radius: 50%;
+    border-color: #764ba2;
+  }
+}
+
+/* 内部旋转的正方形 */
+.loading-geo-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transform: translate(-50%, -50%);
+  animation: geo-inner 2s ease-in-out infinite reverse;
+}
+
+@keyframes geo-inner {
+  0%, 100% { 
+    transform: translate(-50%, -50%) rotate(0deg);
+    border-radius: 0;
+  }
+  50% { 
+    transform: translate(-50%, -50%) rotate(-180deg);
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+}
+
+/* 脉冲环 */
+.loading-geo-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  border-radius: 50%;
+  animation: geo-ring 2s ease-out infinite;
+}
+
+@keyframes geo-ring {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+}
+
+/* 载入中文字 */
+.loading-status-text {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+/* 载入中动画点 */
+.loading-dots {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 2px;
+}
+
+.loading-dots span {
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  animation: dot-bounce 1.4s ease-in-out infinite both;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+.loading-dots span:nth-child(3) { animation-delay: 0s; }
+
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* 慢速提示文字 */
+.loading-slow-hint {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease;
+  margin-top: 8px;
+}
+
+.loading-slow-hint.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .loading-glass-card {
+    padding: 36px 40px;
+    margin: 0 20px;
+  }
+  
+  .loading-site-title {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .loading-geo-container {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .loading-geo-square {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .loading-geo-inner {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .loading-status-text {
+    font-size: 14px;
+  }
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  #loading-screen {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(2, 6, 23, 0.98) 100%);
+  }
+}
