@@ -593,7 +593,7 @@ article#tag .all-tags ul li span:before {
   overflow: auto;
   background: var(--color-codeblock);
   font-size: 0.8125rem;
-  font-family: Menlo, UbuntuMono, Monaco, monospace, courier, sans-serif;
+  font-family: Menlo, "LXGW ZhenKai", Monaco, monospace, monospace, courier, sans-serif;
   border: 1px solid #e3ebf3;
   padding: 16px;
   border-radius: 4px;
@@ -613,7 +613,7 @@ article#tag .all-tags ul li span:before {
   color: rgba(30,41,59,0.9);
 }
 .article code {
-  font-family: Menlo, UbuntuMono, Monaco, monospace, courier, sans-serif;
+  font-family: Menlo, "LXGW ZhenKai", Monaco, monospace, monospace, courier, sans-serif;
 }
 .article code:not([class]) {
   word-break: break-all;
@@ -5563,11 +5563,11 @@ p.p.subtitle:first-child {
 }
 span.p.logo,
 p.p.logo {
-  font-family: "Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, Helvetica, monospace;
+  font-family: "NyushuFirmia", "PingFang SC", "Microsoft YaHei", sans-serif, Helvetica, monospace;
 }
 span.p.code,
 p.p.code {
-  font-family: Menlo, UbuntuMono, Monaco, monospace, courier, sans-serif;
+  font-family: Menlo, "LXGW ZhenKai", Monaco, monospace, monospace, courier, sans-serif;
 }
 span.p.left,
 p.p.left {
@@ -6052,7 +6052,7 @@ div.timenode:hover .meta:after {
   -ms-transform: scale(1);
 }
 .article mjx-container {
-  font-family: Menlo, UbuntuMono, Monaco, monospace, courier, sans-serif;
+  font-family: Menlo, "LXGW ZhenKai", Monaco, monospace, monospace, courier, sans-serif;
   padding: 16px 8px;
   border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -6511,7 +6511,7 @@ div.timenode:hover .meta:after {
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-appearance: none;
-  font-family: Menlo, Menlo, UbuntuMono, Monaco, monospace, courier, sans-serif;
+  font-family: Menlo, Menlo, "LXGW ZhenKai", Monaco, monospace, monospace, courier, sans-serif;
   font-size: 11px;
   font-weight: bold;
   padding: 4px 8px;
@@ -6857,7 +6857,7 @@ pre {
   display: block;
   background: var(--color-block);
   font-size: 0.8125rem;
-  font-family: Menlo, UbuntuMono, Monaco, monospace, courier, sans-serif;
+  font-family: Menlo, "LXGW ZhenKai", Monaco, monospace, monospace, courier, sans-serif;
   border-radius: 4px;
   -webkit-border-radius: 4px;
   line-height: 1.5;
@@ -7028,7 +7028,7 @@ pre {
   border-radius: 4px;
   -webkit-border-radius: 4px;
   color: var(--color-text);
-  font-family: UbuntuMono, "Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, Menlo, Monaco, monospace, sans-serif;
+  font-family: "LXGW ZhenKai", "PingFang SC", "Microsoft YaHei", sans-serif, Menlo, Monaco, monospace, sans-serif;
 }
 .aplayer .aplayer-list {
   text-align: left;

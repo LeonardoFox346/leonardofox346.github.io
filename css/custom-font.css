@@ -1,0 +1,102 @@
+/* ============================================
+   自定义字体配置 - 适配 Volantis 主题
+   ============================================ */
+
+/* 定义字体 */
+@font-face {
+  font-family: 'NyushuFirmia';
+  src: url('/fonts/NyushuFirmia.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LXGW ZhenKai';
+  src: url('/fonts/LXGWZhenKai-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================
+   1. 导航栏使用 NyushuFirmia（最高优先级）
+   ============================================ */
+.header,
+.header *,
+.nav-main,
+.nav-main *,
+.navbar,
+.navbar *,
+.site-title,
+.site-title *,
+.logo,
+.logo *,
+.menu,
+.menu *,
+.menu-item,
+.menu-item a,
+#l_header,
+#l_header *,
+.l_header,
+.l_header * {
+  font-family: 'NyushuFirmia', 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
+}
+
+/* ============================================
+   2. 侧边栏使用 NyushuFirmia（最高优先级）
+   ============================================ */
+.sidebar,
+.sidebar *,
+#l_side,
+#l_side *,
+.l_side,
+.l_side *,
+aside,
+aside *,
+.widget,
+.widget *,
+.widget-header,
+.widget-header *,
+.blogger,
+.blogger *,
+.author,
+.author * {
+  font-family: 'NyushuFirmia', 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
+}
+
+/* ============================================
+   3. 文章区域使用 LXGW ZhenKai
+   ============================================ */
+.article-entry,
+.article-entry *,
+.post-content,
+.post-content *,
+.post-title,
+.post-title *,
+.post-card,
+.post-card *,
+.article-title,
+.article-title *,
+.post-body,
+.post-body *,
+.article-body,
+.article-body *,
+.markdown-body,
+.markdown-body *,
+.content,
+.content * {
+  font-family: 'LXGW ZhenKai', 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
+}
+
+/* ============================================
+   4. 代码块保持等宽字体
+   ============================================ */
+code,
+pre,
+pre code,
+.hljs,
+.code-block,
+.code-block * {
+  font-family: 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace !important;
+}
