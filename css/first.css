@@ -1073,7 +1073,7 @@ button {
 }
 .l_header .nav-sub .title {
   font-weight: bold;
-  font-family: "NyushuFirmia", "PingFang SC", "Microsoft YaHei", sans-serif, Helvetica, monospace;
+  font-family: "LXGW ZhenKai", "PingFang SC", "Microsoft YaHei", sans-serif, Menlo, Monaco, monospace, sans-serif;
   line-height: 1.2;
   max-height: 64px;
   white-space: normal;
@@ -1357,7 +1357,6 @@ ul.nav-list-h>li >a {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 600;
-  font-family: "NyushuFirmia", "PingFang SC", "Microsoft YaHei", sans-serif, Helvetica, monospace;
 }
 ul.list-v {
   z-index: 1;
@@ -1460,7 +1459,6 @@ ul.list-v >li>a:hover {
   max-height: 64px;
   overflow: hidden;
   color: inherit;
-  font-family: "NyushuFirmia", "PingFang SC", "Microsoft YaHei", sans-serif, Helvetica, monospace;
 }
 .l_header ul.nav-list-h>li >a:active,
 .l_header ul.nav-list-h>li >a.active {
