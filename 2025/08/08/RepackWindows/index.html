@@ -42,7 +42,7 @@
   
 <meta property="og:type" content="article">
 <meta property="og:title" content="封装一个属于你的Windows镜像(图文重置版)">
-<meta property="og:url" content="http://leonardo346.github.io/2025/08/08/RepackWindows/index.html">
+<meta property="og:url" content="http://leonardo346.github.io/2025/08/08/repackwindows/index.html">
 <meta property="og:site_name" content="纳多狐狐的实验室">
 <meta property="og:description" content="从零开始教你封装一个纯净、精简、个性化的Windows安装镜像，包含系统精简、驱动整合、自动应答等完整流程">
 <meta property="og:locale" content="zh_CN">
@@ -2419,7 +2419,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     root: '/',
     debug: "env",
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1660614606622/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1772714804441),
+    lastupdate: new Date(1772717694969),
     cdn: {
       izitoast_css: 'https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css',
       izitoast_js: 'https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js',
@@ -2449,7 +2449,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       },
       
       
-      rightmenus: {"enable":true,"order":["plugins.navigation","hr","plugins.inputBox","plugins.seletctText","plugins.elementCheck","plugins.elementImage","menus.link","hr","menus.darkMode","plugins.articlePage","hr","music"],"options":{"iconPrefix":"fa-solid","articleShowLink":true,"musicAlwaysShow":true},"plugins":{"navigation":[{"id":"left","name":"转到上一页","icon":"fa-solid fa-arrow-left PETERRIVE","event":"history.back()","group":"navigation"},{"id":"right","name":"转到下一页","icon":"fa-solid fa-arrow-right PETERRIVE","event":"history.forward()","group":"navigation"},{"id":"redo","name":"刷新当前页面","icon":"fa-solid fa-redo PETERRIVE","event":"window.location.reload()","group":"navigation"},{"id":"home","name":"回到首页","icon":"fa-solid fa-home PETERRIVE","link":"/","group":"navigation"}],"inputBox":[{"id":"copyPaste","name":"粘贴文本","icon":"fa-solid fa-paste PETERRIVE","event":"copyPaste","group":"inputBox"},{"id":"copyAll","name":"全选文本","icon":"fa-solid fa-object-ungroup PETERRIVE","event":"copyAll","group":"inputBox"},{"id":"copyCut","name":"剪切文本","icon":"fa-solid fa-cut PETERRIVE","event":"copyCut","group":"inputBox"}],"seletctText":[{"id":"copyText","name":"复制选中文本","icon":"fa-solid fa-copy PETERRIVE","event":"copyText","group":"seletctText"},{"id":"searchWord","name":"站内搜索内容","icon":"fa-solid fa-search PETERRIVE","event":"OpenSearch(__text__)","group":"seletctText"},{"id":"bingSearch","name":"必应搜索内容","icon":"fa-solid fa-blog PETERRIVE","event":"window.open(`https://cn.bing.com/search?q=${__text__}`)","group":"seletctText"}],"elementCheck":[{"id":"openTab","name":"新标签页打开","icon":"fa-solid fa-external-link-square-alt","event":"window.open(__link__)","group":"elementCheck"},{"id":"copyLink","name":"复制链接地址","icon":"fa-solid fa-link","event":"copyLink","group":"elementCheck"}],"elementImage":[{"id":"copyImg","name":"复制图片","icon":"fa-solid fa-image","event":"copyImg","group":"elementImage"},{"id":"googleImg","name":"谷歌识图","icon":"fa-solid fa-images","event":"window.open(`https://www.google.com.hk/searchbyimage?image_url=${__link__}`)","group":"elementImage"}],"articlePage":[{"id":"printMode","name":"打印这个页面","icon":"fa-solid fa-print TURQUOISE","event":"printMode","group":"articlePage"},{"id":"readMode","name":"打开阅读模式","icon":"fa-solid fa-book-open EMERALD","event":"readMode","group":"articlePage"}]},"menus":{"link":[{"id":"help","name":"打开帮助中心","icon":"fa-solid fa-handshake-angle EMERALD","link":"/help/","group":"link"},{"id":"help","name":"BUG反馈","icon":"fa-solid fa-bug","link":"https://qm.qq.com/q/Rbn3nYSscQ EMERALD","group":"link"}],"darkMode":[{"id":"darkMode","name":"切换显示模式","icon":"fa-solid fa-circle-half-stroke WISTERIA","event":"volantis.dark.toggle()","group":"darkMode"}]}}
+      rightmenus: {"enable":true,"order":["plugins.navigation","hr","plugins.inputBox","plugins.seletctText","plugins.elementCheck","plugins.elementImage","menus.link","hr","menus.darkMode","plugins.articlePage","hr","music"],"options":{"iconPrefix":"fa-solid","articleShowLink":true,"musicAlwaysShow":false},"plugins":{"navigation":[{"id":"left","name":"转到上一页","icon":"fa-solid fa-arrow-left PETERRIVE","event":"history.back()","group":"navigation"},{"id":"right","name":"转到下一页","icon":"fa-solid fa-arrow-right PETERRIVE","event":"history.forward()","group":"navigation"},{"id":"redo","name":"刷新当前页面","icon":"fa-solid fa-redo PETERRIVE","event":"window.location.reload()","group":"navigation"},{"id":"home","name":"回到首页","icon":"fa-solid fa-home PETERRIVE","link":"/","group":"navigation"}],"inputBox":[{"id":"copyPaste","name":"粘贴文本","icon":"fa-solid fa-paste PETERRIVE","event":"copyPaste","group":"inputBox"},{"id":"copyAll","name":"全选文本","icon":"fa-solid fa-object-ungroup PETERRIVE","event":"copyAll","group":"inputBox"},{"id":"copyCut","name":"剪切文本","icon":"fa-solid fa-cut PETERRIVE","event":"copyCut","group":"inputBox"}],"seletctText":[{"id":"copyText","name":"复制选中文本","icon":"fa-solid fa-copy PETERRIVE","event":"copyText","group":"seletctText"},{"id":"searchWord","name":"站内搜索内容","icon":"fa-solid fa-search PETERRIVE","event":"OpenSearch(__text__)","group":"seletctText"},{"id":"bingSearch","name":"必应搜索内容","icon":"fa-solid fa-blog PETERRIVE","event":"window.open(`https://cn.bing.com/search?q=${__text__}`)","group":"seletctText"}],"elementCheck":[{"id":"openTab","name":"新标签页打开","icon":"fa-solid fa-external-link-square-alt","event":"window.open(__link__)","group":"elementCheck"},{"id":"copyLink","name":"复制链接地址","icon":"fa-solid fa-link","event":"copyLink","group":"elementCheck"}],"elementImage":[{"id":"copyImg","name":"复制图片","icon":"fa-solid fa-image","event":"copyImg","group":"elementImage"},{"id":"googleImg","name":"谷歌识图","icon":"fa-solid fa-images","event":"window.open(`https://www.google.com.hk/searchbyimage?image_url=${__link__}`)","group":"elementImage"}],"articlePage":[{"id":"printMode","name":"打印这个页面","icon":"fa-solid fa-print TURQUOISE","event":"printMode","group":"articlePage"},{"id":"readMode","name":"打开阅读模式","icon":"fa-solid fa-book-open EMERALD","event":"readMode","group":"articlePage"}]},"menus":{"link":[{"id":"help","name":"打开帮助中心","icon":"fa-solid fa-handshake-angle EMERALD","link":"/help/","group":"link"},{"id":"help","name":"BUG反馈","icon":"fa-solid fa-bug","link":"https://qm.qq.com/q/Rbn3nYSscQ EMERALD","group":"link"}],"darkMode":[{"id":"darkMode","name":"切换显示模式","icon":"fa-solid fa-circle-half-stroke WISTERIA","event":"volantis.dark.toggle()","group":"darkMode"}]}}
       
     },
     search: {
@@ -2473,7 +2473,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 </script>
 
   
-    <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"纳多狐狐的实验室","url":"http://leonardo346.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"LeonardoFox","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://leonardo346.github.io/","sameAs":["https://github.com/volantis-x"],"description":"A Blog Website"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://leonardo346.github.io/","name":"纳多狐狐的实验室"}},{"@type":"ListItem","position":2,"item":{"@id":"http://leonardo346.github.io/categories/科技/","name":"科技"}},{"@type":"ListItem","position":3,"item":{"@id":"http://leonardo346.github.io/2025/08/08/RepackWindows/","name":"封装一个属于你的Windows镜像(图文重置版)"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"纳多狐狐的实验室","url":"http://leonardo346.github.io/","keywords":"Blog&Technology","description":"A Blog Website","author":{"@type":"Person","name":"LeonardoFox","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://leonardo346.github.io/","description":"A Blog Website"},"publisher":{"@type":"Organization","name":"纳多狐狐的实验室","url":"http://leonardo346.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"http://leonardo346.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"封装一个属于你的Windows镜像(图文重置版)","description":"从零开始教你封装一个纯净、精简、个性化的Windows安装镜像，包含系统精简、驱动整合、自动应答等完整流程","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"http://leonardo346.github.io/2025/08/08/RepackWindows/"},"author":{"@type":"Person","name":"LeonardoFox","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://leonardo346.github.io/"},"publisher":{"@type":"Organization","name":"纳多狐狐的实验室","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"http://leonardo346.github.io/2025/08/08/RepackWindows/","wordCount":0,"datePublished":"2025-08-08T02:19:48.000Z","dateModified":"2025-01-31T02:19:48.000Z","articleSection":"科技","keywords":"Windows,折腾,玩机教程,教程","image":{"@type":"ImageObject","url":"https://pic1.imgdb.cn/item/689574c458cb8da5c8111e73.png","width":1024,"height":768}}]</script>
+    <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"纳多狐狐的实验室","url":"http://leonardo346.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"LeonardoFox","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://leonardo346.github.io/","sameAs":["https://github.com/volantis-x"],"description":"A Blog Website"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://leonardo346.github.io/","name":"纳多狐狐的实验室"}},{"@type":"ListItem","position":2,"item":{"@id":"http://leonardo346.github.io/categories/科技/","name":"科技"}},{"@type":"ListItem","position":3,"item":{"@id":"http://leonardo346.github.io/2025/08/08/repackwindows/","name":"封装一个属于你的Windows镜像(图文重置版)"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"纳多狐狐的实验室","url":"http://leonardo346.github.io/","keywords":"Blog&Technology","description":"A Blog Website","author":{"@type":"Person","name":"LeonardoFox","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://leonardo346.github.io/","description":"A Blog Website"},"publisher":{"@type":"Organization","name":"纳多狐狐的实验室","url":"http://leonardo346.github.io/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"http://leonardo346.github.io?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"封装一个属于你的Windows镜像(图文重置版)","description":"从零开始教你封装一个纯净、精简、个性化的Windows安装镜像，包含系统精简、驱动整合、自动应答等完整流程","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"http://leonardo346.github.io/2025/08/08/repackwindows/"},"author":{"@type":"Person","name":"LeonardoFox","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://leonardo346.github.io/"},"publisher":{"@type":"Organization","name":"纳多狐狐的实验室","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"http://leonardo346.github.io/2025/08/08/repackwindows/","wordCount":0,"datePublished":"2025-08-08T02:19:48.000Z","dateModified":"2025-01-31T02:19:48.000Z","articleSection":"科技","keywords":"Windows,折腾,玩机教程,教程","image":{"@type":"ImageObject","url":"https://pic1.imgdb.cn/item/689574c458cb8da5c8111e73.png","width":1024,"height":768}}]</script>
   
   <!-- import head_end begin -->
   <!-- import head_end end -->
@@ -3338,7 +3338,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
 <div id="l_main" class=''>
   <article itemscope itemtype="http://schema.org/Article" class="article post white-box reveal md shadow floatable blur article-type-post" id="post" itemscope itemprop="blogPost">
-  <link itemprop="mainEntityOfPage" href="http://leonardo346.github.io/2025/08/08/RepackWindows/">
+  <link itemprop="mainEntityOfPage" href="http://leonardo346.github.io/2025/08/08/repackwindows/">
   <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
     <meta itemprop="name" content="纳多狐狐的实验室">
   </span>
@@ -4504,7 +4504,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
           
           <div class="copyright license">
             <div class="license-title">封装一个属于你的Windows镜像(图文重置版)</div>
-            <div class="license-link"><a href="http://leonardo346.github.io/2025/08/08/RepackWindows/">http://leonardo346.github.io/2025/08/08/RepackWindows/</a>
+            <div class="license-link"><a href="http://leonardo346.github.io/2025/08/08/repackwindows/">http://leonardo346.github.io/2025/08/08/repackwindows/</a>
             </div>
             <div class="license-meta">
               <div class="license-meta-item">
@@ -4572,7 +4572,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://leonardo346.github.io/2025/08/08/RepackWindows/&title=封装一个属于你的Windows镜像(图文重置版) - 纳多狐狐的实验室&summary="
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://leonardo346.github.io/2025/08/08/repackwindows/&title=封装一个属于你的Windows镜像(图文重置版) - 纳多狐狐的实验室&summary="
           
           >
           
@@ -4584,7 +4584,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://leonardo346.github.io/2025/08/08/RepackWindows/&title=封装一个属于你的Windows镜像(图文重置版) - 纳多狐狐的实验室&summary="
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://leonardo346.github.io/2025/08/08/repackwindows/&title=封装一个属于你的Windows镜像(图文重置版) - 纳多狐狐的实验室&summary="
           
           >
           
@@ -4596,7 +4596,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
           
-          target="_blank" href="http://service.weibo.com/share/share.php?url=http://leonardo346.github.io/2025/08/08/RepackWindows/&title=封装一个属于你的Windows镜像(图文重置版) - 纳多狐狐的实验室&summary="
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://leonardo346.github.io/2025/08/08/repackwindows/&title=封装一个属于你的Windows镜像(图文重置版) - 纳多狐狐的实验室&summary="
           
           >
           
@@ -4610,7 +4610,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
         <div class='hoverbox'>
           <a class='share'><img src="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/wechat.png" class="lazyload" data-srcset="https://unpkg.com/volantis-static@0.0.1660614606622/media/org.volantis/logo/128/wechat.png" srcset="data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="></a>
           <div class='target'>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADtElEQVR42u3aQZLbMAwEQP//08k9KZWIAWTDu82bXDZFNn2YAvj6Y0TjhQAcOHDgDHDglsC9wvHfhBefXy7gcN7q/P9+7+o53S84cODAgQMHDtw2uOqGqws+3Uj1fZcbvPk83S84cODAgQMHDtxWuNMFnQbKU6BusJ1ePzhw4MCBAwcO3G+DqxYgqwXN6QAMDhw4cODAgQMHrjZP2khODxAcOHDgwIEDB+6nw00VFNMgevr7akBe18kHBw4cOHDgwIEbgquO6eD67ud4v+DAgQMHDhw4cEvguiMNttXA2g3CY/sFBw4cOHDgwIFbApcGxLuNpxf9UoDuhcTjhjY4cODAgQMHDtwSuNMFTDeET9/TDdhTBVhw4MCBAwcOHLhtcNVg+lRDOIXtFkTL6wMHDhw4cODAgVsCN9WQrhYaqwXRKmR6cfB23eDAgQMHDhw4cEvgqhN0N5I2wqfnTxvU4MCBAwcOHDhw3wKXXgichj6FSqGPAz84cODAgQMHDtwSuG5DNy0cPgU2faHxuAIMDhw4cODAgQP3ZrhuYJxq/KYBtbqudvAHBw4cOHDgwIFbApdONBWIuwG3G4DLz+DAgQMHDhw4cMvgqoE4/X61Yd0dVbDbgwUHDhw4cODAgVsCl07cLTBOXRisBuDugYIDBw4cOHDgwG2Dqwbb7sLShnh6gGPrBQcOHDhw4MCB+xK4avBMoboFx9NgnQKCAwcOHDhw4MBtg+sGzalgmgKmhdM4EIMDBw4cOHDgwC2F6wbj6QA9BVN9/21DGhw4cODAgQMH7sNw3QbwVKHy9D3VwmO6rrGGNDhw4MCBAwcO3ENw5UJeEfCpC4lPN8jBgQMHDhw4cOC2w00F0qcLn92Anf5RLhvS4MCBAwcOHDhwy+DSguDp79KLhFW4biCOG9LgwIEDBw4cOHAfgusG4OmLhNXfnR5oeqERHDhw4MCBAwduK1y10DjV2J4OrmlAjhvS4MCBAwcOHDhwb4brjm4juhtgp4Pw7YGBAwcOHDhw4MAtgesGxOkC4tT81efjQAwOHDhw4MCBA7cMLg283YW9K+BWDxIcOHDgwIEDB+7b4MoN2mKQTQPspwc4cODAgQMHDtxPhateCDwNwt2AXA268Y1McODAgQMHDhy4L4erFj67hdLpA3l7IRMcOHDgwIEDB24ILg2eVdAuzOmGqw3n2/WBAwcOHDhw4MAtg4sbtMUXV4NrNfCmBxs3pMGBAwcOHDhw4D4EZxQLnAjAgQMHzgAH7rPjL/fce+Jv6nePAAAAAElFTkSuQmCC">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATgAAAE4CAAAAADqFLC2AAADpklEQVR42u3aQXIbMQwEQP//08k9KZcwANaC7eZN1i5FNn2YAvjxx2iNDwTgwIEDZ4ADdwTuozn+ff/VfP8tIJzn5YaK74/3Cw4cOHDgwIEDdwyuHACLEFWA9EC23uvuFxw4cODAgQMH7ipcGni7QfRp4DR4l+cHBw4cOHDgwIH7IXDdwmZaqEwDODhw4MCBAwcOHLidguL0+erfwYEDBw4cOHDgfitc9wJftUA5hU8LoWc7+eDAgQMHDhw4cEtw6ZgWNt/9ub1fcODAgQMHDhy4I3DTkTaYp8+nFxa3Bzhw4MCBAwcO3BW4tLE7bVhX4aYXD7fXAQ4cOHDgwIED993gtoPpduDtFiRfrefTv4MDBw4cOHDgwB2B626oGly3GtnToLsWsMGBAwcOHDhw4I7CVTeQbjQ9iG6gfSpogwMHDhw4cODAXYVLN5gCTwPpFGwa4MGBAwcOHDhw4K7DpQtMg+z0d6YBd1rQBAcOHDhw4MCBuwa3FRC3G9zVoNsteMbQ4MCBAwcOHDhwR+C2CpRdkHTDTxc0wYEDBw4cOHDgvgtcWjCcXvSbPrcVcNOCKzhw4MCBAwcO3DW4NAB2C5bVg3gqSFcLri+fBwcOHDhw4MCBOwI3hdgG2m6UT/8xwIEDBw4cOHDgrsK1G7NLwXX7wNKCZvw9OHDgwIEDBw7cUbiti4ZpA3j6/PRAywVTcODAgQMHDhy4I3DdgDld8NZBdQuf7QANDhw4cODAgQN3BK57Ya/aiN4qTHZBpoEaHDhw4MCBAwfuOly1UdttTHcDZxq40/dSQHDgwIEDBw4cuCtw08DbvRhYPaj1QuTwoMGBAwcOHDhw4K7ATS/aPQU1DdTdgmfckAYHDhw4cODAgXsT3FZQnAbQpwqU1ffK6wcHDhw4cODAgTsOl06cLrQ7poF6PC84cODAgQMHDtwRuDQ4TguO3eCbBtcpXNyQBgcOHDhw4MCB+2K46XiqUZzOX4UZN87BgQMHDhw4cOCOwG0VFLcLldugXShw4MCBAwcOHLjrcNMG9VOFxq0Ana4DHDhw4MCBAwfuu8FNA2+3kT2db+uAXn4PDhw4cODAgQP3Q+C6AThtXHcLqCn4y98BBw4cOHDgwIH7YXBPXTTsButu4/vLCpngwIEDBw4cOHDLcFsN6TQYpxuqBt1usP70fXDgwIEDBw4cuGNw3QCZfp42irvBOS2slhvS4MCBAwcOHDhwb4IzsgEOHDhw4Axw4N48/gLscP1EGVDvnQAAAABJRU5ErkJggg==">
           </div>
         </div>
       
@@ -4618,7 +4618,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
       
         <a class="-mob-share-telegram" title="" rel="external nofollow noopener noreferrer noopener"
           
-            target="_blank" href="https://t.me/share/url?url=http://leonardo346.github.io/2025/08/08/RepackWindows/&text=封装一个属于你的Windows镜像(图文重置版) - 纳多狐狐的实验室"
+            target="_blank" href="https://t.me/share/url?url=http://leonardo346.github.io/2025/08/08/repackwindows/&text=封装一个属于你的Windows镜像(图文重置版) - 纳多狐狐的实验室"
           
           >
           
@@ -4649,7 +4649,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
   
     <div class="prev-next">
       
-        <a class='prev' href='/2025/08/15/%E6%81%90%E9%AC%BC%E7%97%87%E9%AC%BC%E7%B1%BB%E5%9E%8B%E4%B8%8E%E7%89%B9%E7%82%B9/'>
+        <a class='prev' href='/2025/08/15/Phasmophobiagost/'>
           <p class='title'><i class="fa-solid fa-chevron-left" aria-hidden="true"></i>恐鬼症鬼魂特点与证据速查</p>
           <p class='content'>看表！
 
