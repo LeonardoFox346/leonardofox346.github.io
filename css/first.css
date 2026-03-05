@@ -53,7 +53,7 @@ html {
   color: var(--color-text);
   width: 100%;
   height: 100%;
-  font-family: "LXGW ZhenKai", "PingFang SC", "Microsoft YaHei", sans-serif, Menlo, Monaco, monospace, sans-serif;
+  font-family: UbuntuMono, "Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, Menlo, Monaco, monospace, sans-serif;
   font-size: 16px;
 }
 html >::-webkit-scrollbar {
@@ -464,7 +464,7 @@ button {
   margin-top: 32px;
 }
 .cover-wrapper .cover-body .title {
-  font-family: "NyushuFirmia", "PingFang SC", "Microsoft YaHei", sans-serif, Helvetica, monospace;
+  font-family: "Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, Helvetica, monospace;
   font-size: 3.125rem;
   line-height: 1.2;
   text-shadow: 0 1px 2px rgba(0,0,0,0.1);
@@ -931,15 +931,15 @@ button {
   }
 }
 @font-face {
-  font-family: 'LXGW ZhenKai';
-  src: url("/fonts/LXGWZhenKai-Regular.ttf");
+  font-family: 'Arial';
+  src: url("https://unpkg.com/volantis-static@0.0.1660614606622/media/fonts/Arial/Arial-Regular.ttf");
   font-weight: 'normal';
   font-style: 'normal';
   font-display: swap;
 }
 @font-face {
-  font-family: 'NyushuFirmia';
-  src: url("/fonts/NyushuFirmia.ttf");
+  font-family: 'PingFang SC';
+  src: url("https://unpkg.com/volantis-static@0.0.1660614606622/media/fonts/PingFang SC/PingFang SC-Regular.ttf");
   font-weight: 'normal';
   font-style: 'normal';
   font-display: swap;
@@ -1062,7 +1062,7 @@ button {
   line-height: 64px;
   padding: 0 24px;
   font-size: 1.25rem;
-  font-family: "NyushuFirmia", "PingFang SC", "Microsoft YaHei", sans-serif, Helvetica, monospace;
+  font-family: "Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, Helvetica, monospace;
 }
 .l_header #wrapper .nav-main .title img {
   height: 64px;
@@ -1073,7 +1073,7 @@ button {
 }
 .l_header .nav-sub .title {
   font-weight: bold;
-  font-family: "LXGW ZhenKai", "PingFang SC", "Microsoft YaHei", sans-serif, Menlo, Monaco, monospace, sans-serif;
+  font-family: UbuntuMono, "Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial, Menlo, Monaco, monospace, sans-serif;
   line-height: 1.2;
   max-height: 64px;
   white-space: normal;
