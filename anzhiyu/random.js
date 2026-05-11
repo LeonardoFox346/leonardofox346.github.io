@@ -1,0 +1,3 @@
+var posts=["2026/03/03/26-3update/","2025/08/15/Phasmophobiagost/","2026/03/05/WarningInformation/","2026/02/18/amdrightmenu/","2026/02/17/aochuangzhongxing/","2025/07/11/firstpage/","2025/07/11/hello-world/","2025/08/08/repackwindows/","2026/03/05/saranzhuang/","2026/02/18/update260218/","2026/05/11/C-Notes/scanfbucong/","2026/05/11/C-Notes/zhanweifuyushujuleixingzongjie/"];function toRandomPost(){
+    pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);
+  };
