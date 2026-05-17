@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>C语言输入输出补充 | 纳多狐狐的实验室</title><meta name="keywords" content="C语言"><meta name="author" content="LeonardoFox"><meta name="copyright" content="LeonardoFox"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#18171d"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="C语言输入输出补充"><meta name="application-name" content="C语言输入输出补充"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#18171d"><meta property="og:type" content="article"><meta property="og:title" content="C语言输入输出补充"><meta property="og:url" content="http://leonardo346.github.io/2026/05/17/C-Notes/Cyuyanshuchushuruzongjie/index.html"><meta property="og:site_name" content="纳多狐狐的实验室"><meta property="og:description" content="补充了一点东西"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://bu.dusays.com/2026/05/17/6a09c9c215f14.png"><meta property="article:author" content="LeonardoFox"><meta property="article:tag" content="Blog&amp;Technology"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://bu.dusays.com/2026/05/17/6a09c9c215f14.png"><meta name="description" content="补充了一点东西"><link rel="shortcut icon" href="https://s21.ax1x.com/2025/08/05/pVUdq10.jpg"><link rel="canonical" href="http://leonardo346.github.io/2026/05/17/C-Notes/Cyuyanshuchushuruzongjie/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: undefined,
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: undefined,
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":null},
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":true,"limitCount":50,"languages":{"author":"作者: LeonardoFox","link":"链接: ","source":"来源: 纳多狐狐的实验室","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.2.0/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: '纳多狐狐的实验室',
+  title: 'C语言输入输出补充',
+  postAI: '',
+  pageFillDescription: '一、再次补充–核心基础语法对照表, 二、 scanf 键盘录入三大黄金法则（重点考点）, 法则 1：除了 %s其余核心变量必须加取地址符 amp, 法则 2：多个数据连续输入时推荐用空格分隔占位符, 补充%d 的贪婪读取特性, %d 在读取键盘输入时是一个贪婪的提取器。, 经典对比：格式串带固定字符的正确输入姿势, 为了让你更直观地理解 scanf 的匹配逻辑我们来看下面这个对比表格：, 💡 考点总结, 三、 printf 精准输出与格式控制, 1. 小数点位数控制（%.Nf）, 2. 规范输出习惯, 四、Visual Studio 绿线警告与报错解析(不是很重要只要代码能跑就行!), 1. 表达式直接丢给 printf 导致的警告, 2. scanf 安全性报错（C4996 经典报错）, 示例代码, 键盘录入3个小数 分别表示长方体的长宽高 分别求A面（长宽） B面（宽高） C面（长*高）的面积与体积 结果保留2位小数一再次补充核心基础语法对照表常用数据类型关键字占位符占用内存典型值适用场景整型字节年龄数量整数计算单精度浮点型字节身高体重带小数的计算双精度浮点型字节高精度科学计算字符型字节单个英文字母符号字符串字符数组取决于定义的数组大小姓名地址连续文本二键盘录入三大黄金法则重点考点法则除了其余核心变量必须加取地址符原理需要知道变量在内存中的具体地址才能把键盘输入的值填进去数组特例字符串数组名如本身就代表了该数组的首地址因此不要加错误写法加了会引发隐患和漏了会导致程序直接崩溃正确写法法则多个数据连续输入时推荐用空格分隔占位符在的双引号内占位符之间推荐使用空格分隔推荐输入时可以用空格或回车换行来分隔和反面教材输入时必须强行打逗号如极其不灵活且不能用回车换行错误写法严格禁止夹带其他乱码字符补充的贪婪读取特性在读取键盘输入时是一个贪婪的提取器机制它会从第一个数字字符开始一直往后吞数字直到遇见第一个非数字字符比如空格回车字母或标点符号才会依依不舍地停下来以你的代码为例第一个开始发威它看到全是数字于是一口气把这一整串数字全部吃掉赋值给变量此时匹配格式控制符第一个吃完后输入缓冲区里已经空空如也了但格式串里后面还死板地写着它在缓冲区里找不到来匹配导致匹配失败变量的下场因为前面的格式匹配在这里断掉了后面的第二个根本没有机会执行最终变量无法分到任何值保持原有的垃圾值或初始值经典对比格式串带固定字符的正确输入姿势为了让你更直观地理解的匹配逻辑我们来看下面这个对比表格代码写法格式串键盘输入内容实际变量分配结果幕后解析过程带空格遇到空格停下拿到顺着往下走刚好匹配掉输入里的遇到第二个空格跳过第二个拿到连着打无值失败太贪婪把数字全吞了拿到整串格式串里的在缓冲区里找不到对应的字符匹配宣告破裂颗粒无收遇到逗号停下拿到成功消掉格式串里的第二个拿到考点总结双引号里写了什么键盘就必须死板地敲什么遇到非数字才会踩刹车空格回车逗号字母都是的刹车片三精准输出与格式控制小数点位数控制默认打印位小数通过在和之间加入可以指定保留位小数遵循四舍五入原则保留位小数保留位小数规范输出习惯换行符在输出字符串的末尾加上可以使控制台在打印完毕后自动换行保持控制台整洁题目格式严格匹配例题目要求格式为我的姓名为年龄为请录入你的姓名年龄与身高此处换行了不然控制台输出就会粘在一起收到你的名字是年龄是身高是四绿线警告与报错解析不是很重要只要代码能跑就行在中写语言时经常会遇到静态分析器画的绿色波浪线这虽然不影响编译运行但代表代码存在不规范或潜在的安全隐患表达式直接丢给导致的警告现象在长方体计算中直接写容易在中引发警告原因类型在进行乘法运算时语言内部会自动将结果提升为双精度进行计算这与预期的类型产生了微妙的类型安全不匹配最佳工程化解决方案业务计算与展现逻辑分离先定义专门的变量存储结果再把变量传给不推荐容易弹警告面的面积为推荐写法干净规范杜绝警告且极其方便调试面的面积为安全性报错经典报错现象报错原因微软认为传统的不会检查输入边界容易导致内存溢出比如你的只有字节用户却输入了字节就会导致程序崩溃或被黑客利用通用的种解决方法方案一最推荐在源文件的第一行必须是首行加入宏定义方案二使用微软特有的安全函数例如但注意这种写法在标准语言考试或编译器下不通用专升本考试中仍需写示例代码键盘录入个小数分别表示长方体的长宽高分别求面长宽面宽高面长高的面积与体积结果保留位小数解决安全报错变量定义规范输入请分别输入这个长方体的长宽高用空格或回车隔开数据记录反馈已记录长宽高业务计算定义中间变量消灭乘方运算导致的绿线警告格式化输出经计算得面的面积为经计算得面的面积为经计算得面的面积为经计算得该长方体的体积为规范结尾',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-05-17 22:04:58',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 8.1.1"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><a id="site-name" href="/" accesskey="h"><div class="title">纳多狐狐的实验室</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a><div id="he-plugin-simple"></div><script>var WIDGET = {
+  "CONFIG": {
+    "modules": "0124",
+    "background": "2",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "16",
+    "cityColor": "FFFFFF",
+    "citySize": "16",
+    "aqiColor": "E8D87B",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "borderRadius": "20",
+    "fixed": "true",
+    "vertical": "top",
+    "horizontal": "left",
+    "left": "20",
+    "top": "7.1",
+    "key": "df245676fb434a0691ead1c63341cd94"
+  }
+}
+</script><link rel="stylesheet" href="https://widget.qweather.net/simple/static/css/he-simple.css?v=1.4.0"/><script src="https://widget.qweather.net/simple/static/js/he-simple.js?v=1.4.0"></script></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 全部文章</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/c-notes/"><i class="anzhiyufont anzhiyu-icon-code faa-tada" style="font-size: 0.9em;"></i><span> C语言学习</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于我</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/equipment/"><i class="anzhiyufont anzhiyu-icon-dice-d20 faa-tada" style="font-size: 0.9em;"></i><span> 我的装备</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="/null" target="_blank"><img class="post-qr-code-img" alt="微信" src="/null"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/null" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="/null"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/AMD%E6%98%BE%E5%8D%A1/" style="font-size: 1.05rem;">AMD显卡<sup>1</sup></a><a href="/tags/ArmouryCrate/" style="font-size: 1.05rem;">ArmouryCrate<sup>1</sup></a><a href="/tags/CTF/" style="font-size: 1.05rem;">CTF<sup>1</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 1.05rem;">C语言<sup>5</sup></a><a href="/tags/Python/" style="font-size: 1.05rem;">Python<sup>2</sup></a><a href="/tags/Python%E4%B9%8B%E7%A6%85/" style="font-size: 1.05rem;">Python之禅<sup>1</sup></a><a href="/tags/Steam/" style="font-size: 1.05rem;">Steam<sup>1</sup></a><a href="/tags/Super-Animal-Royale/" style="font-size: 1.05rem;">Super Animal Royale<sup>1</sup></a><a href="/tags/Windows/" style="font-size: 1.05rem;">Windows<sup>1</sup></a><a href="/tags/web/" style="font-size: 1.05rem;">web<sup>1</sup></a><a href="/tags/%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">入门教程<sup>1</sup></a><a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 1.05rem;">内存管理<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF%E9%80%86%E5%90%91/" style="font-size: 1.05rem;">前端逆向<sup>1</sup></a><a href="/tags/%E5%8D%8E%E7%A1%95ROG/" style="font-size: 1.05rem;">华硕ROG<sup>1</sup></a><a href="/tags/%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/" style="font-size: 1.05rem;">右键菜单<sup>1</sup></a><a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 1.05rem;">后端开发<sup>1</sup></a><a href="/tags/%E5%A4%A7%E9%80%83%E6%9D%80/" style="font-size: 1.05rem;">大逃杀<sup>1</sup></a><a href="/tags/%E5%A4%A9%E9%80%89/" style="font-size: 1.05rem;">天选<sup>1</sup></a><a href="/tags/%E5%A5%A5%E5%88%9B%E4%B8%AD%E5%BF%83/" style="font-size: 1.05rem;">奥创中心<sup>1</sup></a><a href="/tags/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/" style="font-size: 1.05rem;">安全研究<sup>1</sup></a><a href="/tags/%E5%B0%8F%E5%8A%A8%E7%89%A9%E4%B9%8B%E6%98%9F/" style="font-size: 1.05rem;">小动物之星<sup>1</sup></a><a href="/tags/%E5%BC%80%E5%8F%91/" style="font-size: 1.05rem;">开发<sup>1</sup></a><a href="/tags/%E6%81%90%E6%80%96%E6%B8%B8%E6%88%8F/" style="font-size: 1.05rem;">恐怖游戏<sup>1</sup></a><a href="/tags/%E6%8A%98%E8%85%BE/" style="font-size: 1.05rem;">折腾<sup>1</sup></a><a href="/tags/%E6%94%BB%E7%95%A5/" style="font-size: 1.05rem;">攻略<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>2</sup></a><a href="/tags/%E6%97%A5%E5%B8%B8/" style="font-size: 1.05rem;">日常<sup>1</sup></a><a href="/tags/%E6%9E%81%E5%AE%A2/" style="font-size: 1.05rem;">极客<sup>1</sup></a><a href="/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8/" style="font-size: 1.05rem;">注册表<sup>1</sup></a><a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" style="font-size: 1.05rem;">渗透测试<sup>1</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 1.05rem;">游戏<sup>1</sup></a><a href="/tags/%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/" style="font-size: 1.05rem;">版本回退<sup>1</sup></a><a href="/tags/%E7%8E%A9%E6%9C%BA%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">玩机教程<sup>1</sup></a><a href="/tags/%E7%AB%99%E5%8A%A1/" style="font-size: 1.05rem;">站务<sup>1</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96/" style="font-size: 1.05rem;">系统优化<sup>1</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/" style="font-size: 1.05rem;">编程入门<sup>1</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B%E5%93%B2%E5%AD%A6/" style="font-size: 1.05rem;">编程哲学<sup>1</sup></a><a href="/tags/%E8%81%94%E6%9C%BA%E6%B8%B8%E6%88%8F/" style="font-size: 1.05rem;">联机游戏<sup>1</sup></a><a href="/tags/%E8%A7%86%E8%A7%89%E4%BF%AE%E5%A4%8D/" style="font-size: 1.05rem;">视觉修复<sup>1</sup></a></div></div></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/05/"><span class="card-archive-list-date">五月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">8</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/03/"><span class="card-archive-list-date">三月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/02/"><span class="card-archive-list-date">二月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">3</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/08/"><span class="card-archive-list-date">八月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date">七月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/C-Notes/" itemprop="url">C-Notes</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/C%E8%AF%AD%E8%A8%80/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>C语言</span></a></span></div></div><h1 class="post-title" itemprop="name headline">C语言输入输出补充</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-05-17T13:52:51.720Z" title="发表于 2026-05-17 21:52:51">2026-05-17</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-05-17T14:04:58.929Z" title="更新于 2026-05-17 22:04:58">2026-05-17</time></span></div><div class="meta-secondline"><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为长沙"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>长沙</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="https://bu.dusays.com/2026/05/17/6a09c9c215f14.png"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://leonardo346.github.io/2026/05/17/C-Notes/Cyuyanshuchushuruzongjie/"><header><a class="post-meta-categories" href="/categories/C-Notes/" itemprop="url">C-Notes</a><a href="/tags/C%E8%AF%AD%E8%A8%80/" tabindex="-1" itemprop="url">C语言</a><h1 id="CrawlerTitle" itemprop="name headline">C语言输入输出补充</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">LeonardoFox</span><time itemprop="dateCreated datePublished" datetime="2026-05-17T13:52:51.720Z" title="发表于 2026-05-17 21:52:51">2026-05-17</time><time itemprop="dateCreated datePublished" datetime="2026-05-17T14:04:58.929Z" title="更新于 2026-05-17 22:04:58">2026-05-17</time></header>
+<h2 id="一、再次补充–核心基础语法对照表"><a href="#一、再次补充–核心基础语法对照表" class="headerlink" title="一、再次补充–核心基础语法对照表"></a>一、再次补充–核心基础语法对照表</h2><table>
+<thead>
+<tr>
+<th><strong>常用数据类型</strong></th>
+<th><strong>关键字</strong></th>
+<th><strong>scanf&#x2F;printf 占位符</strong></th>
+<th><strong>占用内存（典型值）</strong></th>
+<th><strong>适用场景</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>整型</strong></td>
+<td><code>int</code></td>
+<td><code>%d</code></td>
+<td>4 字节</td>
+<td>年龄、数量、整数计算</td>
+</tr>
+<tr>
+<td><strong>单精度浮点型</strong></td>
+<td><code>float</code></td>
+<td><code>%f</code></td>
+<td>4 字节</td>
+<td>身高、体重、带小数的计算</td>
+</tr>
+<tr>
+<td><strong>双精度浮点型</strong></td>
+<td><code>double</code></td>
+<td><code>%lf</code></td>
+<td>8 字节</td>
+<td>高精度科学计算</td>
+</tr>
+<tr>
+<td><strong>字符型</strong></td>
+<td><code>char</code></td>
+<td><code>%c</code></td>
+<td>1 字节</td>
+<td>单个英文字母、符号</td>
+</tr>
+<tr>
+<td><strong>字符串（字符数组）</strong></td>
+<td><code>char[]</code></td>
+<td><code>%s</code></td>
+<td>取决于定义的数组大小</td>
+<td>姓名、地址、连续文本</td>
+</tr>
+</tbody></table>
+
+<h2 id="二、-scanf-键盘录入三大黄金法则（重点考点）"><a href="#二、-scanf-键盘录入三大黄金法则（重点考点）" class="headerlink" title="二、 scanf 键盘录入三大黄金法则（重点考点）"></a>二、 <code>scanf</code> 键盘录入三大黄金法则（重点考点）</h2><h3 id="法则-1：除了-s，其余核心变量必须加取地址符"><a href="#法则-1：除了-s，其余核心变量必须加取地址符" class="headerlink" title="法则 1：除了 %s，其余核心变量必须加取地址符 &amp;"></a>法则 1：除了 <code>%s</code>，其余核心变量必须加取地址符 <code>&amp;</code></h3><ul>
+<li><strong>原理</strong>：<code>scanf</code> 需要知道变量在内存中的<strong>具体地址</strong>，才能把键盘输入的值填进去。</li>
+<li><strong>数组特例</strong>：字符串数组名（如 <code>name</code>）本身就代表了该数组的首地址，因此<strong>不要</strong>加 <code>&amp;</code>。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> name[<span class="number">20</span>];</span><br><span class="line"><span class="type">int</span> age;</span><br><span class="line"><span class="type">float</span> height;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ❌ 错误写法：name 加了 &amp; 会引发隐患；age 和 height 漏了 &amp; 会导致程序直接崩溃</span></span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%s %d %f&quot;</span>, &amp;name, age, height); </span><br><span class="line"></span><br><span class="line"><span class="comment">//  正确写法：</span></span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%s %d %f&quot;</span>, name, &amp;age, &amp;height); </span><br></pre></td></tr></table></figure>
+
+<h3 id="法则-2：多个数据连续输入时，推荐用“空格”分隔占位符"><a href="#法则-2：多个数据连续输入时，推荐用“空格”分隔占位符" class="headerlink" title="法则 2：多个数据连续输入时，推荐用“空格”分隔占位符"></a>法则 2：多个数据连续输入时，推荐用“空格”分隔占位符</h3><p>在 <code>scanf</code> 的双引号内，占位符之间推荐使用<strong>空格</strong>分隔。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;a, &amp;b); <span class="comment">// 推荐：输入时可以用【空格】或【回车换行】来分隔 a 和 b</span></span><br></pre></td></tr></table></figure>
+
+<p>⚠️ <strong>反面教材：</strong></p>
+<ul>
+<li><code>scanf(&quot;%d,%d&quot;, &amp;a, &amp;b);</code> ➡️ 输入时必须强行打逗号（如 <code>10,20</code>），极其不灵活，且不能用回车换行。</li>
+<li><code>scanf(&quot;%d123%d&quot;, &amp;a, &amp;b);</code> ➡️ 错误写法，严格禁止夹带其他乱码字符。</li>
+</ul>
+<h4 id="补充-d-的“贪婪读取”特性"><a href="#补充-d-的“贪婪读取”特性" class="headerlink" title="补充%d 的“贪婪读取”特性"></a>补充<code>%d</code> 的“贪婪读取”特性</h4><h5 id="d-在读取键盘输入时，是一个贪婪的提取器。"><a href="#d-在读取键盘输入时，是一个贪婪的提取器。" class="headerlink" title="%d 在读取键盘输入时，是一个贪婪的提取器。"></a><code>%d</code> 在读取键盘输入时，是一个<strong>贪婪的提取器</strong>。</h5><ul>
+<li><strong>机制</strong>：它会从第一个数字字符开始，<strong>一直往后吞数字</strong>，直到遇见第一个<strong>非数字字符</strong>（比如空格、回车、字母或标点符号）才会依依不舍地停下来。</li>
+</ul>
+<p>📌 <strong>以你的代码为例：</strong></p>
+<p><strong>第一个 <code>%d</code> 开始发威</strong>：它看到 <code>678123789</code> 全是数字，于是一口气把这一整串数字<strong>全部吃掉</strong>，赋值给变量 <code>a</code>（此时 <code>a = 678123789</code>）。</p>
+<ol>
+<li><strong>匹配格式控制符 <code>123</code></strong>：第一个 <code>%d</code> 吃完后，输入缓冲区里已经<strong>空空如也</strong>了。但 <code>scanf</code> 格式串里后面还死板地写着 <code>123</code>，它在缓冲区里找不到 <code>123</code> 来匹配，导致匹配失败。</li>
+<li><strong>变量 <code>b</code> 的下场</strong>：因为前面的格式匹配在 <code>123</code> 这里断掉了，后面的第二个 <code>%d</code> 根本没有机会执行。最终，<strong>变量 <code>b</code> 无法分到任何值</strong>（保持原有的垃圾值或初始值）。</li>
+</ol>
+<h3 id="经典对比：格式串带固定字符的正确输入姿势"><a href="#经典对比：格式串带固定字符的正确输入姿势" class="headerlink" title="经典对比：格式串带固定字符的正确输入姿势"></a>经典对比：格式串带固定字符的正确输入姿势</h3><h4 id="为了让你更直观地理解-scanf-的匹配逻辑，我们来看下面这个对比表格："><a href="#为了让你更直观地理解-scanf-的匹配逻辑，我们来看下面这个对比表格：" class="headerlink" title="为了让你更直观地理解 scanf 的匹配逻辑，我们来看下面这个对比表格："></a>为了让你更直观地理解 <code>scanf</code> 的匹配逻辑，我们来看下面这个对比表格：</h4><table>
+<thead>
+<tr>
+<th align="left"><strong>代码写法 (scanf 格式串)</strong></th>
+<th align="center"><strong>键盘输入内容</strong></th>
+<th align="center"><strong>实际变量分配结果</strong></th>
+<th align="center"><strong>幕后解析过程</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>scanf(&quot;%d123%d&quot;, &amp;a, &amp;b);</code></td>
+<td align="center"><strong><code>678 123 789</code></strong> <em>(带空格)</em></td>
+<td align="center"><code>a = 678</code><br> <code>b = 789</code></td>
+<td align="center">① <code>%d</code> 遇到空格停下，<code>a</code> 拿到 <code>678</code>；<br> ② 顺着往下走，刚好匹配掉输入里的 <code>123</code>；<br> ③ 遇到第二个空格跳过，第二个 <code>%d</code> 拿到 <code>789</code>。</td>
+</tr>
+<tr>
+<td align="left"><code>scanf(&quot;%d123%d&quot;, &amp;a, &amp;b);</code></td>
+<td align="center"><strong><code>678123789</code></strong> <br><em>(连着打)</em></td>
+<td align="center"><code>a = 678123789</code> <br><code>b = 无值 / 失败</code></td>
+<td align="center">① <code>%d</code> 太贪婪，把数字全吞了，<code>a</code> 拿到整串； <br>② 格式串里的 <code>123</code> 在缓冲区里找不到对应的字符，<br><strong>匹配宣告破裂</strong>，<code>b</code> 颗粒无收。</td>
+</tr>
+<tr>
+<td align="left"><code>scanf(&quot;%d, %d&quot;, &amp;a, &amp;b);</code></td>
+<td align="center"><strong><code>10, 20</code></strong></td>
+<td align="center"><code>a = 10</code><br> <code>b = 20</code></td>
+<td align="center">① <code>%d</code> 遇到逗号停下，<code>a</code> 拿到 <code>10</code>； <br>② <code>scanf</code> 成功消掉格式串里的 <code>,</code>；<br> ③ 第二个 <code>%d</code> 拿到 <code>20</code>。</td>
+</tr>
+</tbody></table>
+<h4 id="💡-考点总结"><a href="#💡-考点总结" class="headerlink" title="💡 考点总结"></a>💡 考点总结</h4><ol>
+<li><strong><code>scanf</code> 双引号里写了什么，键盘就必须死板地敲什么</strong>。</li>
+<li><strong>遇到非数字，<code>%d</code> 才会踩刹车</strong>。空格、回车、逗号、字母，都是 <code>%d</code> 的刹车片。</li>
+</ol>
+
+<h2 id="三、-printf-精准输出与格式控制"><a href="#三、-printf-精准输出与格式控制" class="headerlink" title="三、 printf 精准输出与格式控制"></a>三、 <code>printf</code> 精准输出与格式控制</h2><h3 id="1-小数点位数控制（-Nf）"><a href="#1-小数点位数控制（-Nf）" class="headerlink" title="1. 小数点位数控制（%.Nf）"></a>1. 小数点位数控制（<code>%.Nf</code>）</h3><p><code>%f</code> 默认打印 6 位小数。通过在 <code>%</code> 和 <code>f</code> 之间加入 <code>.N</code> 可以指定保留 <code>N</code> 位小数（遵循<strong>四舍五入</strong>原则）。</p>
+<ul>
+<li><code>%.1f</code> ➡️ 保留 1 位小数</li>
+<li><code>%.2f</code> ➡️ 保留 2 位小数</li>
+</ul>
+<h3 id="2-规范输出习惯"><a href="#2-规范输出习惯" class="headerlink" title="2. 规范输出习惯"></a>2. 规范输出习惯</h3><ul>
+<li><p><strong>换行符 <code>\n</code></strong>：在输出字符串的末尾加上 <code>\n</code> 可以使控制台在打印完毕后自动换行，保持控制台整洁。</p>
+</li>
+<li><p><strong>题目格式严格匹配</strong>：</p>
+<p><em>例：题目要求格式为：<code>我的姓名为XXX 年龄为XXX</code></em></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;请录入你的姓名年龄与身高\n&quot;</span>);   <span class="comment">// 此处换行了 不然控制台输出就会粘在一起!</span></span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%s %d %f&quot;</span>, &amp;name , &amp;age , &amp;height);  </span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;收到！你的名字是%s年龄是%d身高是%.2f&quot;</span>, name, age, height);</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+<h2 id="四、Visual-Studio-绿线警告与报错解析-不是很重要-只要代码能跑就行"><a href="#四、Visual-Studio-绿线警告与报错解析-不是很重要-只要代码能跑就行" class="headerlink" title="四、Visual Studio 绿线警告与报错解析(不是很重要,只要代码能跑就行!)"></a>四、Visual Studio 绿线警告与报错解析(不是很重要,只要代码能跑就行!)</h2><p>在 Visual Studio 中写 C 语言时，经常会遇到静态分析器画的<strong>绿色波浪线</strong>。这虽然不影响编译运行，但代表代码存在<strong>不规范或潜在的安全隐患</strong>。</p>
+<h3 id="1-表达式直接丢给-printf-导致的警告"><a href="#1-表达式直接丢给-printf-导致的警告" class="headerlink" title="1. 表达式直接丢给 printf 导致的警告"></a>1. 表达式直接丢给 <code>printf</code> 导致的警告</h3><ul>
+<li><strong>现象</strong>：在长方体计算中，直接写 <code>printf(&quot;...%.2f&quot;, chang * kuan);</code> 容易在 VS 中引发警告。</li>
+<li><strong>原因</strong>：<code>float</code> 类型在进行乘法运算时，C 语言内部会自动将结果提升为 <code>double</code>（双精度）进行计算，这与 <code>%f</code> &#x2F; <code>%.2f</code> 预期的 <code>float</code> 类型产生了微妙的类型安全不匹配。</li>
+<li><strong>最佳工程化解决方案</strong>：<strong>业务计算与展现逻辑分离</strong>。先定义专门的变量存储结果，再把变量传给 <code>printf</code>。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 不推荐（容易弹警告）</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;A面的面积为%.2f\n&quot;</span>, chang * kuan);</span><br><span class="line"></span><br><span class="line"><span class="comment">//  推荐写法（干净规范，杜绝警告，且极其方便调试）</span></span><br><span class="line"><span class="type">float</span> areaA = chang * kuan;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;A面的面积为%.2f\n&quot;</span>, areaA);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-scanf-安全性报错（C4996-经典报错）"><a href="#2-scanf-安全性报错（C4996-经典报错）" class="headerlink" title="2. scanf 安全性报错（C4996 经典报错）"></a>2. <code>scanf</code> 安全性报错（<code>C4996</code> 经典报错）</h3><ul>
+<li><p><strong>现象</strong>：VS 报错 <code>error C4996: &#39;scanf&#39;: This function or variable may be unsafe...</code></p>
+</li>
+<li><p><strong>原因</strong>：微软认为传统的 <code>scanf</code> 不会检查输入边界，容易导致内存溢出（比如你的 <code>name</code> 只有 20 字节，用户却输入了 100 字节，就会导致程序崩溃或被黑客利用）。</p>
+</li>
+<li><p><strong>通用的 3 种解决方法</strong>：</p>
+<ol>
+<li><p><strong>方案一（最推荐）</strong>：在源文件的<strong>第一行</strong>（必须是首行）加入宏定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _CRT_SECURE_NO_WARNINGS</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>方案二</strong>：使用微软特有的安全函数 <code>scanf_s</code>（例如 <code>scanf_s(&quot;%d&quot;, &amp;a);</code>），但注意这种写法在标准 C 语言考试或 Linux 编译器下不通用，专升本考试中仍需写 <code>scanf</code>。</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><h4 id="键盘录入3个小数-分别表示长方体的长宽高-分别求A面（长宽）-B面（宽高）-C面（长-高）的面积与体积-结果保留2位小数"><a href="#键盘录入3个小数-分别表示长方体的长宽高-分别求A面（长宽）-B面（宽高）-C面（长-高）的面积与体积-结果保留2位小数" class="headerlink" title="键盘录入3个小数 分别表示长方体的长宽高 分别求A面（长宽） B面（宽高） C面（长*高）的面积与体积 结果保留2位小数"></a>键盘录入3个小数 分别表示长方体的长宽高 分别求A面（长<em>宽） B面（宽</em>高） C面（长*高）的面积与体积 结果保留2位小数</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _CRT_SECURE_NO_WARNINGS <span class="comment">// 解决 VS 安全报错</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 1. 变量定义</span></span><br><span class="line">    <span class="type">float</span> chang, kuan, gao;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 2. 规范输入</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请分别输入这个长方体的长、宽、高（用空格或回车隔开）：\n&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%f %f %f&quot;</span>, &amp;chang, &amp;kuan, &amp;gao);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 3. 数据记录反馈</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;已记录！长：%.2f，宽：%.2f，高：%.2f\n&quot;</span>, chang, kuan, gao);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 4. 业务计算（定义中间变量，消灭printf乘方运算导致的绿线警告）</span></span><br><span class="line">    <span class="type">float</span> areaA  = chang * kuan;</span><br><span class="line">    <span class="type">float</span> areaB  = gao * kuan;</span><br><span class="line">    <span class="type">float</span> areaC  = chang * gao;</span><br><span class="line">    <span class="type">float</span> volume = chang * kuan * gao;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 5. 格式化输出</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;经计算得A面的面积为：%.2f\n&quot;</span>, areaA);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;经计算得B面的面积为：%.2f\n&quot;</span>, areaB);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;经计算得C面的面积为：%.2f\n&quot;</span>, areaC);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;经计算得该长方体的体积为：%.2f\n&quot;</span>, volume);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// 规范结尾</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/04/01/69cd1de744d33.png" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/04/01/69cd1de744d33.png" title="头像" alt="头像"></a><div class="post-copyright__author_name">LeonardoFox</div><div class="post-copyright__author_desc">带你探索科技的奥秘</div></div><div class="post-copyright__post__info"><span class="post-copyright__original" title="该文章为原创文章，注意版权协议">原创</span><span class="post-copyright-title"><span onclick="rm.copyPageUrl('http://leonardo346.github.io/2026/05/17/C-Notes/Cyuyanshuchushuruzongjie/')">C语言输入输出补充</span></span></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://leonardo346.github.io" target="_blank">纳多狐狐的实验室</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/C-Notes/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>C-Notes<span class="categoryesPageCount">5</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/C%E8%AF%AD%E8%A8%80/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>C语言<span class="tagsPageCount">5</span></a></div></div><div class="post_share"><div class="social-share" data-image="https://bu.dusays.com/2026/05/17/6a09d03eec264.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/05/12/python_zen/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/12/6822a1b3c4d5e.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python：藏在&quot;import this&quot;里的编程哲学</div></div></a></div><div class="next-post pull-right"><a href="/2026/05/17/C-Notes/fhelfdequfen/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/17/6a09ce25e60d1.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">单精度浮点型与双精度浮点型的区分</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/2026/05/17/C-Notes/cyuyansuanshujisuanfu/" title="C语言算术运算符、数据类型转型与数位拆分"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/17/6a09d03eec264.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-05-17</div><div class="title">C语言算术运算符、数据类型转型与数位拆分</div></div></a></div><div><a href="/2026/05/17/C-Notes/fhelfdequfen/" title="单精度浮点型与双精度浮点型的区分"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/17/6a09ce25e60d1.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-05-17</div><div class="title">单精度浮点型与双精度浮点型的区分</div></div></a></div><div><a href="/2026/05/11/C-Notes/scanfbucong/" title="关于scanf"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/11/6a01fadb6fb3e.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-05-11</div><div class="title">关于scanf</div></div></a></div><div><a href="/2026/05/11/C-Notes/zhanweifuyushujuleixingzongjie/" title="你好为什么变成了烫烫烫"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/11/6a01fbafe2695.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-05-11</div><div class="title">你好为什么变成了烫烫烫</div></div></a></div></div></div><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)" style="display: none">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/04/01/69cd1de744d33.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这有关于<b style="color:#fff">产品、设计、开发</b>相关的问题和看法，还有<b style="color:#fff">文章翻译</b>和<b style="color:#fff">分享</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">LeonardoFox</h1><div class="author-info__desc">带你探索科技的奥秘</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/LeonardoFox346" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/523509650" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">博客正在迁移中...部分页面无法打开为正常现象! 文章页面请切换到深色模式查看,浅色模式无法正常显示文字!</div></div><div class="card-widget anzhiyu-right-widget" id="card-wechat" onclick="null"><div id="flip-wrapper"><div id="flip-content"><div class="face" style="background: url(https://bu.dusays.com/2023/01/13/63c02edf44033.png) center center / 100% no-repeat"></div><div class="back face" style="background: url(https://bu.dusays.com/2026/04/07/69d4869076eb2.png) center center / 100% no-repeat"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%86%8D%E6%AC%A1%E8%A1%A5%E5%85%85%E2%80%93%E6%A0%B8%E5%BF%83%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E5%AF%B9%E7%85%A7%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">一、再次补充–核心基础语法对照表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-scanf-%E9%94%AE%E7%9B%98%E5%BD%95%E5%85%A5%E4%B8%89%E5%A4%A7%E9%BB%84%E9%87%91%E6%B3%95%E5%88%99%EF%BC%88%E9%87%8D%E7%82%B9%E8%80%83%E7%82%B9%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">二、 scanf 键盘录入三大黄金法则（重点考点）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E5%88%99-1%EF%BC%9A%E9%99%A4%E4%BA%86-s%EF%BC%8C%E5%85%B6%E4%BD%99%E6%A0%B8%E5%BF%83%E5%8F%98%E9%87%8F%E5%BF%85%E9%A1%BB%E5%8A%A0%E5%8F%96%E5%9C%B0%E5%9D%80%E7%AC%A6"><span class="toc-number">2.1.</span> <span class="toc-text">法则 1：除了 %s，其余核心变量必须加取地址符 &amp;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%95%E5%88%99-2%EF%BC%9A%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E8%BF%9E%E7%BB%AD%E8%BE%93%E5%85%A5%E6%97%B6%EF%BC%8C%E6%8E%A8%E8%8D%90%E7%94%A8%E2%80%9C%E7%A9%BA%E6%A0%BC%E2%80%9D%E5%88%86%E9%9A%94%E5%8D%A0%E4%BD%8D%E7%AC%A6"><span class="toc-number">2.2.</span> <span class="toc-text">法则 2：多个数据连续输入时，推荐用“空格”分隔占位符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85-d-%E7%9A%84%E2%80%9C%E8%B4%AA%E5%A9%AA%E8%AF%BB%E5%8F%96%E2%80%9D%E7%89%B9%E6%80%A7"><span class="toc-number">2.2.1.</span> <span class="toc-text">补充%d 的“贪婪读取”特性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#d-%E5%9C%A8%E8%AF%BB%E5%8F%96%E9%94%AE%E7%9B%98%E8%BE%93%E5%85%A5%E6%97%B6%EF%BC%8C%E6%98%AF%E4%B8%80%E4%B8%AA%E8%B4%AA%E5%A9%AA%E7%9A%84%E6%8F%90%E5%8F%96%E5%99%A8%E3%80%82"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">%d 在读取键盘输入时，是一个贪婪的提取器。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%8F%E5%85%B8%E5%AF%B9%E6%AF%94%EF%BC%9A%E6%A0%BC%E5%BC%8F%E4%B8%B2%E5%B8%A6%E5%9B%BA%E5%AE%9A%E5%AD%97%E7%AC%A6%E7%9A%84%E6%AD%A3%E7%A1%AE%E8%BE%93%E5%85%A5%E5%A7%BF%E5%8A%BF"><span class="toc-number">2.3.</span> <span class="toc-text">经典对比：格式串带固定字符的正确输入姿势</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BA%86%E8%AE%A9%E4%BD%A0%E6%9B%B4%E7%9B%B4%E8%A7%82%E5%9C%B0%E7%90%86%E8%A7%A3-scanf-%E7%9A%84%E5%8C%B9%E9%85%8D%E9%80%BB%E8%BE%91%EF%BC%8C%E6%88%91%E4%BB%AC%E6%9D%A5%E7%9C%8B%E4%B8%8B%E9%9D%A2%E8%BF%99%E4%B8%AA%E5%AF%B9%E6%AF%94%E8%A1%A8%E6%A0%BC%EF%BC%9A"><span class="toc-number">2.3.1.</span> <span class="toc-text">为了让你更直观地理解 scanf 的匹配逻辑，我们来看下面这个对比表格：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%92%A1-%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93"><span class="toc-number">2.3.2.</span> <span class="toc-text">💡 考点总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-printf-%E7%B2%BE%E5%87%86%E8%BE%93%E5%87%BA%E4%B8%8E%E6%A0%BC%E5%BC%8F%E6%8E%A7%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">三、 printf 精准输出与格式控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B0%8F%E6%95%B0%E7%82%B9%E4%BD%8D%E6%95%B0%E6%8E%A7%E5%88%B6%EF%BC%88-Nf%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">1. 小数点位数控制（%.Nf）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%A7%84%E8%8C%83%E8%BE%93%E5%87%BA%E4%B9%A0%E6%83%AF"><span class="toc-number">3.2.</span> <span class="toc-text">2. 规范输出习惯</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Visual-Studio-%E7%BB%BF%E7%BA%BF%E8%AD%A6%E5%91%8A%E4%B8%8E%E6%8A%A5%E9%94%99%E8%A7%A3%E6%9E%90-%E4%B8%8D%E6%98%AF%E5%BE%88%E9%87%8D%E8%A6%81-%E5%8F%AA%E8%A6%81%E4%BB%A3%E7%A0%81%E8%83%BD%E8%B7%91%E5%B0%B1%E8%A1%8C"><span class="toc-number">4.</span> <span class="toc-text">四、Visual Studio 绿线警告与报错解析(不是很重要,只要代码能跑就行!)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9B%B4%E6%8E%A5%E4%B8%A2%E7%BB%99-printf-%E5%AF%BC%E8%87%B4%E7%9A%84%E8%AD%A6%E5%91%8A"><span class="toc-number">4.1.</span> <span class="toc-text">1. 表达式直接丢给 printf 导致的警告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-scanf-%E5%AE%89%E5%85%A8%E6%80%A7%E6%8A%A5%E9%94%99%EF%BC%88C4996-%E7%BB%8F%E5%85%B8%E6%8A%A5%E9%94%99%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">2. scanf 安全性报错（C4996 经典报错）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">4.3.</span> <span class="toc-text">示例代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%94%AE%E7%9B%98%E5%BD%95%E5%85%A53%E4%B8%AA%E5%B0%8F%E6%95%B0-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E9%95%BF%E6%96%B9%E4%BD%93%E7%9A%84%E9%95%BF%E5%AE%BD%E9%AB%98-%E5%88%86%E5%88%AB%E6%B1%82A%E9%9D%A2%EF%BC%88%E9%95%BF%E5%AE%BD%EF%BC%89-B%E9%9D%A2%EF%BC%88%E5%AE%BD%E9%AB%98%EF%BC%89-C%E9%9D%A2%EF%BC%88%E9%95%BF-%E9%AB%98%EF%BC%89%E7%9A%84%E9%9D%A2%E7%A7%AF%E4%B8%8E%E4%BD%93%E7%A7%AF-%E7%BB%93%E6%9E%9C%E4%BF%9D%E7%95%992%E4%BD%8D%E5%B0%8F%E6%95%B0"><span class="toc-number">4.3.1.</span> <span class="toc-text">键盘录入3个小数 分别表示长方体的长宽高 分别求A面（长宽） B面（宽高） C面（长*高）的面积与体积 结果保留2位小数</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/05/17/C-Notes/cyuyansuanshujisuanfu/" title="C语言算术运算符、数据类型转型与数位拆分"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/17/6a09d03eec264.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言算术运算符、数据类型转型与数位拆分"/></a><div class="content"><a class="title" href="/2026/05/17/C-Notes/cyuyansuanshujisuanfu/" title="C语言算术运算符、数据类型转型与数位拆分">C语言算术运算符、数据类型转型与数位拆分</a><time datetime="2026-05-17T14:27:39.854Z" title="发表于 2026-05-17 22:27:39">2026-05-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/17/C-Notes/fhelfdequfen/" title="单精度浮点型与双精度浮点型的区分"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/17/6a09ce25e60d1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单精度浮点型与双精度浮点型的区分"/></a><div class="content"><a class="title" href="/2026/05/17/C-Notes/fhelfdequfen/" title="单精度浮点型与双精度浮点型的区分">单精度浮点型与双精度浮点型的区分</a><time datetime="2026-05-17T14:20:00.914Z" title="发表于 2026-05-17 22:20:00">2026-05-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/17/C-Notes/Cyuyanshuchushuruzongjie/" title="C语言输入输出补充"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/17/6a09c9c215f14.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C语言输入输出补充"/></a><div class="content"><a class="title" href="/2026/05/17/C-Notes/Cyuyanshuchushuruzongjie/" title="C语言输入输出补充">C语言输入输出补充</a><time datetime="2026-05-17T13:52:51.720Z" title="发表于 2026-05-17 21:52:51">2026-05-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/12/python_zen/" title="Python：藏在&quot;import this&quot;里的编程哲学"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/12/6822a1b3c4d5e.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python：藏在&quot;import this&quot;里的编程哲学"/></a><div class="content"><a class="title" href="/2026/05/12/python_zen/" title="Python：藏在&quot;import this&quot;里的编程哲学">Python：藏在&quot;import this&quot;里的编程哲学</a><time datetime="2026-05-12T11:15:00.000Z" title="发表于 2026-05-12 19:15:00">2026-05-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/05/12/260512update/" title="站点更新"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2026/05/12/6a0307e7127a5.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="站点更新"/></a><div class="content"><a class="title" href="/2026/05/12/260512update/" title="站点更新">站点更新</a><time datetime="2026-05-12T10:30:00.000Z" title="发表于 2026-05-12 18:30:00">2026-05-12</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="footer_custom_text"><div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; padding: 30px 20px; max-width: 800px; margin: 0 auto;"><div style="text-align: left;"><h4 style="margin: 0 0 12px 0; color: var(--color-text); font-size: 16px; border-bottom: 2px solid #2196F3; padding-bottom: 5px; display: inline-block;"><i class="fa-solid fa-circle-info" style="color: #2196F3;"></i> 关于</h4><p style="margin: 0; font-size: 13px; color: var(--color-text); opacity: 0.8; line-height: 1.6;">使用 <a href="https://hexo.io" target="_blank" style="color: #2196F3; text-decoration: none;">Hexo</a> 框架构建<br>魔改安知鱼主题美化</p></div><div style="text-align: center;"><h4 style="margin: 0 0 12px 0; color: var(--color-text); font-size: 16px; border-bottom: 2px solid #FF9800; padding-bottom: 5px; display: inline-block;"><i class="fa-solid fa-copyright" style="color: #FF9800;"></i> 版权</h4><p style="margin: 0; font-size: 13px; color: var(--color-text); opacity: 0.8; line-height: 1.6;">© 2020-2026<br><strong>LeonardoFox346</strong></p></div><div style="text-align: right;"><h4 style="margin: 0 0 12px 0; color: var(--color-text); font-size: 16px; border-bottom: 2px solid #4CAF50; padding-bottom: 5px; display: inline-block;"><i class="fa-solid fa-file-contract" style="color: #4CAF50;"></i> 协议</h4><p style="margin: 0; font-size: 13px; color: var(--color-text); opacity: 0.8; line-height: 1.6;"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" style="color: #4CAF50; text-decoration: none;">CC BY-NC-SA 4.0</a><br>署名-非商业-共享</p></div></div><div style="text-align: center; padding: 15px 20px; max-width: 800px; margin: 0 auto; border-top: 1px solid rgba(128,128,128,0.2);"><p style="margin: 0; font-size: 12px; color: #ff69b4; line-height: 1.6;"><i class="fa-solid fa-shield-halved" style="color: #ff69b4;"></i> <a href="https://icp.gov.moe/?keyword=leonardofox346.github.io" target="_blank" style="color: #ff69b4; text-decoration: none;">萌ICP备20250346号</a></p></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">39</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">2</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 全部文章</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/c-notes/"><i class="anzhiyufont anzhiyu-icon-code faa-tada" style="font-size: 0.9em;"></i><span> C语言学习</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于我</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/equipment/"><i class="anzhiyufont anzhiyu-icon-dice-d20 faa-tada" style="font-size: 0.9em;"></i><span> 我的装备</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/AMD%E6%98%BE%E5%8D%A1/" style="font-size: 0.88rem;">AMD显卡<sup>1</sup></a><a href="/tags/ArmouryCrate/" style="font-size: 0.88rem;">ArmouryCrate<sup>1</sup></a><a href="/tags/CTF/" style="font-size: 0.88rem;">CTF<sup>1</sup></a><a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 0.88rem;">C语言<sup>5</sup></a><a href="/tags/Python/" style="font-size: 0.88rem;">Python<sup>2</sup></a><a href="/tags/Python%E4%B9%8B%E7%A6%85/" style="font-size: 0.88rem;">Python之禅<sup>1</sup></a><a href="/tags/Steam/" style="font-size: 0.88rem;">Steam<sup>1</sup></a><a href="/tags/Super-Animal-Royale/" style="font-size: 0.88rem;">Super Animal Royale<sup>1</sup></a><a href="/tags/Windows/" style="font-size: 0.88rem;">Windows<sup>1</sup></a><a href="/tags/web/" style="font-size: 0.88rem;">web<sup>1</sup></a><a href="/tags/%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">入门教程<sup>1</sup></a><a href="/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" style="font-size: 0.88rem;">内存管理<sup>1</sup></a><a href="/tags/%E5%89%8D%E7%AB%AF%E9%80%86%E5%90%91/" style="font-size: 0.88rem;">前端逆向<sup>1</sup></a><a href="/tags/%E5%8D%8E%E7%A1%95ROG/" style="font-size: 0.88rem;">华硕ROG<sup>1</sup></a><a href="/tags/%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95/" style="font-size: 0.88rem;">右键菜单<sup>1</sup></a><a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/" style="font-size: 0.88rem;">后端开发<sup>1</sup></a><a href="/tags/%E5%A4%A7%E9%80%83%E6%9D%80/" style="font-size: 0.88rem;">大逃杀<sup>1</sup></a><a href="/tags/%E5%A4%A9%E9%80%89/" style="font-size: 0.88rem;">天选<sup>1</sup></a><a href="/tags/%E5%A5%A5%E5%88%9B%E4%B8%AD%E5%BF%83/" style="font-size: 0.88rem;">奥创中心<sup>1</sup></a><a href="/tags/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/" style="font-size: 0.88rem;">安全研究<sup>1</sup></a><a href="/tags/%E5%B0%8F%E5%8A%A8%E7%89%A9%E4%B9%8B%E6%98%9F/" style="font-size: 0.88rem;">小动物之星<sup>1</sup></a><a href="/tags/%E5%BC%80%E5%8F%91/" style="font-size: 0.88rem;">开发<sup>1</sup></a><a href="/tags/%E6%81%90%E6%80%96%E6%B8%B8%E6%88%8F/" style="font-size: 0.88rem;">恐怖游戏<sup>1</sup></a><a href="/tags/%E6%8A%98%E8%85%BE/" style="font-size: 0.88rem;">折腾<sup>1</sup></a><a href="/tags/%E6%94%BB%E7%95%A5/" style="font-size: 0.88rem;">攻略<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>2</sup></a><a href="/tags/%E6%97%A5%E5%B8%B8/" style="font-size: 0.88rem;">日常<sup>1</sup></a><a href="/tags/%E6%9E%81%E5%AE%A2/" style="font-size: 0.88rem;">极客<sup>1</sup></a><a href="/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8/" style="font-size: 0.88rem;">注册表<sup>1</sup></a><a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" style="font-size: 0.88rem;">渗透测试<sup>1</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 0.88rem;">游戏<sup>1</sup></a><a href="/tags/%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80/" style="font-size: 0.88rem;">版本回退<sup>1</sup></a><a href="/tags/%E7%8E%A9%E6%9C%BA%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">玩机教程<sup>1</sup></a><a href="/tags/%E7%AB%99%E5%8A%A1/" style="font-size: 0.88rem;">站务<sup>1</sup></a><a href="/tags/%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96/" style="font-size: 0.88rem;">系统优化<sup>1</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8/" style="font-size: 0.88rem;">编程入门<sup>1</sup></a><a href="/tags/%E7%BC%96%E7%A8%8B%E5%93%B2%E5%AD%A6/" style="font-size: 0.88rem;">编程哲学<sup>1</sup></a><a href="/tags/%E8%81%94%E6%9C%BA%E6%B8%B8%E6%88%8F/" style="font-size: 0.88rem;">联机游戏<sup>1</sup></a><a href="/tags/%E8%A7%86%E8%A7%89%E4%BF%AE%E5%A4%8D/" style="font-size: 0.88rem;">视觉修复<sup>1</sup></a></div></div></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="13981921635" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://music.163.com/playlist?id=13981921635&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@6.1.6/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@19.1.3/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark_high_contrast' : 'light_high_contrast'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'LeonardoFox346/HomePinglun',
+      'data-repo-id': 'R_kgDOR8zBYQ',
+      'data-category-id': 'DIC_kwDOR8zBYc4C6Wuj',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"data-lang":"zh-CN","data-mapping":"pathname","data-category":"Announcements","data-input-position":"bottom"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  anzhiyu.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) anzhiyu.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://cdn.cbd.int/qrcodejs@1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/js/console_egg.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
