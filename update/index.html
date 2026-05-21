@@ -1,0 +1,581 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>更新日志 - 纳多狐狐的实验室</title><link rel="shortcut icon" href="https://s21.ax1x.com/2025/08/05/pVUdq10.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"><style>:root {
+    --md-primary: #0060ff;
+    --md-primary-rgb: 0, 96, 255;
+    --md-background: #f4f6f9;
+    --md-surface: rgba(255, 255, 255, 0.9);
+    --md-on-background: #111827;
+    --md-on-surface: #1f2937;
+    --md-on-surface-variant: #4b5563;
+    --md-outline: rgba(0, 96, 255, 0.15);
+    --shadow: 0 10px 30px rgba(0, 96, 255, 0.06);
+    --transition: cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s;
+    --log-font-size: 1.1rem;
+}
+[data-theme='dark'] {
+    --md-background: #0a0f1d;
+    --md-surface: rgba(15, 23, 42, 0.85);
+    --md-on-background: #f3f4f6;
+    --md-on-surface: #e5e7eb;
+    --md-on-surface-variant: #9ca3af;
+    --md-outline: rgba(0, 96, 255, 0.25);
+    --shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    background-color: var(--md-background); color: var(--md-on-background);
+    font-family: 'Noto Serif SC', serif; transition: background-color 0.4s, color 0.4s;
+    position: relative; overflow-x: hidden; min-height: 100vh;
+}
+#matrixCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: 0.15; transition: opacity 0.4s; }
+[data-theme='dark'] #matrixCanvas { opacity: 0.35; }
+.header-bar {
+    position: sticky; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 2rem; background: rgba(var(--md-surface), 0.85); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--md-outline); z-index: 100;
+}
+.nav-left { display: flex; align-items: center; gap: 1.25rem; }
+.nav-actions { display: flex; gap: 0.5rem; }
+.btn-nav {
+    background: var(--md-surface); border: 1px solid var(--md-outline); width: 38px; height: 38px; border-radius: 8px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); color: var(--md-on-background);
+}
+.btn-nav:hover { border-color: var(--md-primary); color: var(--md-primary); background: rgba(var(--md-primary-rgb), 0.08); transform: scale(1.08); }
+.btn-nav svg { width: 18px; height: 18px; fill: currentColor; }
+.brand-title { font-size: 2.1rem; font-weight: 700; color: var(--md-primary); letter-spacing: -0.02em; }
+.control-panel { display: flex; gap: 0.75rem; align-items: center; }
+.btn-geek {
+    background: var(--md-surface); color: var(--md-on-background); border: 1px solid var(--md-outline); padding: 0.55rem 1rem; border-radius: 8px;
+    cursor: pointer; font-family: 'Noto Serif SC', serif; font-size: 0.85rem; font-weight: 700; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem;
+}
+.btn-geek svg { width: 15px; height: 15px; fill: currentColor; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.btn-geek:hover { border-color: var(--md-primary); color: var(--md-primary); transform: translateY(-2px); }
+.btn-geek.active { background: var(--md-primary); color: #ffffff; border-color: var(--md-primary); }
+.size-selector { display: flex; border: 1px solid var(--md-outline); border-radius: 8px; background: var(--md-surface); overflow: hidden; align-items: center; height: 35px; }
+.size-icon-wrap { padding-left: 0.75rem; color: var(--md-on-surface-variant); display: flex; align-items: center; }
+.size-icon-wrap svg { width: 14px; height: 14px; fill: currentColor; }
+.btn-size { background: transparent; border: none; padding: 0 0.85rem; height: 100%; font-size: 0.8rem; font-weight: 700; cursor: pointer; color: var(--md-on-background); transition: var(--transition); }
+.btn-size.active { background: var(--md-primary); color: #ffffff; }
+.main-content { width: 100%; max-width: 840px; margin: 4rem auto; padding: 0 2rem; }
+.timeline-wrapper { position: relative; padding-left: 2.5rem; display: flex; flex-direction: column; }
+.timeline-wrapper::before { content: ''; position: absolute; left: 7px; top: 10px; bottom: 10px; width: 2px; background: var(--md-primary); box-shadow: 0 0 8px rgba(0, 96, 255, 0.3); transition: var(--transition); }
+.timeline-node { position: relative; margin-bottom: 3.5rem; transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease; }
+.timeline-node::before { content: ''; position: absolute; left: -2.5rem; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--md-background); border: 3px solid var(--md-primary); box-shadow: 0 0 0 4px var(--md-surface); z-index: 2; transition: var(--transition); }
+.timeline-node:hover::before { background: var(--md-primary); transform: scale(1.25); }
+.update-card { background: var(--md-surface); border-radius: 14px; padding: 2rem; box-shadow: var(--shadow); border: 1px solid var(--md-outline); transition: var(--transition); }
+.update-card:hover { border-color: var(--md-primary); transform: translateX(6px); }
+.card-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem; }
+.header-meta-left { display: flex; align-items: baseline; gap: 1rem; }
+.version-tag { font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; font-weight: 700; color: var(--md-primary); }
+.date-tag { font-family: 'JetBrains Mono', monospace; color: var(--md-on-surface-variant); font-size: 0.9rem; }
+.custom-type-badge { font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 6px; color: #ffffff; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.log-list { list-style: none; }
+.log-item { position: relative; padding-left: 1.5rem; margin-bottom: 1rem; font-size: var(--log-font-size); line-height: 1.75; color: var(--md-on-surface); }
+.log-item::before { content: "「"; position: absolute; left: 0; color: var(--md-primary); font-weight: bold; }
+.log-item::after { content: " 」"; color: var(--md-primary); font-weight: bold; }
+.image-gallery {
+    display: grid; gap: 1.25rem; margin-top: 1.5rem;
+}
+.image-gallery[data-layout="auto"] {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+.image-gallery[data-layout="1"] {
+    grid-template-columns: 1fr;
+}
+.image-gallery[data-layout="1"] .gallery-img {
+    height: 300px;
+}
+.image-gallery[data-layout="2"] {
+    grid-template-columns: repeat(2, 1fr);
+}
+.image-gallery[data-layout="2"] .gallery-img {
+    height: 200px;
+}
+.image-gallery[data-layout="4"] {
+    grid-template-columns: repeat(4, 1fr);
+}
+.image-gallery[data-layout="4"] .gallery-img {
+    height: 130px;
+}
+.gallery-item {
+    display: flex; flex-direction: column; background: rgba(var(--md-primary-rgb), 0.02);
+    border: 1px solid var(--md-outline); border-radius: 8px; overflow: hidden; transition: var(--transition);
+}
+.gallery-item:hover {
+    border-color: var(--md-primary); background: rgba(var(--md-primary-rgb), 0.04);
+}
+.gallery-img {
+    width: 100%; object-fit: cover; filter: grayscale(15%); transition: var(--transition); cursor: zoom-in;
+    background-size: cover; background-position: center;
+}
+.gallery-item:hover .gallery-img { filter: grayscale(0%); transform: scale(1.02); }
+.gallery-desc {
+    padding: 0.6rem 0.75rem; font-size: 0.82rem; line-height: 1.4;
+    color: var(--md-on-surface-variant); border-top: 1px solid var(--md-outline);
+    background: rgba(var(--md-surface), 0.5); transition: var(--transition);
+}
+.gallery-item:hover .gallery-desc { color: var(--md-primary); }
+.node-reloading { opacity: 0 !important; transform: scale(0.9) translateY(20px) !important; transition: none !important; }
+.node-fade-in { opacity: 1 !important; transform: scale(1) translateY(0) !important; }
+body.reader-mode { background: #f4efe2 !important; }
+[data-theme='dark'] body.reader-mode { background: #0e1015 !important; }
+body.reader-mode #matrixCanvas { display: none; }
+body.reader-mode .header-bar { background: rgba(244, 239, 226, 0.95) !important; }
+[data-theme='dark'] body.reader-mode .header-bar { background: rgba(14, 16, 21, 0.95) !important; }
+body.reader-mode .update-card { box-shadow: none !important; border-color: transparent !important; padding: 2rem 0 !important; background: transparent !important; }
+body.reader-mode .image-gallery { display: none; }
+body.reader-mode .timeline-node { margin-bottom: 2.5rem; }
+body.reader-mode .timeline-node::before { box-shadow: 0 0 0 4px #f4efe2; }
+[data-theme='dark'] body.reader-mode .timeline-node::before { box-shadow: 0 0 0 4px #0e1015; }
+
+/* Custom Link Button Styles */
+.custom-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+    border: 1px solid var(--md-outline);
+    background: var(--md-surface);
+    color: var(--md-on-background);
+    margin-top: 1rem;
+}
+.custom-link-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+.custom-link-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    transition: transform 0.3s ease;
+}
+.custom-link-btn:hover svg {
+    transform: translateX(3px);
+}
+.custom-link-btn.primary {
+    background: var(--md-primary);
+    color: #ffffff;
+    border-color: var(--md-primary);
+}
+.custom-link-btn.primary:hover {
+    background: #0050d8;
+    border-color: #0050d8;
+}
+
+/* ==========================================================================
+ * TOC SIDEBAR - Left Navigation
+ * ========================================================================== */
+.toc-sidebar {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 240px;
+    max-height: 75vh;
+    background: var(--md-surface);
+    border: 1px solid var(--md-outline);
+    border-radius: 14px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    z-index: 90;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow-y: auto;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+/* 修复Bug 2: 自定义滚动条样式，适配深浅模式 */
+.toc-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+.toc-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.toc-sidebar::-webkit-scrollbar-thumb {
+    background: var(--md-outline);
+    border-radius: 2px;
+}
+.toc-sidebar::-webkit-scrollbar-thumb:hover {
+    background: var(--md-primary);
+}
+.toc-sidebar.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) translateX(-20px) scale(0.95);
+}
+.toc-title {
+    font-family: "Noto Serif SC", serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--md-primary);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--md-outline);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.toc-title svg { width: 18px; height: 18px; fill: currentColor; }
+.toc-list { list-style: none; }
+.toc-item { margin-bottom: 0.35rem; }
+.toc-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: "Noto Serif SC", serif;
+    color: var(--md-on-surface-variant);
+    text-decoration: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+}
+.toc-link:hover {
+    background: rgba(var(--md-primary-rgb), 0.08);
+    color: var(--md-primary);
+}
+.toc-link.active {
+    background: var(--md-primary);
+    color: #ffffff;
+}
+.toc-link .toc-date {
+    font-size: 0.78rem;
+    font-family: "JetBrains Mono", monospace;
+    opacity: 0.6;
+    margin-left: 0.4rem;
+}
+
+/* TOC Mini Button (collapsed state) */
+.toc-mini-btn {
+    position: fixed;
+    left: 1.5rem;
+    bottom: 5rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--md-surface);
+    border: 1px solid var(--md-outline);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: var(--md-primary);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.8) translateX(-10px);
+}
+.toc-mini-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1) translateX(0);
+}
+.toc-mini-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--md-primary);
+    background: rgba(var(--md-primary-rgb), 0.08);
+}
+.toc-mini-btn svg { width: 20px; height: 20px; fill: currentColor; }
+.toc-mini-btn .toc-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--md-primary);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* ==========================================================================
+ * BACK TO TOP BUTTON - Bottom Right
+ * ========================================================================== */
+.back-to-top {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--md-surface);
+    border: 1px solid var(--md-outline);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    color: var(--md-primary);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.8);
+}
+.back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+.back-to-top:hover {
+    transform: translateY(-4px) scale(1.08);
+    border-color: var(--md-primary);
+    background: rgba(var(--md-primary-rgb), 0.08);
+    box-shadow: 0 15px 40px rgba(0, 96, 255, 0.2);
+}
+.back-to-top svg { width: 22px; height: 22px; fill: currentColor; transition: transform 0.3s ease; }
+.back-to-top:hover svg { transform: translateY(-2px); }
+
+/* 修复Bug 1: 删除 @media (max-width: 1200px) 中对 .toc-mini-btn 的 display:none */
+/* 原错误代码已移除，现在大屏下目录隐藏后 mini 按钮可以正常显示 */
+
+@media (max-width: 900px) {
+    .header-bar { padding: 1rem 1.5rem; flex-direction: column; gap: 1.25rem; align-items: flex-start; }
+    .control-panel { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 0.6rem; }
+    .main-content { margin: 2rem auto; padding: 0 1.25rem; }
+    .timeline-wrapper { padding-left: 1.5rem; }
+    .timeline-node::before { left: -1.5rem; }
+    .image-gallery[data-layout="1"],
+    .image-gallery[data-layout="2"],
+    .image-gallery[data-layout="4"],
+    .image-gallery[data-layout="auto"] {
+        grid-template-columns: 1fr !important;
+    }
+    .image-gallery[data-layout="1"] .gallery-img,
+    .image-gallery[data-layout="2"] .gallery-img,
+    .image-gallery[data-layout="4"] .gallery-img,
+    .image-gallery[data-layout="auto"] .gallery-img {
+        height: 200px !important;
+    }
+    /* 移动端隐藏目录和mini按钮 */
+    .toc-sidebar, .toc-mini-btn { display: none !important; }
+}
+</style><meta name="generator" content="Hexo 8.1.1"></head><body><canvas id="matrixCanvas"></canvas><div class="container"><header class="header-bar"><div class="nav-left"><div class="nav-actions"><button class="btn-nav" id="backBtn" title="返回上一页"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg></button><a class="btn-nav" href="/" title="回到主页"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path></svg></a></div><div class="brand-title">更新日志</div></div><div class="control-panel"><div class="size-selector"><div class="size-icon-wrap"><svg viewBox="0 0 24 24"><path d="M9 4v3h5v12h3V7h5V4H9zm-6 6v3h3v6h3v-6h3v-3H3z"></path></svg></div><button class="btn-size" data-size="small">小</button><button class="btn-size active" data-size="medium">中</button><button class="btn-size" data-size="large">大</button></div><button class="btn-geek" id="orderBtn"><svg viewBox="0 0 24 24"><path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"></path></svg><span>时间正序</span></button><button class="btn-geek" id="readerBtn"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg><span>阅读模式: 关</span></button><button class="btn-geek" id="themeBtn"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"></path></svg><span>环境偏光</span></button><a class="btn-geek" id="oldVersionBtn" href="/hisupdate" title="查看旧版更新日志"><svg viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"></path></svg><span>旧版界面</span></a></div></header><main class="main-content"><div class="timeline-wrapper" id="timeline"><article class="timeline-node" data-version="3.0"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">3.0</span><span class="date-tag">Tue May 12</span></div><span class="custom-type-badge" style="background-color: #FF0055">重大更新</span></div><ul class="log-list"><li class="log-item">1.网页已经升级到3.0</li><li class="log-item">5月迭代：从底层逻辑到视觉重构</li><li class="log-item">迁移到了AnZhiYu主题(Nardo魔改版)</li><li class="log-item">2.为了提供更稳定的访问体验，站点已正式搬迁至全新的托管页面。目前所有路由已完成重定向映射，确保你的书签不会失效。</li><li class="log-item">更换了新的图床提供商去不图床原图床已弃用</li><li class="log-item">页面交互视觉重置</li><li class="log-item">文章与主题遵循MD2规范与Blue(#0060ff)的核心视觉准则，我对主题90%的页面魔改定制：</li><li class="log-item">UI 重置：基于 AnZhiYu 的卡片式布局，重新优化了信息密度，确保用户浏览的极致观感.</li><li class="log-item">双模式适配：重构了文章页面,修复了文章页面的渲染BUG,深夜浏览文章也不再刺眼。</li><li class="log-item">页面重绘：重写了“关于我”与“更新日志(Beta1)”页</li><li class="log-item">3. 紧急修复：浅色模式阅读异常 (HOTFIX)</li><li class="log-item">我们修复了一个严重影响阅读的视觉 Bug：在某些情况下，站点进入浅色模式后文章字体仍保持为白色（与背景色冲突）。</li><li class="log-item">现状：修复后，浅色模式下字体强制回归高对比度深灰色 (#363636)，确保全时段阅读体验。</li><li class="log-item">4. 技能树扩展：C 语言专栏预告</li><li class="log-item">近期我正深耕于C 语言的底层世界。基于我在 MSVC 编译器排错和 NCRE2 准备中的心得，本站将新增一个核心 C 语言板块。</li></ul><div class="image-gallery" data-layout="1"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://bu.dusays.com/2026/04/02/69ce85107ce7e.jpg)"></div><div class="gallery-desc">版本图片</div></div></div></section></article><article class="timeline-node" data-version="2.9.6"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">2.9.6</span><span class="date-tag">Tue Mar 03</span></div><span class="custom-type-badge" style="background-color: #0060ff">色彩回归</span></div><ul class="log-list"><li class="log-item">网页色彩回归 侧边栏 顶栏 快捷方式已重定义颜色</li><li class="log-item">网页标题栏图标更新</li><li class="log-item">页脚更新</li><li class="log-item">之后会统一文章的风格为MD2 设计 MD2设计简洁 优雅 比较适合我</li><li class="log-item">没多少更新 就这些了 这次更新没有HTML网页版</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s41.ax1x.com/2026/03/03/pepOxBR.jpg)"></div><div class="gallery-desc">26.3 版本官方设定图片</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s41.ax1x.com/2026/03/03/pepXC4K.png)"></div><div class="gallery-desc">网页色彩回归：重定义后的侧边栏、顶栏与快捷方式颜色</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/69a6b0c7f98389e4a9b7bac1.png)"></div><div class="gallery-desc">全新升级的网页标题栏图标预览</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/69a6b0eef98389e4a9b7bac5.png)"></div><div class="gallery-desc">极简进化的新版页脚布局展示</div></div></div></section></article><article class="timeline-node" data-version="2.6.7"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">2.6.7</span><span class="date-tag">Sun Feb 15</span></div><span class="custom-type-badge" style="background-color: #00CC66">体验优化</span></div><ul class="log-list"><li class="log-item">优化了部分网页的互动体验 删除控件后确实流畅不少</li><li class="log-item">一篇新的文章&lt;&lt;华硕奥创中心降级指南(文本重置)&gt;&gt;</li><li class="log-item">用HTML写的,挺好的 控件一大堆。之后B站的所有视频的跳转不会直接跳转到云盘了 都会先跳转到这里来</li><li class="log-item">重置了一篇文章,新增了文字版，也是HTML写的哦</li><li class="log-item">重构了联系我(社交整合页),关于本网站,关于我(标准),还有视觉小说前两部分 我感觉挺好的</li><li class="log-item">固定格式备注：本次更新没有更换版本图片</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/699568a1556e27f1c93a29ce.png)"></div><div class="gallery-desc">&lt;&lt;华硕奥创中心降级指南(文本重置)&gt;&gt; 交互页实拍</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cb.png)"></div><div class="gallery-desc">用 HTML 编写的全新文章文字版控制台</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cf.png)"></div><div class="gallery-desc">重构后的联系我（社交整合页）全新视觉效果</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cd.png)"></div><div class="gallery-desc">关于本网站核心交互版块重构渲染</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/699568a1556e27f1c93a29cc.png)"></div><div class="gallery-desc">关于我（标准版）极客卡片页重构</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/699568a1556e27f1c93a29d0.png)"></div><div class="gallery-desc">视觉小说前两部分重构框架展示</div></div></div></section></article><article class="timeline-node" data-version="26 Update 1"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">26 Update 1</span><span class="date-tag">Sun Feb 08</span></div><span class="custom-type-badge" style="background-color: #9933FF">重构大更</span></div><ul class="log-list"><li class="log-item">推出全新HTML版本介绍页 以后差不多都是这个模式 想看详细更新内容就只能来这里看了XD</li><li class="log-item">该版本更新为独立html页面 请点击下方按钮查看(描述)：{% btn center large::点击跳转::/updatehtml/26-02-08.html::fa-solid fa-square-arrow-up-right %}</li><li class="log-item">更新hexo到最新版本</li><li class="log-item">更新Node.js到最新语言库</li><li class="log-item">切换回Volantis主题</li><li class="log-item">重置404页面并重绘主界面</li><li class="log-item">重置色彩至默认(这是Volantis把我的配置文件删了QAQ)</li><li class="log-item">全部界面色彩重绘 使用设计师精选配色</li><li class="log-item">页脚重置(数量删减到了3个) 且重置了友链页面</li><li class="log-item">阅读体验提升(新增了摘要)</li><li class="log-item">核心降级/移除：移除了IE的支持、评论区功能、调试菜单、旧版菜单、帮助页面、精选文章(4个重大漏洞)</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s41.ax1x.com/2026/02/08/pZTayWj.png)"></div><div class="gallery-desc">神秘图片数据流</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s41.ax1x.com/2026/01/30/pZfKDAg.jpg)"></div><div class="gallery-desc">26 Update 1 版本官方概念大图</div></div></div></section></article><article class="timeline-node" data-version="2.3.2"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">2.3.2</span><span class="date-tag">Sat Nov 01</span></div><span class="custom-type-badge" style="background-color: #777777">日常停更</span></div><ul class="log-list"><li class="log-item">一个停更版本 用的Buttfly主题 随便写了点</li><li class="log-item">版本代号: 再出发</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s21.ax1x.com/2025/11/01/pVzhevq.jpg)"></div><div class="gallery-desc">停更留存代号图片：再出发</div></div></div></section></article><article class="timeline-node" data-version="2.1.1"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">2.1.1</span><span class="date-tag">Wed Aug 06</span></div><span class="custom-type-badge" style="background-color: #FFAA00">临时维护</span></div><ul class="log-list"><li class="log-item">大家凌晨好awa现在是2025/08/06 周三 的凌晨1点24分网页现在已经全部维护好了 并且加了一点点新东西 版本号2.0.1</li><li class="log-item">精简部分代码 加速网页访问速度</li><li class="log-item">加我好友页重大优化：手机端为2个一排，电脑端为4个一排。已适配浏览器的深色模式（虽然很丑）</li><li class="log-item">友链页面新增4位的链接(各位想加入直接来私我[B站和QQ都可以UoU])</li><li class="log-item">一些快捷方式新增加了2项入口，同时网页图标已上色，让我们进入色彩的世界吧！</li><li class="log-item">网页主题色、深色背景和浅色背景的颜色修改</li><li class="log-item">Project Delta的小说入口已移走（在哪我就不多说了 大家自己找找吧awa）</li><li class="log-item">有什么网站的优化建议记得给我说awa 之后可能会优化的awa。因为懒awa 别问 问就是懒UwU</li><li class="log-item">底部签署：CopyRight LeonardoFox 版本：第一版 —— 2025/08/06 01:24</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s21.ax1x.com/2025/08/06/pVU6iIU.png)"></div><div class="gallery-desc">临时维护监控状态图</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6892425858cb8da5c807c623.png)"></div><div class="gallery-desc">加我好友页重大优化：手机端版本</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6892428f58cb8da5c807c7d6.png)"></div><div class="gallery-desc">加我好友页重大优化：PC端版本</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/689242c458cb8da5c807c95e.png)"></div><div class="gallery-desc">深色模式下的好友页适配效果（虽然很丑）</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/689242e658cb8da5c807ca46.png)"></div><div class="gallery-desc">友链页面新增4位链接板块</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6892430958cb8da5c807cb53.png)"></div><div class="gallery-desc">快捷方式新增加的2项入口</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6892436c58cb8da5c807ce2a.png)"></div><div class="gallery-desc">已上色的全新网页图标</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6892439e58cb8da5c807cfa0.png)"></div><div class="gallery-desc">色彩世界：修改后的浅色版主题底色</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6892439e58cb8da5c807cfa1.png)"></div><div class="gallery-desc">色彩世界：修改后的深色版主题底色</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s21.ax1x.com/2025/08/03/pVNTvad.jpg)"></div><div class="gallery-desc">更新期间留存的测试图片</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s21.ax1x.com/2025/08/06/pVU6PaT.jpg)"></div><div class="gallery-desc">本次更新精选图片（图源来自必应每日壁纸）</div></div></div></section></article><article class="timeline-node" data-version="2.0.0"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">2.0.0</span><span class="date-tag">Thu Jul 24</span></div><span class="custom-type-badge" style="background-color: #FF0055">里程碑正式版</span></div><ul class="log-list"><li class="log-item">【正式版宣发】你知道吗 历经开发时长12天的Leonardo实验报告博客终于完成了主要开发！</li><li class="log-item">内部基本没有问题了 如果出现问题我会用即时热补丁覆盖修复的。</li><li class="log-item">所有页面均已制作完成 快去体验吧！</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6882456d58cb8da5c8d76278.png)"></div><div class="gallery-desc">2.0.0 正式版官方重磅更新宣传图</div></div></div></section></article><article class="timeline-node" data-version="v1.9.7.5 (Public)"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">v1.9.7.5 (Public)</span><span class="date-tag">Tue Jul 22</span></div><span class="custom-type-badge" style="background-color: #0060ff">公测终章</span></div><ul class="log-list"><li class="log-item">最后一个测试版 马上向我们走来的是正式版2.0！</li><li class="log-item">左侧菜单头像更换（PC独占）</li><li class="log-item">关于我页面已制作完成，大家可以去看看了</li><li class="log-item">加好友页面已修复深色模式功能（Mobile端）。PC大家应该也不会去看这玩意吧○( ＾皿＾)っHiahiahia…</li><li class="log-item">主页LOGO删除（修改中.....） 菜单栏LOGO删除（修改中.....）</li><li class="log-item">网页现在基本开发完成了 等我再改一点点东西就能到2.0.0正式版了嘻嘻</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s21.ax1x.com/2025/07/22/pVGEs0I.jpg)"></div><div class="gallery-desc">1.9.7.5 核心更新代号图片</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/687f663b58cb8da5c8cb66a9.png)"></div><div class="gallery-desc">PC端独占：更换后的左侧菜单头像</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/687f66bd58cb8da5c8cb66c9.png)"></div><div class="gallery-desc">全面完工上线的“关于我”全新精美页面</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/687f676858cb8da5c8cb670a.jpg)"></div><div class="gallery-desc">Mobile移动端修复后的加好友页面深色模式实测</div></div></div></section></article><article class="timeline-node" data-version="v1.8.8 StopUpdateFewDays"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">v1.8.8 StopUpdateFewDays</span><span class="date-tag">Sat Jul 19</span></div><span class="custom-type-badge" style="background-color: #555555">停更通知</span></div><ul class="log-list"><li class="log-item">停更通知与请假条：346这几天身体不适 休息几天.....</li><li class="log-item">大局规划：预计3天后复更网页...</li><li class="log-item">本次更新版本维护人员：NameAlpha345 (1.8.5 To 1.8.8)</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s21.ax1x.com/2025/07/19/pV3LnlF.png)"></div><div class="gallery-desc">停更期间特殊版本代号图片</div></div></div></section></article><article class="timeline-node" data-version="v1.8.5 Beta"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">v1.8.5 Beta</span><span class="date-tag">Thu Jul 17</span></div><span class="custom-type-badge" style="background-color: #00CC66">功能微调</span></div><ul class="log-list"><li class="log-item">加我好友页现已制作完成 正式投入使用 各位可以直接戳图标来加我好友了！是不是感觉特别方便？鼠标放上去还有上浮效果！</li><li class="log-item">关于加好友页的特殊备注：深色效果目前还没有完全覆盖（我故意的）。discord目前还没添加链接（找不到我自己的之后考虑换一个别的平台....）</li><li class="log-item">首页的Bug反馈已移除 如遇Bug Pc端可以右键或和移动端一样点击菜单栏的网页设置内的BUG反馈选项来反馈</li><li class="log-item">侧边栏功能微调：现在PC端的侧边栏音乐播放器已移除（PC端支持全局音乐播放器请在菜单栏打开，或者用右键菜单来唤起！）</li><li class="log-item">手机端目前只有主页可以使用音乐播放器（其它页面正在开发中....）</li><li class="log-item">音乐播放器功能微调：由于未知Bug手机端也会自动播放歌曲，自动播放功能现已移除... 并调整了播放器内置歌曲数量以及歌曲。</li><li class="log-item">关于页面已完工75% 在写了 在写了....</li><li class="log-item">总结：没了 这次更新算是一个小更新 补了点小Bug和修复了页面的显示问题awa</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s21.ax1x.com/2025/07/17/pV3uIje.jpg)"></div><div class="gallery-desc">v1.8.5 版本核心代号图片</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb816.png)"></div><div class="gallery-desc">全面投入使用的“加我好友”页面图标区</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb814.png)"></div><div class="gallery-desc">加好友图标鼠标悬停触浮效果演示</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6878c38458cb8da5c8beb801.png)"></div><div class="gallery-desc">加好友页面未完全覆盖的深色效果实录</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6878cb4858cb8da5c8bebe72.png)"></div><div class="gallery-desc">移除Bug反馈选项后的全新主页样式</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bc.png)"></div><div class="gallery-desc">PC端右键快捷Bug反馈交互入口说明图1</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/687736c58cb8da5c8b77699.png)"></div><div class="gallery-desc">移动端菜单栏网页设置内的BUG反馈说明图2</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877624f58cb8da5c8b90430.png)"></div><div class="gallery-desc">旧版侧边栏音乐播放器历史留存图</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb812.png)"></div><div class="gallery-desc">新版侧边栏音乐播放器精简后样式</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb815.png)"></div><div class="gallery-desc">PC端全局控制台播放器（支持右键唤起）</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877624f58cb8da5c8b9042f.png)"></div><div class="gallery-desc">手机端主页专属内置音乐播放器版面</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6878c39158cb8da5c8beb813.png)"></div><div class="gallery-desc">微调调整后的播放器内置歌曲曲目控制台</div></div></div></section></article><article class="timeline-node" data-version="v1.7.8 LittleUpdate-DEV"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">v1.7.8 LittleUpdate-DEV</span><span class="date-tag">Wed Jul 16</span></div><span class="custom-type-badge" style="background-color: #FFAA00">紧急加更</span></div><ul class="log-list"><li class="log-item">临时加更一个小公开版本</li><li class="log-item">网页版侧边栏和手机版下拉空间各加一个音乐播放器，妈妈再也不用担心我听不了歌了！</li><li class="log-item">为了避免尴尬 手机版我没开自动播放 电脑端我是开了的（纯音乐 别担心！）</li><li class="log-item">希望大家能喜欢这个新版本( •̀ ω •́ )✧</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877624f58cb8da5c8b90430.png)"></div><div class="gallery-desc">网页版侧边栏新增的全局音乐控制台</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877624f58cb8da5c8b9042f.png)"></div><div class="gallery-desc">手机端下拉导航空间内新增的轻量化播放器</div></div></div></section></article><article class="timeline-node" data-version="v1.7.3 PreTestVersion"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">v1.7.3 PreTestVersion</span><span class="date-tag">Wed Jul 16</span></div><span class="custom-type-badge" style="background-color: #FF0055">史诗级更新</span></div><ul class="log-list"><li class="log-item">版本号大提升（1.3.9Public-&gt;1.7.3Pre），因为开发内容真有那么多！</li><li class="log-item">Html语法大优化，优化网页更多显示内容，基于1.3.9进行大幅优化。</li><li class="log-item">【重大修复】去掉了1.1.7（未公开）到1.3.9Public才发现的 loop 漏洞（该漏洞曾导致浏览器爆内存崩溃）。</li><li class="log-item">修复文章分类页无法访问的问题（发现其实是我打错字了....现在已经修复了）。</li><li class="log-item">新开发内容：文章内音乐播放器。现在可以在文章内播放按钮点击播放听歌了，改成纯音乐了有6首，各位可以自己去听awa（手机端暂不支持！）</li><li class="log-item">主页显示更新：在主界面时，如果你在主图片页，将不会显示状态栏。这样能使你更加有注意力欣赏图片？唤起菜单栏只要下拉到图片不显示区域就行了。</li><li class="log-item">菜单栏项目更新：网页设置内新增2条项目（获取帮助【新增页面】和Bug反馈）。</li><li class="log-item">网页新增改版右键菜单！现在已经用 java 脚本接管了原版（浏览器自带的）右键菜单，里面功能还挺多 大家自己去看看吧！（不知道有没有Bug？有的话请联系我修复！）</li><li class="log-item">鼠标指针样式替换（截图截不到 只能拍屏了..... ）</li><li class="log-item">文章显示页面优化：现在将页面显示层数设置为不超过4行，新增头图显示功能？</li><li class="log-item">【规范确立】文章底部新增 CopyRight 许可专用部分，大家可要遵守这些规则哟！</li><li class="log-item">文章底部新增微信和 Telegram 分享页面，现在可以分享到这两个平台了。</li><li class="log-item">文章新增过期文章标签，证明这是上个版本的内容，可以查看最新版本了。</li><li class="log-item">加好友聚合页面（All in One）再次优化，这次的排版应该比前好几次的好看多了吧！</li><li class="log-item">新增页面“帮助中心”：大家可以在这一页留言 我会为大家一一解答（其实直接点BUG反馈更好）。</li><li class="log-item">鸣谢页面新增4个项目：感谢你们的无私开源 让这个世界变得更加美好！</li><li class="log-item">【重磅新系统】新增崩溃界面：如果 Html 网页监听发现了 Java 脚本错误/浏览器错误/Loop错误会把你重定向到这个崩溃警报界面。</li><li class="log-item">优化页面 支持UP主页面：现在这个界面可以正常使用了 大家快来投喂UP主吧╰(*°▽°*)╯ ‘(* /ω＼ *)’</li><li class="log-item">结语：更新内容就没了 这次更新了挺多东西的( •̀ ω •́ )✧ 应该离2.0不远了 嘻嘻</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s21.ax1x.com/2025/07/16/pV1om3d.jpg)"></div><div class="gallery-desc">v1.7.3 内部大更官方代号背景图</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877388858cb8da5c8b776be.png)"></div><div class="gallery-desc">已定位并修复的代码拼写错误位置截图</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bf.png)"></div><div class="gallery-desc">全新开发的文章嵌入式轻量化音乐播放按钮</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877386d58cb8da5c8b7769b.png)"></div><div class="gallery-desc">内置6首精选纯音乐曲库控制列表</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877386d58cb8da5c8b7769e.png)"></div><div class="gallery-desc">主页沉浸式头图无状态栏模式视觉一览</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877386c58cb8da5c8b77699.png)"></div><div class="gallery-desc">网页设置项中全新划入的帮助与反馈槽位</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bc.png)"></div><div class="gallery-desc">全面接管原生浏览器的改版右键专属高级菜单</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/68773da558cb8da5c8b7aa0d.jpg)"></div><div class="gallery-desc">实机拍屏：替换后的全新极客鼠标指针样式</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877388858cb8da5c8b776c3.png)"></div><div class="gallery-desc">限制显示不超过4行并引入头图的文章列表优化版面</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bd.png)"></div><div class="gallery-desc">文章底部全新筑造的专属 CopyRight 许可合规规范条</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877388858cb8da5c8b776bb.png)"></div><div class="gallery-desc">文章底部新增的社交多平台（微信/Telegram）分享总成</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877387a58cb8da5c8b776a9.png)"></div><div class="gallery-desc">文章内置自动唤醒的“内容已过期”警告标识效果</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877387b58cb8da5c8b776ad.png)"></div><div class="gallery-desc">全新排版进化后的加好友聚合页面（All in One）</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877387b58cb8da5c8b776ab.png)"></div><div class="gallery-desc">专属新造页面：异步交互式网页个人帮助中心看板</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877386c58cb8da5c8b7769a.png)"></div><div class="gallery-desc">致敬开源：全新划归建立的4项开源鸣谢项目栏</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877386d58cb8da5c8b7769c.png)"></div><div class="gallery-desc">高危防御系统：全自动化重定向脚本崩溃报错捕捉界面</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6877387b58cb8da5c8b776ac.png)"></div><div class="gallery-desc">支持与赞助UP主（投喂发电）的完全就绪可用版面</div></div></div></section></article><article class="timeline-node" data-version="v1.3.9 PublicUpdate"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">v1.3.9 PublicUpdate</span><span class="date-tag">Tue Jul 15</span></div><span class="custom-type-badge" style="background-color: #FF0055">回滚撤回</span></div><ul class="log-list"><li class="log-item">公测大更：本次更新再次优化了很多内容 预计2.0.0将是正式完整版。</li><li class="log-item">本站启动半永久链接：jacklu346.github.io</li><li class="log-item">赞助页更换：将不再使用爱发电平台 因为他喵的他们不给我过审！目前全新专属赞助页正在开发中，页面暂时为预览体验，大家可以通过侧边栏和网页设置中的赞助图标进入Beta页面。</li><li class="log-item">【硬核策略】这个版本彻底禁用了IE浏览器进入页面访问的机会，同时禁用了低Java脚本进入的许可！进入页面就会看到一片乱码。</li><li class="log-item">加好友页面（All One）页面史诗级更新：至少现在排版没上次那样混乱了？</li><li class="log-item">网页显示文本替换！终于不用看圆体了！开心！字体现在切换为系统自带高显字体（微软雅黑 Microsoft-YaHei）</li><li class="log-item">【史诗级更新】音乐播放器现在升级为播单！现在我们可以不仅仅听一首歌了。</li><li class="log-item">通知栏改动：通知栏现在整体上移到了页面的左上角。</li><li class="log-item">重大BUG回滚备注：BackSpaceName：1.3.9公测更新（由于存在极为严重的炸内存BUG，已紧急执行物理撤回）</li><li class="log-item">内联安全代码部署流展示：killOldVersionsOfIE.enable=true; killNoScript.enable=true;</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6876180958cb8da5c8b25406.png)"></div><div class="gallery-desc">正在内测开发的自主赞助独立Beta版面</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6876181f58cb8da5c8b254bc.png)"></div><div class="gallery-desc">IE 浏览器与低级别脚本强制拒绝访问死锁界面效果</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6876180358cb8da5c8b253d8.png)"></div><div class="gallery-desc">更新排版后的加好友（All in One）聚合层</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6876181a58cb8da5c8b25490.png)"></div><div class="gallery-desc">替换为微软雅黑（Microsoft YaHei）后的抗锯齿文本展示</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6876180758cb8da5c8b253f8.png)"></div><div class="gallery-desc">全新升级的支持多曲目轮询的音乐播单控制台</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6876183658cb8da5c8b25581.png)"></div><div class="gallery-desc">向左上角整体平移挂载后的全新通知状态栏</div></div></div></section></article><article class="timeline-node" data-version="v1.2.5 Beta-Public"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">v1.2.5 Beta-Public</span><span class="date-tag">Mon Jul 14</span></div><span class="custom-type-badge" style="background-color: #0060ff">视觉优化</span></div><ul class="log-list"><li class="log-item">最近更新里程：1.0.0DEV To 1.2.5 BETA。</li><li class="log-item">更新内容：页脚显示方式与样式修改，详情请见下图面板。</li><li class="log-item">网页标题图像（顶图）全局加载成功并全面进行深度优化。</li><li class="log-item">封面图片更新（图源来自必应每日壁纸）。</li><li class="log-item">开发者警告备注：网页进入图片优化（现在图片被优化掉了 不能显示了 嘻嘻，具体详情看版本代号图片）。</li><li class="log-item">一桩其他Bug修复：例如修复了旧版页脚QQ跳转后产生404页面的恶性漏洞。</li><li class="log-item">总结：这次更新修复了很多Bug和优化了更多页面的显示效果 希望能给大家带来更加优质的体验！</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s21.ax1x.com/2025/07/14/pV1eC4O.jpg)"></div><div class="gallery-desc">v1.2.5 Beta 官方发布限定代号大图</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6874e8e158cb8da5c8ad3d91.png)"></div><div class="gallery-desc">全新重构并解决404跳转Bug后的精美新页脚样式</div></div><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://pic1.imgdb.cn/item/6874e8e158cb8da5c8ad3d90.png)"></div><div class="gallery-desc">全局优化加载成功后的网页顶图主视觉</div></div></div></section></article><article class="timeline-node" data-version="v1.0.0 Dev-Public"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">v1.0.0 Dev-Public</span><span class="date-tag">Mon Jul 14</span></div><span class="custom-type-badge" style="background-color: #00CC66">公网首发</span></div><ul class="log-list"><li class="log-item">版本跨越性演进：Dev To Dev-Public 0.X 系列全面步入 1.X 世代。</li><li class="log-item">【重要突破】网页取得并成功绑定公网域名：jacklu346.github.io</li><li class="log-item">评论区与部分全局超链接已经全部可以使用了，文章页脚的社交分享功能也顺利修复！</li><li class="log-item">核心网版本号正式更新至 1.0.0！开心到起飞！</li><li class="log-item">Ps.关于我的界面已经在后台施工了 大概3天就能上线！（为啥是三天？我明明花了一个星期写这玩意！！！！！）</li></ul></section></article><article class="timeline-node" data-version="v0.9.7 DEV"><section class="update-card"><div class="card-header"><div class="header-meta-left"><span class="version-tag">v0.9.7 DEV</span><span class="date-tag">Sun Jul 13</span></div><span class="custom-type-badge" style="background-color: #777777">初始雏形</span></div><ul class="log-list"><li class="log-item">Debugtittle 初始定义：核心开发调试提示。</li><li class="log-item">维护开发专属签署：NameAlpha346。</li><li class="log-item">版本说明：第一个初具雏形的网页主页与文章界面已成功可打开。</li><li class="log-item">已知缺陷警报：文章下面的分享和评论区目前还是坏的，暂时不要使用！</li></ul><div class="image-gallery" data-layout="auto"><div class="gallery-item"><div class="gallery-img" style="background-image:url(https://s21.ax1x.com/2025/07/12/pVl1VZd.jpg)"></div><div class="gallery-desc">LocalHost 本地核心内测环境版本代号图片</div></div></div></section></article></div></main></div><nav class="toc-sidebar" id="tocSidebar"><div class="toc-title"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"></path></svg><span>版本目录</span></div><ul class="toc-list"><li class="toc-item"><button class="toc-link" data-index="0">3.0<span class="toc-date">Tue May 12</span></button></li><li class="toc-item"><button class="toc-link" data-index="1">2.9.6<span class="toc-date">Tue Mar 03</span></button></li><li class="toc-item"><button class="toc-link" data-index="2">2.6.7<span class="toc-date">Sun Feb 15</span></button></li><li class="toc-item"><button class="toc-link" data-index="3">26 Update 1<span class="toc-date">Sun Feb 08</span></button></li><li class="toc-item"><button class="toc-link" data-index="4">2.3.2<span class="toc-date">Sat Nov 01</span></button></li><li class="toc-item"><button class="toc-link" data-index="5">2.1.1<span class="toc-date">Wed Aug 06</span></button></li><li class="toc-item"><button class="toc-link" data-index="6">2.0.0<span class="toc-date">Thu Jul 24</span></button></li><li class="toc-item"><button class="toc-link" data-index="7">v1.9.7.5 (Public)<span class="toc-date">Tue Jul 22</span></button></li><li class="toc-item"><button class="toc-link" data-index="8">v1.8.8 StopUpdateFewDays<span class="toc-date">Sat Jul 19</span></button></li><li class="toc-item"><button class="toc-link" data-index="9">v1.8.5 Beta<span class="toc-date">Thu Jul 17</span></button></li><li class="toc-item"><button class="toc-link" data-index="10">v1.7.8 LittleUpdate-DEV<span class="toc-date">Wed Jul 16</span></button></li><li class="toc-item"><button class="toc-link" data-index="11">v1.7.3 PreTestVersion<span class="toc-date">Wed Jul 16</span></button></li><li class="toc-item"><button class="toc-link" data-index="12">v1.3.9 PublicUpdate<span class="toc-date">Tue Jul 15</span></button></li><li class="toc-item"><button class="toc-link" data-index="13">v1.2.5 Beta-Public<span class="toc-date">Mon Jul 14</span></button></li><li class="toc-item"><button class="toc-link" data-index="14">v1.0.0 Dev-Public<span class="toc-date">Mon Jul 14</span></button></li><li class="toc-item"><button class="toc-link" data-index="15">v0.9.7 DEV<span class="toc-date">Sun Jul 13</span></button></li></ul></nav><button class="toc-mini-btn" id="tocMiniBtn" title="展开版本目录"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"></path></svg><span class="toc-badge">16</span></button><button class="back-to-top" id="backToTop" title="回到顶部"><svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg></button><script>const timeline = document.getElementById('timeline');
+const orderBtn = document.getElementById('orderBtn');
+const readerBtn = document.getElementById('readerBtn');
+const themeBtn = document.getElementById('themeBtn');
+const backBtn = document.getElementById('backBtn');
+const sizeButtons = document.querySelectorAll('.btn-size');
+const tocSidebar = document.getElementById('tocSidebar');
+const tocMiniBtn = document.getElementById('tocMiniBtn');
+const backToTop = document.getElementById('backToTop');
+const tocLinks = document.querySelectorAll('.toc-link');
+let isDesc = true;
+const nodes = Array.from(timeline.querySelectorAll('.timeline-node'));
+
+const canvas = document.getElementById('matrixCanvas');
+const ctx = canvas.getContext('2d');
+let width = (canvas.width = window.innerWidth);
+let height = (canvas.height = window.innerHeight);
+const fontSize = 15;
+let columns = Math.floor(width / fontSize);
+const matrixChars = ['0', '1'];
+let drops = [];
+const initDrops = () => {
+    columns = Math.floor(window.innerWidth / fontSize);
+    drops = [];
+    for (let i = 0; i < columns; i++) { drops[i] = Math.random() * -100; }
+};
+initDrops();
+let activePrimaryColor = '#0060ff';
+const updateColorCache = () => {
+    activePrimaryColor = getComputedStyle(document.documentElement).getPropertyValue('--md-primary').trim() || '#0060ff';
+};
+updateColorCache();
+const drawMatrix = () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    ctx.fillStyle = isDark ? 'rgba(10, 15, 29, 0.08)' : 'rgba(244, 246, 249, 0.08)';
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = 'bold ' + fontSize + 'px "JetBrains Mono", monospace';
+    for (let i = 0; i < drops.length; i++) {
+        let char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+        ctx.fillStyle = activePrimaryColor;
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > height && Math.random() > 0.975) { drops[i] = 0; }
+        drops[i] += 0.8;
+    }
+};
+let matrixInterval = setInterval(drawMatrix, 33);
+window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    initDrops();
+});
+
+const toggleOrder = () => {
+    isDesc = !isDesc;
+    nodes.forEach(node => node.classList.add('node-reloading'));
+    setTimeout(() => {
+        nodes.forEach((node, index) => { node.style.order = isDesc ? index : (nodes.length - index); });
+        orderBtn.querySelector('span').textContent = isDesc ? "时间正序" : "时间倒序";
+        orderBtn.classList.toggle('active', !isDesc);
+        nodes.forEach((node, index) => {
+            setTimeout(() => {
+                node.classList.remove('node-reloading');
+                node.classList.add('node-fade-in');
+                setTimeout(() => node.classList.remove('node-fade-in'), 600);
+            }, index * 60);
+        });
+    }, 250);
+};
+orderBtn.addEventListener('click', toggleOrder);
+
+// Refresh TOC active state after sort toggle
+const refreshTocActive = () => {
+    setTimeout(() => {
+        updateTocVisibility();
+    }, 350); // Wait for reorder animation
+};
+orderBtn.addEventListener('click', refreshTocActive);
+
+let isReader = false;
+readerBtn.addEventListener('click', () => {
+    isReader = !isReader;
+    document.body.classList.toggle('reader-mode', isReader);
+    readerBtn.querySelector('span').textContent = isReader ? "阅读模式: 开" : "阅读模式: 关";
+    readerBtn.classList.toggle('active', isReader);
+});
+
+const sizeMap = { small: '0.95rem', medium: '1.1rem', large: '1.3rem' };
+sizeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        sizeButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const sizeKey = btn.getAttribute('data-size');
+        document.documentElement.style.setProperty('--log-font-size', sizeMap[sizeKey]);
+    });
+});
+
+const getAnzhiyuTheme = () => {
+    if (document.documentElement.getAttribute('data-theme')) { return document.documentElement.getAttribute('data-theme'); }
+    if (localStorage.getItem('theme')) return localStorage.getItem('theme');
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+};
+const setTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    themeBtn.querySelector('span').textContent = theme === 'dark' ? '深空暗夜' : '赛博极光';
+    updateColorCache();
+};
+themeBtn.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || getAnzhiyuTheme();
+    setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+});
+
+backBtn.addEventListener('click', () => {
+    if (document.referrer && document.referrer.includes(window.location.host)) { window.history.back(); }
+    else { window.location.href = '/'; }
+});
+
+setTheme(getAnzhiyuTheme());
+nodes.forEach((node, index) => { node.style.order = index; });
+
+// ==========================================================================
+// TOC SIDEBAR - Scroll Detection & Interactions
+// ==========================================================================
+const LINE_HEIGHT = 28; // approximate line height in px
+const SCROLL_THRESHOLD = LINE_HEIGHT * 5;
+let tocExpanded = true;
+
+const updateTocVisibility = () => {
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    if (scrollY > SCROLL_THRESHOLD) {
+        // Scrolled past 5 lines - collapse TOC
+        if (tocExpanded) {
+            tocSidebar.classList.add('hidden');
+            tocMiniBtn.classList.add('visible');
+            tocExpanded = false;
+        }
+    } else {
+        // Near top - expand TOC
+        if (!tocExpanded) {
+            tocSidebar.classList.remove('hidden');
+            tocMiniBtn.classList.remove('visible');
+            tocExpanded = true;
+        }
+    }
+
+    // Update active TOC item based on scroll position
+    nodes.forEach((node, index) => {
+        const rect = node.getBoundingClientRect();
+        if (rect.top <= 150 && rect.bottom >= 150) {
+            tocLinks.forEach(l => l.classList.remove('active'));
+            if (tocLinks[index]) tocLinks[index].classList.add('active');
+        }
+    });
+};
+
+const toggleToc = () => {
+    tocExpanded = !tocExpanded;
+    if (tocExpanded) {
+        tocSidebar.classList.remove('hidden');
+        tocMiniBtn.classList.remove('visible');
+    } else {
+        tocSidebar.classList.add('hidden');
+        tocMiniBtn.classList.add('visible');
+    }
+};
+
+tocMiniBtn.addEventListener('click', toggleToc);
+
+// Click on TOC backdrop to close
+tocSidebar.addEventListener('click', (e) => {
+    if (e.target === tocSidebar && window.innerWidth < 1200) {
+        toggleToc();
+    }
+});
+
+window.addEventListener('scroll', updateTocVisibility, { passive: true });
+updateTocVisibility();
+
+// Scroll to specific version
+// TOC click handler using event delegation
+document.querySelector('.toc-list').addEventListener('click', (e) => {
+    const btn = e.target.closest('.toc-link');
+    if (!btn) return;
+    const index = parseInt(btn.dataset.index);
+    const targetNode = nodes[index];
+    if (targetNode) {
+        const headerOffset = 100;
+        const elementPosition = targetNode.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    }
+});
+// ==========================================================================
+// BACK TO TOP
+// ==========================================================================
+const updateBackToTop = () => {
+    const scrollY = window.scrollY || window.pageYOffset;
+    if (scrollY > 400) {
+        backToTop.classList.add('visible');
+    } else {
+        backToTop.classList.remove('visible');
+    }
+};
+
+backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+window.addEventListener('scroll', updateBackToTop, { passive: true });
+updateBackToTop();</script></body></html>

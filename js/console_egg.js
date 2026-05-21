@@ -37,7 +37,7 @@
         // 3. 法律高亮区
         _originalLog(`%c 《中华人民共和国网络安全法》告知： `, `color: #fff; background: #333; padding: 2px 5px; margin-top: 10px;`);
 
-        const legalStyle = `color: ${warnColor}; font-family: "Microsoft YaHei", sans-serif; font-size: 12px; line-height: 1.6;`;
+        const legalStyle = `color: ${warnColor}; font-family: "Microsoft YaHei", sans-serif; font-size: 12px; lSine-height: 1.6;`;
 
         _originalLog(`%c  第27条：不得从事非法侵入他人网络、干扰他人网络正常功能等活动。`, legalStyle);
         _originalLog(`%c  第44条：任何个人和组织不得窃取或者以其他非法方式获取个人信息。`, legalStyle);
